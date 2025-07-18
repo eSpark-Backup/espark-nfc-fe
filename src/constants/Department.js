@@ -1,0 +1,68 @@
+import {
+  Marketing,
+  HR,
+  SoftwareEngineering,
+  BusinessDevelopment,
+  Devops,
+  Sales,
+  UIUX,
+} from "../assets/images/pngs";
+
+export const ROWS = [
+  {
+    id: 1,
+    image: Marketing,
+    name: "Marketing",
+    email: "Marketing@gmail.com",
+    noOfEmployee: 193,
+    createdAt: "Apr 12, 2023, 14:02:52",
+  },
+  {
+    id: 2,
+    image: HR,
+    name: "Human Resources",
+    email: "Human Resources @gmail.com",
+    noOfEmployee: 193,
+    createdAt: "Apr 12, 2023, 14:02:52",
+  },
+  {
+    id: 3,
+    image: SoftwareEngineering,
+    name: "Software Engineering",
+    email: "Software Engineering@gmail.com",
+    noOfEmployee: 193,
+    createdAt: "Apr 12, 2023, 14:02:52",
+  },
+  {
+    id: 4,
+    image: BusinessDevelopment,
+    name: "Business Development",
+    email: "Business Development@gmail.com",
+    noOfEmployee: 193,
+    createdAt: "Apr 12, 2023, 14:02:52",
+  },
+  {
+    id: 5,
+    image: Devops,
+    name: "DevOps",
+    email: "DevOps@gmail.com",
+    noOfEmployee: 193,
+    createdAt: "Apr 12, 2023, 14:02:52",
+  },
+  {
+    id: 6,
+    image: Sales,
+    name: "Sales",
+    email: "Sales@gmail.com",
+    noOfEmployee: 193,
+    createdAt: "Apr 12, 2023, 14:02:52",
+  },
+  {
+    id: 7,
+    image: UIUX,
+    name: "UX & UI",
+    email: "UX & UI@gmail.com",
+    noOfEmployee: 193,
+    createdAt: "Apr 12, 2023, 14:02:52",
+  },
+];
