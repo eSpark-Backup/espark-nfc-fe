@@ -1,0 +1,174 @@
+// SIDEBAR
+const linkListContainer = {
+  paddingTop: "0px !important",
+  paddingBottom: "0px !important",
+};
+
+const linkItemButton = (theme, isActive) => {
+  return {
+    justifyContent: "flex-start",
+    padding: "13px 16px",
+    color: isActive ? theme.palette.action.selected : "#324054",
+    backgroundColor: isActive ? "#E8EDFF" : "transparent",
+    margin: "0px 24px 16px 19px",
+    borderRadius: "5px",
+    maxHeight: "48px",
+    transition: "all 0.3s ease",
+
+    "& span": {
+      lineHeight: "22.2px",
+      fontSize: "17.32px",
+      fontWeight: isActive ? 500 : 400,
+    },
+
+    ":hover": {
+      backgroundColor: "#E8EDFF",
+      color: theme.palette.action.selected,
+
+      "& span": {
+        fontWeight: 500,
+      },
+    },
+  };
+};
+
+const linkItemIcon = {
+  minWidth: 0,
+  justifyContent: "center",
+  marginRight: "6.5px",
+};
+
+const logoutItemButton = (theme) => {
+  return {
+    justifyContent: "flex-start",
+    padding: "13px",
+    color: theme.palette.error.main,
+    marginBottom: "13px",
+    backgroundColor: "transparent !important",
+
+    "& span": {
+      lineHeight: "22.2px",
+      fontSize: "17.32px",
+      fontWeight: 500,
+    },
+  };
+};
+
+const logoutItemIcon = {
+  minWidth: 0,
+  justifyContent: "center",
+  marginRight: "17px",
+};
+
+const drawerContainer = {
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+};
+
+const toolbar = {
+  paddingLeft: "0px !important",
+  paddingRight: "0px !important",
+  minHeight: "auto !important",
+  margin: "8px 0px 29px",
+};
+
+const temporaryDrawerPaper = {
+  borderRadius: 0,
+  backgroundColor: "#FFFFFF",
+};
+
+const permanentDrawerPaper = {
+  transition: "width 0.3s",
+  overflowX: "hidden",
+  height: "100vh",
+  backgroundColor: "#FFFFFF",
+  border: 1,
+  borderColor: "divider",
+  borderRadius: 0,
+};
+
+// HEADER
+const appBar = {
+  borderBottom: 1,
+  borderColor: "divider",
+  borderRadius: 0,
+  boxShadow: "none",
+  backgroundColor: "#ffffff",
+  top: 0,
+  left: 0,
+};
+
+const headerToolbar = {
+  minHeight: "69px !important",
+  width: "100%",
+  paddingLeft: "20px !important",
+  paddingRight: "20px !important",
+};
+
+const formOpenButton = (theme) => {
+  return {
+    marginLeft: "auto",
+    display: "flex",
+    alignItems: "center",
+    background: `${theme.palette.secondary.light} !important`,
+    border: 1,
+    borderColor: "divider",
+    padding: "6.5px 12px 6.5px 6px",
+  };
+};
+
+const avatarContainer = {
+  width: "23px",
+  height: "23px",
+  borderRadius: "50%",
+  borderColor: "#000000",
+  border: 1,
+  marginRight: "4.5px",
+};
+
+const typographyOrg = {
+  color: "#000000",
+  fontSize: "9px",
+  lineHeight: "14px",
+  fontWeight: 500,
+};
+
+const typographyRole = {
+  color: "#78858F",
+  fontSize: "7px",
+  lineHeight: "11px",
+  textAlign: "left",
+};
+
+const dropdownContainer = {
+  width: "18px",
+  height: "18px",
+  backgroundColor: "#E6EDF9",
+  borderRadius: "50%",
+  borderColor: "#000000",
+  border: 1,
+  marginRight: "4.5px",
+};
+
+export {
+  // SIDEBAR
+  linkListContainer,
+  linkItemButton,
+  linkItemIcon,
+  logoutItemButton,
+  logoutItemIcon,
+  drawerContainer,
+  toolbar,
+  temporaryDrawerPaper,
+  permanentDrawerPaper,
+  // HEADER
+  appBar,
+  headerToolbar,
+  formOpenButton,
+  avatarContainer,
+  typographyOrg,
+  typographyRole,
+  dropdownContainer,
+};

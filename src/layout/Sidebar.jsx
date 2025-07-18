@@ -1,0 +1,140 @@
+import { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+
+import {
+  Drawer,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Box,
+  useTheme,
+} from "@mui/material";
+
+import { Logo } from "../assets/images/pngs";
+import { Logout } from "../assets/images/svgs";
+
+import { NAVITEMS } from "../constants/Sidebar";
+
+import {
+  drawerContainer,
+  linkItemButton,
+  linkItemIcon,
+  linkListContainer,
+  logoutItemButton,
+  logoutItemIcon,
+  permanentDrawerPaper,
+  temporaryDrawerPaper,
+  toolbar,
+} from "./styles";
+
+const drawerWidth = 240;
+const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
+  const location = useLocation();
+  const theme = useTheme();
+
+  const [hoveredLabel, setHoveredLabel] = useState(null);
+
+  const renderLinks = () => (
+    <List sx={linkListContainer}>
+      {NAVITEMS.LINKS.map(({ label, icon, activeIcon, path }) => {
+        const isActive = location.pathname === path;
+        const isHovered = hoveredLabel === label;
+
+        return (
+          <ListItemButton
+            key={label}
+            component={NavLink}
+            to={path}
+            onMouseEnter={() => setHoveredLabel(label)}
+            onMouseLeave={() => setHoveredLabel(null)}
+            disableRipple
+            sx={linkItemButton(theme, isActive)}
+          >
+            <ListItemIcon sx={linkItemIcon}>
+              <img
+                src={isActive || isHovered ? activeIcon : icon}
+                alt={label}
+              />
+            </ListItemIcon>
+
+            <ListItemText primary={label} />
+          </ListItemButton>
+        );
+      })}
+    </List>
+  );
+
+  const renderLogout = () => (
+    <Box width={"100%"}>
+      <List sx={linkListContainer}>
+        <ListItemButton
+          sx={logoutItemButton(theme)}
+          disableRipple
+          onClick={() => {
+            console.log("Logged out");
+          }}
+        >
+          <ListItemIcon sx={logoutItemIcon}>
+            <img src={Logout} alt={NAVITEMS.LOGOUT} />
+          </ListItemIcon>
+
+          <ListItemText primary={NAVITEMS.LOGOUT} />
+        </ListItemButton>
+      </List>
+    </Box>
+  );
+
+  const drawerContent = (
+    <Box sx={drawerContainer}>
+      <Box>
+        <Toolbar sx={toolbar}>
+          <Box component={"img"} src={Logo} alt="Logo" />
+        </Toolbar>
+
+        {renderLinks()}
+      </Box>
+
+      {renderLogout()}
+    </Box>
+  );
+
+  return (
+    <>
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{ keepMounted: true }}
+        sx={{
+          display: { xs: "block", md: "none" },
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            ...temporaryDrawerPaper,
+          },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+
+      <Drawer
+        variant="permanent"
+        open
+        sx={{
+          display: { xs: "none", md: "block" },
+          width: drawerWidth,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            ...permanentDrawerPaper,
+          },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+    </>
+  );
+};
+
+export default Sidebar;
