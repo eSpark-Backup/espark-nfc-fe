@@ -1,0 +1,190 @@
+import { useEffect, useState } from "react";
+
+import {
+  Box,
+  Checkbox,
+  IconButton,
+  Paper,
+  Skeleton,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+
+import SearchInput from "./inputs/SearchInput";
+import ActionButton from "./ActionButton";
+import Pagination from "./Pagination";
+
+import { actionButton, TABLEACTIONBUTTONS } from "../constants/Table";
+
+import { Action } from "../assets/images/svgs";
+
+import {
+  tableBodyCell,
+  tableBoxContainer,
+  tableContainer,
+  tableHeaderCell,
+  tableStackContainer,
+} from "./styles";
+
+const GenericTable = ({
+  columns,
+  rows,
+  totalRows,
+  loading = false,
+  onAddClick,
+  onSortClick,
+  onSearch,
+  employee = false,
+}) => {
+  const [selected, setSelected] = useState([]);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [page, setPage] = useState(1);
+
+  const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+  const isAllSelected = rows.length > 0 && selected.length === rows.length;
+  const handleSelectAll = (checked) => {
+    setSelected(checked ? rows.map((row) => row.id) : []);
+  };
+  const handleSelectRow = (id) => {
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
+  useEffect(() => {
+    setSelected([]);
+  }, [rows]);
+
+  const paginatedRows = rows.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
+
+  return (
+    <Box sx={tableBoxContainer}>
+      <Stack sx={tableStackContainer}>
+        <SearchInput onSearch={onSearch} />
+
+        <Stack direction="row" spacing={1} justifyContent="flex-end">
+          {actionButton.map((el, index) => {
+            return (
+              <ActionButton
+                icon={el.icon}
+                text={el.name}
+                key={index}
+                onClick={index === 0 ? onSortClick : onAddClick}
+              />
+            );
+          })}
+        </Stack>
+      </Stack>
+
+      {/* Table */}
+      <TableContainer component={Paper} variant="outlined" sx={tableContainer}>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ bgcolor: "#F6F8FA" }}>
+              <TableCell padding="checkbox" sx={tableHeaderCell}>
+                <Checkbox
+                  checked={isAllSelected}
+                  onChange={(e) => handleSelectAll(e.target.checked)}
+                />
+              </TableCell>
+
+              {columns.map((col) => (
+                <TableCell key={col.id} sx={tableHeaderCell}>
+                  {col.label}
+                </TableCell>
+              ))}
+
+              <TableCell sx={tableHeaderCell}>Action</TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {loading
+              ? [...Array(rowsPerPage)].map((_, i) => (
+                  <TableRow key={i}>
+                    <TableCell padding="checkbox" sx={tableBodyCell}>
+                      <Skeleton variant="rectangular" width={20} height={20} />
+                    </TableCell>
+
+                    {columns.map((col) => (
+                      <TableCell key={col.id} sx={tableBodyCell}>
+                        <Skeleton variant="text" />
+                      </TableCell>
+                    ))}
+
+                    <TableCell sx={tableBodyCell}>
+                      <Skeleton variant="circular" width={24} height={24} />
+                    </TableCell>
+                  </TableRow>
+                ))
+              : paginatedRows.map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell padding="checkbox" sx={tableBodyCell}>
+                      <Checkbox
+                        checked={selected.includes(row.id)}
+                        onChange={() => handleSelectRow(row.id)}
+                      />
+                    </TableCell>
+
+                    {columns.map((col) => (
+                      <TableCell key={col.id} sx={tableBodyCell}>
+                        {col.render ? col.render(row) : row[col.id]}
+                      </TableCell>
+                    ))}
+
+                    {employee ? (
+                      <TableCell sx={tableBodyCell}>
+                        {TABLEACTIONBUTTONS.map((el, index) => {
+                          return (
+                            <IconButton
+                              sx={{
+                                padding: 0,
+                                margin: index === 1 ? "0px 12px" : 0,
+                              }}
+                              key={index}
+                            >
+                              <img src={el.icon} alt="Action" />
+                            </IconButton>
+                          );
+                        })}
+                      </TableCell>
+                    ) : (
+                      <TableCell sx={tableBodyCell}>
+                        <IconButton
+                          sx={{
+                            padding: 0,
+                          }}
+                        >
+                          <img src={Action} alt="Action" />
+                        </IconButton>
+                      </TableCell>
+                    )}
+                  </TableRow>
+                ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      {/* Pagination */}
+      <Pagination
+        page={page}
+        rowsPerPage={rowsPerPage}
+        setPage={setPage}
+        setRowsPerPage={setRowsPerPage}
+        totalRows={totalRows}
+        totalPages={totalPages}
+      />
+    </Box>
+  );
+};
+
+export default GenericTable;

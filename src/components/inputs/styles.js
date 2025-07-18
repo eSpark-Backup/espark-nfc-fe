@@ -21,4 +21,20 @@ const link = {
   lineHeight: "100%",
 };
 
-export { container, linkContainer, link };
+const searchInput = {
+  width: "293px",
+
+  "& input": {
+    padding: "8.5px 11px 8.5px 0px",
+    fontSize: "13px",
+    lineHeight: "20px",
+    letterSpacing: "-0.015em",
+    color: "#525866",
+  },
+
+  "& fieldset": {
+    borderColor: "#E2E4E9 !important",
+  },
+};
+
+export { container, linkContainer, link, searchInput };
