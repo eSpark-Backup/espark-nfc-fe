@@ -43,6 +43,7 @@ import Outdoor from "./outdoor.svg";
 import Location from "./location.svg";
 import Logo from "./logo.svg";
 import DashboardActive from "./dashboard-active.svg";
+import Dashboard from "./dashboard.svg";
 
 export {
   // UI Icons
@@ -90,4 +91,5 @@ export {
   Location,
   Logo,
   DashboardActive,
+  Dashboard
 };

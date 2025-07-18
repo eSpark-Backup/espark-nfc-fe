@@ -1,6 +1,7 @@
 import Avatar from "./avatar.png";
 import DetailImage from "./detail.png";
 import LoginBG from "./login-bg.png";
+import Logo from "./logo.png";
 // Departments
 import BusinessDevelopment from "./bd.png";
 import Devops from "./devops.png";
@@ -17,11 +18,13 @@ import User4 from "./user-4.png";
 import User5 from "./user-5.png";
 import User6 from "./user-6.png";
 import User7 from "./user-7.png";
+import User from "./user.png";
 
 export {
   Avatar,
   DetailImage,
   LoginBG,
+  Logo,
   // Departments
   BusinessDevelopment,
   Devops,
@@ -38,4 +41,5 @@ export {
   User5,
   User6,
   User7,
+  User
 };
