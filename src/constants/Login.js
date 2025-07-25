@@ -1,8 +1,10 @@
-export const HEADING = "Login to your account";
-export const FORGET = "Forgot";
-export const SUBMIT = "Login now";
+const LOGIN = {
+  heading: "Login to your account",
+  forgot: "Forgot",
+  submit: "Login now",
+};
 
-export const FIELDCONFIG = [
+const LOGINFIELDSCONFIG = [
   {
     name: "email",
     label: "Email",
@@ -16,3 +18,5 @@ export const FIELDCONFIG = [
     placeholder: "Enter your password",
   },
 ];
+
+export { LOGIN, LOGINFIELDSCONFIG };

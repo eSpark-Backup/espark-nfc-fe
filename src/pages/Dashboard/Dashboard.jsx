@@ -3,6 +3,7 @@ import { Box, Grid } from "@mui/material";
 import InfoCard from "../../components/InfoCard";
 
 import { DASHBOARDITEMS } from "../../constants/Dashboard";
+import SlidePopover from "../../components/dialogs/SlidePopover";
 
 const Dashboard = () => {
   return (
@@ -13,6 +14,8 @@ const Dashboard = () => {
             <InfoCard {...item} />
           </Grid>
         ))}
+
+        <SlidePopover />
       </Grid>
     </Box>
   );

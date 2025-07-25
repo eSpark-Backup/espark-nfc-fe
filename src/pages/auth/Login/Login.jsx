@@ -4,7 +4,7 @@ import GenericForm from "../../../components/GenericForm";
 
 import { loginFormSchema } from "../../../validations/schema";
 
-import { FIELDCONFIG, HEADING, SUBMIT } from "../../../constants/Login";
+import { LOGINFIELDSCONFIG, LOGIN } from "../../../constants/Login";
 
 import { backgroundImage, container, form } from "./styles";
 
@@ -19,13 +19,14 @@ const Login = () => {
     <Box sx={container} className="center">
       <Box sx={backgroundImage} className="center">
         <Box sx={form} className="center">
-          <Typography variant="h1">{HEADING}</Typography>
+          <Typography variant="h1">{LOGIN.heading}</Typography>
 
           <GenericForm
-            fieldConfig={FIELDCONFIG}
+            fieldsConfig={LOGINFIELDSCONFIG}
             schema={loginFormSchema}
             onSubmit={handleFormSubmit}
-            submitText={SUBMIT}
+            submitText={LOGIN.submit}
+            gap={1.5}
           />
         </Box>
       </Box>
