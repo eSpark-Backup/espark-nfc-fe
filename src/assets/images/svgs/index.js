@@ -22,7 +22,9 @@ import Employee from "./employee.svg";
 import EmployeeCard from "./employee-card.svg";
 import EmployeeActive from "./employee-active.svg";
 import EmployeeAbout from "./employee-about.svg";
+import EmployeeAboutDisabled from "./employee-about-disabled.svg";
 import EmployeeCompanyProfile from "./employee-company-profile.svg";
+import EmployeeCompanyProfilDisabled from "./employee-company-profile-disabled.svg";
 // Communication Icons
 import Email from "./email.svg";
 import Contact from "./contact.svg";
@@ -70,7 +72,9 @@ export {
   EmployeeCard,
   EmployeeActive,
   EmployeeAbout,
+  EmployeeAboutDisabled,
   EmployeeCompanyProfile,
+  EmployeeCompanyProfilDisabled,
   // Communication Icons
   Email,
   Contact,
@@ -91,5 +95,5 @@ export {
   Location,
   Logo,
   DashboardActive,
-  Dashboard
+  Dashboard,
 };

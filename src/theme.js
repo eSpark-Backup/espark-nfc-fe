@@ -4,7 +4,9 @@ const breakpoints = {
   values: {
     xs: 0,
     sm: 600,
+    smLarge: 680,
     md: 900,
+    mdS: 1000,
     mdLarge: 1025,
     lg: 1200,
     xl: 1536,
@@ -229,21 +231,14 @@ const components = {
       notchedOutline: {
         borderColor: "#D0D5DD",
       },
-      root: {
-        "&:hover .MuiOutlinedInput-notchedOutline": {
-          borderColor: "#D0D5DD",
-        },
-        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-          borderColor: "#D0D5DD",
-        },
-      },
     },
   },
 
   MuiPaper: {
     styleOverrides: {
       root: {
-        borderRadius: 12,
+        borderRadius: 8,
+        backgroundColor: '#FFFFFF',
       },
     },
   },
