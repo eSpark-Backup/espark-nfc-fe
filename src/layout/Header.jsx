@@ -53,17 +53,11 @@ const Header = ({ onMenuClick }) => {
 
           <Button
             variant="contained"
-            // onClick={handleOpen}
+            onClick={handleOpen}
             sx={formOpenButton(theme)}
           >
             <Box sx={avatarContainer} className="center">
-              <img
-                src={User}
-                alt="User"
-                style={{
-                  width: "100%",
-                }}
-              />
+              <img src={User} alt="User" />
             </Box>
 
             <Stack flexDirection={"column"} mr={"10px"}>

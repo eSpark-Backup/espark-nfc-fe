@@ -1,5 +1,4 @@
 const submitButton = {
-  marginTop: "32px",
   padding: "18px 0px",
   height: "auto",
 };
@@ -7,7 +6,7 @@ const submitButton = {
 // CARD
 const cardContainer = {
   display: "flex",
-  gap: 5.5,
+  gap: { xs: 3, sm: 5.5 },
   p: { xs: "18px 21px", xl: "18px 29px" },
   borderRadius: 1,
   border: 1,
@@ -50,6 +49,7 @@ const leftBoxSubtitle = {
 
 const rightBoxContainer = {
   width: "232px",
+  maxWidth: "232px",
   borderRadius: 3,
   display: "flex",
   alignItems: "center",
@@ -63,7 +63,7 @@ const rightBoxCount = {
 
 // TABLE
 const tableBoxContainer = {
-  padding: "37px 40px",
+  padding: { xs: "26px 22px", sm: "30px 28px", md: "37px 40px" },
   height: "100%",
   display: "flex",
   flexDirection: "column",
@@ -74,6 +74,7 @@ const tableStackContainer = {
   justifyContent: "space-between",
   alignItems: { xs: "stretch", sm: "center" },
   marginBottom: 2,
+  gap: 2,
 };
 
 const tableContainer = {
@@ -97,11 +98,32 @@ const tableBodyCell = {
   whiteSpace: "nowrap",
 };
 
+const actionButton = {
+  padding: "7.5px 20px",
+  lineHeight: "20px",
+  fontSize: "14px",
+  letterSpacing: "-0.015em",
+  fontWeight: 400,
+
+  ":hover": {
+    boxShadow: "0px 4px 20px rgba(0,0,0,0.1)", 
+  },
+};
+
+const checkbox = {
+  backgroundColor: "transparent !important",
+
+  "& svg": {
+    width: "19px",
+    height: "19px",
+  },
+};  
+
 // PAGINATION
 const paginationContainer = {
   flexDirection: { xs: "column", sm: "row" },
   justifyContent: "space-between",
-  alignItems: { xs: "stretch", sm: "center" },
+  alignItems: "center",
   marginTop: 4,
   borderBottom: 1,
   borderColor: "divider",
@@ -157,6 +179,39 @@ const paginationNumber = (page, p) => {
   };
 };
 
+// FORM
+const label = {
+  fontSize: "14px",
+  fontWeight: 500,
+  lineHeight: "20px",
+  color: "#525866",
+};
+
+const formLayoutButton = {
+            fontWeight: 500,
+          fontSize: "18px",
+          lineHeight: "24px",
+          padding: "13px 12px",
+          textTransform: "capitalize",
+};
+
+// MENU
+const menuPaper = {
+  boxShadow: "none",
+  border: 1,
+  borderColor: "divider",
+  width: { xs: "85%", smLarge: "450px" },
+  height: "700px",
+  mt: 1,
+  ml: -1,
+  filter: "drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25))",
+  scrollbarWidth: "none",
+
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
+};
+
 export {
   submitButton,
   // CARD
@@ -172,6 +227,8 @@ export {
   tableContainer,
   tableHeaderCell,
   tableBodyCell,
+  actionButton,
+  checkbox,
   // PAGINATION
   paginationContainer,
   pageRowHeading,
@@ -179,4 +236,9 @@ export {
   pageChangeButton,
   pageChangeHeading,
   paginationNumber,
+  // FORM
+  label,
+  formLayoutButton,
+  // MENU
+  menuPaper,
 };

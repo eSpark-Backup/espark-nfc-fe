@@ -1,36 +1,53 @@
+// LAYOUT
+const layoutContainer = {
+  display: "flex",
+  minHeight: "100vh",
+  overflow: "hidden",
+};
+
+const layoutChildrenContainer = {
+  flexGrow: 1,
+  display: "flex",
+  flexDirection: "column",
+};
+
+const layoutMainContainer = {
+  flexGrow: 1,
+  overflowY: "auto",
+  height: "calc(100vh - 70px)",
+};
+
 // SIDEBAR
 const linkListContainer = {
   paddingTop: "0px !important",
   paddingBottom: "0px !important",
 };
 
-const linkItemButton = (theme, isActive) => {
-  return {
-    justifyContent: "flex-start",
-    padding: "13px 16px",
-    color: isActive ? theme.palette.action.selected : "#324054",
-    backgroundColor: isActive ? "#E8EDFF" : "transparent",
-    margin: "0px 24px 16px 19px",
-    borderRadius: "5px",
-    maxHeight: "48px",
-    transition: "all 0.3s ease",
+const linkItemButton = (theme, isActive) => ({
+  justifyContent: "flex-start",
+  padding: "13px 16px",
+  color: isActive ? theme.palette.action.selected : "#324054",
+  backgroundColor: isActive ? "#E8EDFF" : "transparent",
+  margin: "0px 24px 16px 19px",
+  borderRadius: "5px",
+  maxHeight: "48px",
+  transition: "all 0.3s ease",
+
+  "& span": {
+    lineHeight: "22.2px",
+    fontSize: "17.32px",
+    fontWeight: isActive ? 500 : 400,
+  },
+
+  ":hover": {
+    backgroundColor: "#E8EDFF",
+    color: theme.palette.action.selected,
 
     "& span": {
-      lineHeight: "22.2px",
-      fontSize: "17.32px",
-      fontWeight: isActive ? 500 : 400,
+      fontWeight: 500,
     },
-
-    ":hover": {
-      backgroundColor: "#E8EDFF",
-      color: theme.palette.action.selected,
-
-      "& span": {
-        fontWeight: 500,
-      },
-    },
-  };
-};
+  },
+});
 
 const linkItemIcon = {
   minWidth: 0,
@@ -38,21 +55,19 @@ const linkItemIcon = {
   marginRight: "6.5px",
 };
 
-const logoutItemButton = (theme) => {
-  return {
-    justifyContent: "flex-start",
-    padding: "13px",
-    color: theme.palette.error.main,
-    marginBottom: "13px",
-    backgroundColor: "transparent !important",
+const logoutItemButton = (theme) => ({
+  justifyContent: "flex-start",
+  padding: "13px",
+  color: theme.palette.error.main,
+  marginBottom: "13px",
+  backgroundColor: "transparent !important",
 
-    "& span": {
-      lineHeight: "22.2px",
-      fontSize: "17.32px",
-      fontWeight: 500,
-    },
-  };
-};
+  "& span": {
+    lineHeight: "22.2px",
+    fontSize: "17.32px",
+    fontWeight: 500,
+  },
+});
 
 const logoutItemIcon = {
   minWidth: 0,
@@ -71,7 +86,7 @@ const toolbar = {
   paddingLeft: "0px !important",
   paddingRight: "0px !important",
   minHeight: "auto !important",
-  margin: "8px 0px 29px",
+  margin: "8px 0px 29px 36px",
 };
 
 const temporaryDrawerPaper = {
@@ -107,21 +122,19 @@ const headerToolbar = {
   paddingRight: "20px !important",
 };
 
-const formOpenButton = (theme) => {
-  return {
-    marginLeft: "auto",
-    display: "flex",
-    alignItems: "center",
-    background: `${theme.palette.secondary.light} !important`,
-    border: 1,
-    borderColor: "divider",
-    padding: "6.5px 12px 6.5px 6px",
-  };
-};
+const formOpenButton = (theme) => ({
+  marginLeft: "auto",
+  display: "flex",
+  alignItems: "center",
+  background: `${theme.palette.secondary.light} !important`,
+  border: 1,
+  borderColor: "divider",
+  padding: "6.5px 12px 6.5px 6px",
+});
 
 const avatarContainer = {
-  width: "23px",
-  height: "23px",
+  width: "33px",
+  height: "33px",
   borderRadius: "50%",
   borderColor: "#000000",
   border: 1,
@@ -130,14 +143,14 @@ const avatarContainer = {
 
 const typographyOrg = {
   color: "#000000",
-  fontSize: "9px",
+  fontSize: "13px",
   lineHeight: "14px",
   fontWeight: 500,
 };
 
 const typographyRole = {
   color: "#78858F",
-  fontSize: "7px",
+  fontSize: "10px",
   lineHeight: "11px",
   textAlign: "left",
 };
@@ -153,6 +166,10 @@ const dropdownContainer = {
 };
 
 export {
+  // LAYOUT
+  layoutContainer,
+  layoutChildrenContainer,
+  layoutMainContainer,
   // SIDEBAR
   linkListContainer,
   linkItemButton,

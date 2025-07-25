@@ -1,6 +1,20 @@
 import { useState } from "react";
 
-import { Menu, Box, TextField, Typography, Button } from "@mui/material";
+import { Box, Menu, Typography } from "@mui/material";
+
+import FormLayout from "./FormLayout";
+
+import {
+  ADD,
+  COMPANYFIELDSCONFIG,
+  EDITBTN,
+  EDITHEADING,
+} from "../constants/CompanyProfile";
+
+import { companyProfileFormSchema } from "../validations/schema";
+
+import { menuPaper } from "./styles";
+import { formDialogHeading } from "./dialogs/styles";
 
 const DropdownMenuForm = ({ anchorEl, setAnchorEl }) => {
   const [formData, setFormData] = useState({ name: "", email: "" });
@@ -29,42 +43,38 @@ const DropdownMenuForm = ({ anchorEl, setAnchorEl }) => {
       anchorEl={anchorEl}
       open={open}
       onClose={handleClose}
-      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-      transformOrigin={{ vertical: "top", horizontal: "left" }}
-      MenuListProps={{ sx: { p: 2 } }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      slotProps={{
+        paper: {
+          sx: menuPaper,
+        },
+        list: {
+          sx: {
+            padding: 0,
+          },
+        },
+      }}
     >
-      <Box component="form" onSubmit={handleSubmit} sx={{ width: 250 }}>
-        <Typography variant="subtitle1" mb={1}>
-          Fill Form
-        </Typography>
-        <TextField
-          fullWidth
-          name="name"
-          label="Name"
-          value={formData.name}
-          onChange={handleChange}
-          size="small"
-          margin="dense"
-        />
-        <TextField
-          fullWidth
-          name="email"
-          label="Email"
-          value={formData.email}
-          onChange={handleChange}
-          size="small"
-          margin="dense"
-        />
-        <Button
-          type="submit"
-          variant="contained"
-          fullWidth
-          sx={{ mt: 1 }}
-          size="small"
-        >
-          Submit
-        </Button>
-      </Box>
+      <Typography
+        variant="h5"
+        textAlign={"center"}
+        marginBottom={3}
+        marginTop={3}
+        sx={formDialogHeading}
+      >
+        {ADD}
+      </Typography>
+
+      <FormLayout
+        title={ADD}
+        editTitle={EDITHEADING}
+        editBtn={EDITBTN}
+        fieldsConfig={COMPANYFIELDSCONFIG}
+        schema={companyProfileFormSchema}
+        onSubmit={handleSubmit}
+        profile
+      />
     </Menu>
   );
 };
