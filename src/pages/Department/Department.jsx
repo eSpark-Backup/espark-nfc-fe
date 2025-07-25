@@ -1,87 +1,102 @@
 import { useEffect, useState } from "react";
 
-import { Avatar, Box, Typography } from "@mui/material";
-
 import GenericTable from "../../components/GenericTable";
+import SlidePopover from "../../components/dialogs/SlidePopover";
+import FormDialog from "../../components/dialogs/FormDialog";
+import SmallDialog from "../../components/dialogs/SmallDialog";
+import { departmentTableColumns } from "./tableColumns";
 
-import { ROWS } from "../../constants/Department";
+import {
+  ADD,
+  DEPARTMENTFIELDSCONFIG,
+  EDIT,
+  ROWS,
+} from "../../constants/Department";
+
+import { departmentFormSchema } from "../../validations/schema";
 
 const Department = () => {
-  const columns = [
-    {
-      id: "department",
-      label: "Department",
-      render: (row) => (
-        <Box display="flex" alignItems="center" gap={1}>
-          <Avatar
-            src={row.image || "/default-avatar.png"}
-            alt={row.name}
-            sx={{ width: 23, height: 23 }}
-          />
-          <Box>
-            <Typography
-              variant="subtitle2"
-              sx={{
-                fontWeight: 400,
-                lineHeight: "20px",
-                color:'text.primary'
-              }}
-            >
-              {row.name}
-            </Typography>
-
-            <Typography
-              sx={{
-                fontSize: "12px",
-                color:'text.secondary'
-              }}
-            >
-              {row.email}
-            </Typography>
-          </Box>
-        </Box>
-      ),
-    },
-    {
-      id: "noOfEmployee",
-      label: "No of employees",
-    },
-    {
-      id: "createdAt",
-      label: "Created Time",
-      render: (row) =>
-        new Date(row.createdAt).toLocaleString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: false,
-        }),
-    },
-  ];
-
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [rowDetails, setRowDetails] = useState(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      setData(ROWS);
-      setLoading(false);
-    }, 0);
+    setData(ROWS);
   }, []);
 
+  const handleClick = (e, row) => {
+    setRowDetails(row);
+
+    setAnchorEl(e.currentTarget);
+    setVisible(true);
+  };
+
+  const handleClickAdd = () => {
+    setOpen(true);
+  };
+
+  const handleClickDelete = () => {
+    setDeleteDialog(true);
+  };
+
+  const handleClickEdit = () => {
+    setEdit(true);
+    setOpen(true);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+  };
+
+  const handleCloseFormDialog = () => {
+    setOpen(false);
+  };
+
   return (
-    <GenericTable
-      columns={columns}
-      rows={data}
-      totalRows={data.length}
-      loading={loading}
-      onAddClick={() => console.log("Add clicked")}
-      onSortClick={() => console.log("Sort clicked")}
-      onSearch={(text) => console.log("Search:", text)}
-    />
+    <>
+      <GenericTable
+        columns={departmentTableColumns}
+        rows={data}
+        totalRows={data.length}
+        loading={loading}
+        clickHandler={{
+          onAddClick: handleClickAdd,
+          onSortClick: () => console.log("Sort clicked"),
+          onSearch: (text) => console.log("Search:", text),
+          onActionClick: (e, row) => handleClick(e, row),
+        }}
+      />
+
+      <SlidePopover
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
+        visible={visible}
+        setVisible={setVisible}
+        handleDelete={handleClickDelete}
+        handleEdit={handleClickEdit}
+      />
+
+      <FormDialog
+        open={open}
+        setOpen={setOpen}
+        ADD={ADD}
+        EDIT={EDIT}
+        fieldsConfig={DEPARTMENTFIELDSCONFIG}
+        schema={departmentFormSchema}
+        onSubmit={handleSubmit}
+        edit={edit}
+        rowDetails={rowDetails}
+        handleClose={handleCloseFormDialog}
+      />
+
+      <SmallDialog open={deleteDialog} setOpen={setDeleteDialog} />
+    </>
   );
 };
 

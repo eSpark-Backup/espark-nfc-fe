@@ -8,61 +8,99 @@ import {
   UIUX,
 } from "../assets/images/pngs";
 
-export const ROWS = [
+const ROWS = [
   {
     id: 1,
     image: Marketing,
     name: "Marketing",
     email: "Marketing@gmail.com",
-    noOfEmployee: 193,
-    createdAt: "Apr 12, 2023, 14:02:52",
+    no_of_empolyee: 193,
+    creation_time: "Apr 12, 2023, 14:02:52",
   },
   {
     id: 2,
     image: HR,
     name: "Human Resources",
     email: "Human Resources @gmail.com",
-    noOfEmployee: 193,
-    createdAt: "Apr 12, 2023, 14:02:52",
+    no_of_empolyee: 193,
+    creation_time: "Apr 12, 2023, 14:02:52",
   },
   {
     id: 3,
     image: SoftwareEngineering,
     name: "Software Engineering",
     email: "Software Engineering@gmail.com",
-    noOfEmployee: 193,
-    createdAt: "Apr 12, 2023, 14:02:52",
+    no_of_empolyee: 193,
+    creation_time: "Apr 12, 2023, 14:02:52",
   },
   {
     id: 4,
     image: BusinessDevelopment,
     name: "Business Development",
     email: "Business Development@gmail.com",
-    noOfEmployee: 193,
-    createdAt: "Apr 12, 2023, 14:02:52",
+    no_of_empolyee: 193,
+    creation_time: "Apr 12, 2023, 14:02:52",
   },
   {
     id: 5,
     image: Devops,
     name: "DevOps",
     email: "DevOps@gmail.com",
-    noOfEmployee: 193,
-    createdAt: "Apr 12, 2023, 14:02:52",
+    no_of_empolyee: 193,
+    creation_time: "Apr 12, 2023, 14:02:52",
   },
   {
     id: 6,
     image: Sales,
     name: "Sales",
     email: "Sales@gmail.com",
-    noOfEmployee: 193,
-    createdAt: "Apr 12, 2023, 14:02:52",
+    no_of_empolyee: 193,
+    creation_time: "Apr 12, 2023, 14:02:52",
   },
   {
     id: 7,
     image: UIUX,
     name: "UX & UI",
     email: "UX & UI@gmail.com",
-    noOfEmployee: 193,
-    createdAt: "Apr 12, 2023, 14:02:52",
+    no_of_empolyee: 193,
+    creation_time: "Apr 12, 2023, 14:02:52",
   },
 ];
+
+const ADD = "add new department";
+const EDIT = "edit";
+
+const DEPARTMENTFIELDSCONFIG = [
+  {
+    name: "image",
+    label: "Upload Profile",
+    type: "file",
+    placeholder: "Upload image",
+  },
+  {
+    name: "name",
+    label: "Department Name",
+    type: "text",
+    placeholder: "Enter name",
+  },
+  {
+    name: "email",
+    label: "Email",
+    type: "email",
+    placeholder: "Enter email",
+  },
+  {
+    name: "no_of_empolyee",
+    label: "No. of Empolyee",
+    type: "number",
+    placeholder: "Enter no of empolyee",
+  },
+  {
+    name: "creation_time",
+    label: "Created Date",
+    type: "date",
+    placeholder: "Enter creation time",
+  },
+];
+
+export { ROWS, ADD, EDIT, DEPARTMENTFIELDSCONFIG };
