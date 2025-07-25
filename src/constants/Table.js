@@ -1,6 +1,13 @@
-import { Action, Add, Attachment, Sort, View } from "../assets/images/svgs";
+import {
+  Action,
+  Add,
+  Attachment,
+  Delete,
+  Sort,
+  View,
+} from "../assets/images/svgs";
 
-export const actionButton = [
+const actionButton = [
   {
     name: "Sort",
     icon: Sort,
@@ -11,7 +18,7 @@ export const actionButton = [
   },
 ];
 
-export const TABLEACTIONBUTTONS = [
+const TABLEACTIONBUTTONS = [
   {
     name: "Attachment",
     icon: Attachment,
@@ -25,3 +32,13 @@ export const TABLEACTIONBUTTONS = [
     icon: Action,
   },
 ];
+
+const TABLEBUTTONPOPUP = ["Edit", "Delete"];
+
+const TABLEDELETEPOPUP = {
+  icon: Delete,
+  delete: "Delete",
+  makesureText: "Do you want to delete this",
+};
+
+export { actionButton, TABLEACTIONBUTTONS, TABLEBUTTONPOPUP, TABLEDELETEPOPUP };

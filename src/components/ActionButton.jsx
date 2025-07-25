@@ -1,24 +1,15 @@
-import { Button, useTheme } from "@mui/material";
+import { Button } from "@mui/material";
+
+import { actionButton } from "./styles";
 
 const ActionButton = ({ icon, onClick, text }) => {
-  const theme = useTheme();
-
   return (
     <Button
-      variant="outlined"
+      variant="containedInfo"
       endIcon={<img src={icon} alt={text} />}
       onClick={onClick}
       disableRipple
-      sx={{
-        background: theme.palette.secondary.light,
-        borderColor: "divider",
-        padding: "7.5px 20px",
-        lineHeight: "20px",
-        fontSize: "14px",
-        letterSpacing: "-0.015em",
-        fontWeight: 400,
-        color: theme.palette.action.selected,
-      }}
+      sx={actionButton}
     >
       {text}
     </Button>

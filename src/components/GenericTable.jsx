@@ -24,6 +24,7 @@ import { actionButton, TABLEACTIONBUTTONS } from "../constants/Table";
 import { Action } from "../assets/images/svgs";
 
 import {
+  checkbox,
   tableBodyCell,
   tableBoxContainer,
   tableContainer,
@@ -36,9 +37,7 @@ const GenericTable = ({
   rows,
   totalRows,
   loading = false,
-  onAddClick,
-  onSortClick,
-  onSearch,
+  clickHandler,
   employee = false,
 }) => {
   const [selected, setSelected] = useState([]);
@@ -69,7 +68,7 @@ const GenericTable = ({
   return (
     <Box sx={tableBoxContainer}>
       <Stack sx={tableStackContainer}>
-        <SearchInput onSearch={onSearch} />
+        <SearchInput onSearch={clickHandler.onSearch} />
 
         <Stack direction="row" spacing={1} justifyContent="flex-end">
           {actionButton.map((el, index) => {
@@ -78,7 +77,11 @@ const GenericTable = ({
                 icon={el.icon}
                 text={el.name}
                 key={index}
-                onClick={index === 0 ? onSortClick : onAddClick}
+                onClick={
+                  index === 0
+                    ? clickHandler.onSortClick
+                    : clickHandler.onAddClick
+                }
               />
             );
           })}
@@ -90,12 +93,16 @@ const GenericTable = ({
         <Table>
           <TableHead>
             <TableRow sx={{ bgcolor: "#F6F8FA" }}>
-              <TableCell padding="checkbox" sx={tableHeaderCell}>
-                <Checkbox
-                  checked={isAllSelected}
-                  onChange={(e) => handleSelectAll(e.target.checked)}
-                />
-              </TableCell>
+              {!employee && (
+                <TableCell padding="checkbox" sx={tableHeaderCell}>
+                  <Checkbox
+                    checked={isAllSelected}
+                    onChange={(e) => handleSelectAll(e.target.checked)}
+                    sx={checkbox}
+                    disableRipple
+                  />
+                </TableCell>
+              )}
 
               {columns.map((col) => (
                 <TableCell key={col.id} sx={tableHeaderCell}>
@@ -128,12 +135,16 @@ const GenericTable = ({
                 ))
               : paginatedRows.map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell padding="checkbox" sx={tableBodyCell}>
-                      <Checkbox
-                        checked={selected.includes(row.id)}
-                        onChange={() => handleSelectRow(row.id)}
-                      />
-                    </TableCell>
+                    {!employee && (
+                      <TableCell padding="checkbox" sx={tableBodyCell}>
+                        <Checkbox
+                          checked={selected.includes(row.id)}
+                          onChange={() => handleSelectRow(row.id)}
+                          sx={checkbox}
+                          disableRipple
+                        />
+                      </TableCell>
+                    )}
 
                     {columns.map((col) => (
                       <TableCell key={col.id} sx={tableBodyCell}>
@@ -148,11 +159,24 @@ const GenericTable = ({
                             <IconButton
                               sx={{
                                 padding: 0,
-                                margin: index === 1 ? "0px 12px" : 0,
+                                margin:
+                                  index === 1
+                                    ? { xs: "0px 8px", mdLarge: "0px 12px" }
+                                    : 0,
+                                borderRadius: 1,
+                              }}
+                              onClick={(e) => {
+                                clickHandler.onActionClick(e, row, index);
                               }}
                               key={index}
                             >
-                              <img src={el.icon} alt="Action" />
+                              <img
+                                src={el.icon}
+                                alt="Action"
+                                style={{
+                                  width: index !== 2 && "18px",
+                                }}
+                              />
                             </IconButton>
                           );
                         })}
@@ -161,8 +185,10 @@ const GenericTable = ({
                       <TableCell sx={tableBodyCell}>
                         <IconButton
                           sx={{
-                            padding: 0,
+                            padding: 1,
+                            borderRadius: 1,
                           }}
+                          onClick={(e) => clickHandler.onActionClick(e, row)}
                         >
                           <img src={Action} alt="Action" />
                         </IconButton>
