@@ -6,6 +6,12 @@ import { Box } from "@mui/material";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 
+import {
+  layoutChildrenContainer,
+  layoutContainer,
+  layoutMainContainer,
+} from "./styles";
+
 const drawerWidth = 240;
 
 const Layout = () => {
@@ -16,7 +22,7 @@ const Layout = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh", overflow: "hidden" }}>
+    <Box sx={layoutContainer}>
       <Sidebar
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}
@@ -24,26 +30,17 @@ const Layout = () => {
 
       <Box
         sx={{
-          flexGrow: 1,
-          display: "flex",
-          flexDirection: "column",
+          ...layoutChildrenContainer,
           width: `calc(100% - ${drawerWidth}px)`,
         }}
       >
         <Header onMenuClick={handleDrawerToggle} />
 
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            overflowY: "auto",
-            height: "calc(100vh - 70px)",
-          }}
-        >
+        <Box component="main" sx={layoutMainContainer}>
           <Outlet />
         </Box>
       </Box>
-    </Box>
+    </Box>  
   );
 };
 

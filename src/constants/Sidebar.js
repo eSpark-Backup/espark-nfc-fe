@@ -7,7 +7,7 @@ import {
   EmployeeActive,
 } from "../assets/images/svgs";
 
-export const NAVITEMS = {
+const NAVITEMS = {
   LINKS: [
     {
       label: "Dashboard",
@@ -16,13 +16,13 @@ export const NAVITEMS = {
       path: "/dashboard",
     },
     {
-      label: "Department",
+      label: "Departments",
       icon: Department,
       activeIcon: DepartmentActive,
       path: "/department",
     },
     {
-      label: "Employee",
+      label: "Employees",
       icon: Employee,
       activeIcon: EmployeeActive,
       path: "/employee",
@@ -31,7 +31,9 @@ export const NAVITEMS = {
   LOGOUT: "Logout",
 };
 
-export const HEADER = {
+const HEADER = {
   cooperative: "Cooperatives",
   admin: "Admin",
 };
+
+export { NAVITEMS, HEADER };

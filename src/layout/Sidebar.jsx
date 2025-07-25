@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import {
   Drawer,
@@ -11,6 +11,8 @@ import {
   Box,
   useTheme,
 } from "@mui/material";
+
+import SmallDialog from "../components/dialogs/SmallDialog";
 
 import { Logo } from "../assets/images/pngs";
 import { Logout } from "../assets/images/svgs";
@@ -35,6 +37,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
   const theme = useTheme();
 
   const [hoveredLabel, setHoveredLabel] = useState(null);
+  const [logoutDialog, setLogoutDialog] = useState(false);
 
   const renderLinks = () => (
     <List sx={linkListContainer}>
@@ -45,7 +48,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
         return (
           <ListItemButton
             key={label}
-            component={NavLink}
+            component={Link}
             to={path}
             onMouseEnter={() => setHoveredLabel(label)}
             onMouseLeave={() => setHoveredLabel(null)}
@@ -73,7 +76,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
           sx={logoutItemButton(theme)}
           disableRipple
           onClick={() => {
-            console.log("Logged out");
+            setLogoutDialog(true);
           }}
         >
           <ListItemIcon sx={logoutItemIcon}>
@@ -133,6 +136,8 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
       >
         {drawerContent}
       </Drawer>
+
+      <SmallDialog open={logoutDialog} setOpen={setLogoutDialog} logout />
     </>
   );
 };
