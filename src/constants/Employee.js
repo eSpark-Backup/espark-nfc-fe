@@ -8,16 +8,16 @@ import {
   User7,
 } from "../assets/images/pngs";
 
-export const ROWS = [
+const ROWS = [
   {
     id: 1,
     image: User1,
     name: "Savannah Nguyen",
     email: "Savannah Nguyen@gmail.com",
     department: "Marketing",
-    contact: "(307) 555-0133",
+    phone_number: "(307) 555-0133",
     age: "23",
-    joiningDate: "1/15/12",
+    joining_date: "1/15/12",
   },
   {
     id: 2,
@@ -25,9 +25,9 @@ export const ROWS = [
     name: "Cameron Williamson",
     email: "Cameron Williamson @gmail.com",
     department: "Human Resources",
-    contact: "(629) 555-0129",
+    phone_number: "(629) 555-0129",
     age: "23",
-    joiningDate: "9/23/16",
+    joining_date: "9/23/16",
   },
   {
     id: 3,
@@ -35,9 +35,9 @@ export const ROWS = [
     name: "Robert Fox",
     email: "Robert Fox@gmail.com",
     department: "Software Engineering",
-    contact: "(208) 555-0112",
+    phone_number: "(208) 555-0112",
     age: "23",
-    joiningDate: "11/7/16",
+    joining_date: "11/7/16",
   },
   {
     id: 4,
@@ -45,9 +45,9 @@ export const ROWS = [
     name: "Jenny Wilson",
     email: "Jenny Wilson@gmail.com",
     department: "Business Development",
-    contact: "(205) 555-0100",
+    phone_number: "(205) 555-0100",
     age: "23",
-    joiningDate: "2/11/12",
+    joining_date: "2/11/12",
   },
   {
     id: 5,
@@ -55,9 +55,9 @@ export const ROWS = [
     name: "Floyd Miles",
     email: "Floyd Miles@gmail.com",
     department: "DevOps",
-    contact: "(225) 555-0118",
+    phone_number: "(225) 555-0118",
     age: "23",
-    joiningDate: "6/21/19",
+    joining_date: "6/21/19",
   },
   {
     id: 6,
@@ -65,9 +65,9 @@ export const ROWS = [
     name: "Kathryn Murphy",
     email: "Kathryn Murphy@gmail.com",
     department: "Sales",
-    contact: "(252) 555-0126",
+    phone_number: "(252) 555-0126",
     age: "23",
-    joiningDate: "8/30/14",
+    joining_date: "8/30/14",
   },
   {
     id: 7,
@@ -75,8 +75,64 @@ export const ROWS = [
     name: "Guy Hawkins",
     email: "Guy Hawkins@gmail.com",
     department: "UX & UI",
-    contact: "(319) 555-0115",
+    phone_number: "(319) 555-0115",
     age: "23",
-    joiningDate: "4/21/12",
+    joining_date: "4/21/12",
   },
 ];
+
+const ADD = "add new employee";
+const EDIT = "edit";
+
+const EMPOLYEEFIELDSCONFIG = [
+  {
+    name: "image",
+    label: "Upload Profie Image",
+    type: "file",
+    placeholder: "Upload Profie",
+  },
+  {
+    name: "name",
+    label: "Employee Name",
+    type: "text",
+    placeholder: "Enter name",
+  },
+  {
+    name: "email",
+    label: "Email",
+    type: "email",
+    placeholder: "Enter email",
+  },
+  {
+    name: "department",
+    label: "Department name",
+    type: "dropdown",
+    placeholder: "Select department",
+  },
+  {
+    name: "phone_number",
+    label: "Phone Number",
+    type: "number",
+    placeholder: "Enter contact",
+  },
+  {
+    name: "age",
+    label: "Age",
+    type: "number",
+    placeholder: "Enter age",
+  },
+  {
+    name: "joining_date",
+    label: "Date of Joining",
+    type: "date",
+    placeholder: "Enter date of joining",
+  },
+  {
+    name: "url",
+    label: "Embeded URL",
+    type: "text",
+    placeholder: "Enter url",
+  },
+];
+
+export { ROWS, ADD, EDIT, EMPOLYEEFIELDSCONFIG };
