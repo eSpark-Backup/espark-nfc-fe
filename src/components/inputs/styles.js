@@ -1,15 +1,23 @@
-const container = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "12px",
+const input = { fontSize: "14px", lineHeight: "100%" };
+const fieldset = {
+  borderColor: "inherit !important",
+  boxShadow: "none",
+};
+const root = (error) => ({
+  borderColor: error ? "#DF1C41" : "#D0D5DD",
 
   "& input": {
+    ...input,
     height: "auto",
-    fontSize: "14px",
-    lineHeight: "100%",
     padding: "13.5px 16px",
   },
-};
+
+  "& fieldset": fieldset,
+});
+
+const container = (error) => ({
+  "& .MuiOutlinedInput-root": root(error),
+});
 
 const linkContainer = {
   display: "flex",
@@ -35,6 +43,58 @@ const searchInput = {
   "& fieldset": {
     borderColor: "#E2E4E9 !important",
   },
+
+  "@media (max-width:374px)": {
+    width: "100%",
+  },
 };
 
-export { container, linkContainer, link, searchInput };
+const iconButton = {
+  padding: 0,
+};
+
+const dateInput = (error) => ({
+  width: "100%",
+
+  "& .MuiPickersInputBase-root": {
+    padding: "0px 16px",
+    borderColor: error ? "#DF1C41" : "#D0D5DD",
+    "& fieldset": fieldset,
+  },
+
+  "& .MuiPickersSectionList-root": {
+    ...input,
+    padding: "13.5px 0px",
+    height: "48px",
+  },
+});
+
+const selectInputRoot = (error) => ({
+  ...root(error),
+  height: "48px",
+
+  "& .MuiSelect-select": {
+    ...input,
+    minHeight: "auto",
+  },
+});
+
+const menuItem = { fontSize: "14px", lineHeight: "100%", color: "#344054" };
+
+const inputPlaceholder = {
+  fontSize: "14px",
+  lineHeight: "100%",
+  color: "#98A2B3",
+};
+
+export {
+  container,
+  linkContainer,
+  link,
+  searchInput,
+  iconButton,
+  dateInput,
+  selectInputRoot,
+  menuItem,
+  inputPlaceholder,
+};

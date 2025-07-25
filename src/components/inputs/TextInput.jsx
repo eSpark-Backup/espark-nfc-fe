@@ -1,13 +1,21 @@
 import { Link } from "react-router-dom";
 import { Controller } from "react-hook-form";
 
-import { Box, TextField, InputLabel, InputAdornment } from "@mui/material";
+import {
+  Box,
+  TextField,
+  InputLabel,
+  InputAdornment,
+  Stack,
+  IconButton,
+} from "@mui/material";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-import { FORGET } from "../../constants/Login";
+import { LOGIN } from "../../constants/Login";
 
-import { container, link, linkContainer } from "./styles";
+import { container, iconButton, link, linkContainer } from "./styles";
+import { useState } from "react";
 
 const TextInput = ({
   control,
@@ -19,32 +27,40 @@ const TextInput = ({
   helperText,
   placeholder,
   inputStyles = {},
+  gap = 1,
 }) => {
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <Controller
       name={name}
       control={control}
       render={({ field }) => (
-        <Box
+        <Stack
+          gap={gap}
           sx={{
             ...inputStyles.container,
-            ...container,
-            marginTop: name === "password" ? "24px" : 0,
+            ...container(error),
           }}
         >
           <Box sx={linkContainer}>
-            <InputLabel>{label}</InputLabel>
+            <InputLabel sx={inputStyles.label}>{label}</InputLabel>
             {name === "password" && (
               <Link to={"/"} style={link}>
-                {FORGET}?
+                {LOGIN.forgot}?
               </Link>
             )}
           </Box>
 
           <TextField
             {...field}
-            type={type}
+            type={
+              name === "password" && showPassword
+                ? "text"
+                : name === "password" && !showPassword
+                ? "password"
+                : type
+            }
             variant="outlined"
             fullWidth
             error={!!error}
@@ -55,13 +71,29 @@ const TextInput = ({
               input: name === "password" && {
                 endAdornment: (
                   <InputAdornment position="start">
-                    <RemoveRedEyeOutlinedIcon />
+                    {showPassword ? (
+                      <IconButton
+                        disableRipple
+                        sx={iconButton}
+                        onClick={() => setShowPassword(false)}
+                      >
+                        <RemoveRedEyeOutlinedIcon />
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        disableRipple
+                        sx={iconButton}
+                        onClick={() => setShowPassword(true)}
+                      >
+                        <VisibilityOffOutlinedIcon />
+                      </IconButton>
+                    )}
                   </InputAdornment>
                 ),
               },
             }}
           />
-        </Box>
+        </Stack>
       )}
     />
   );

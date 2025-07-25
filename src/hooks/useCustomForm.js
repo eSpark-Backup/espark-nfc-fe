@@ -5,7 +5,7 @@ export const useCustomForm = (schema, defaultValues = {}) => {
   const methods = useForm({
     resolver: yupResolver(schema),
     defaultValues,
-    mode: "onTouched",
+    mode: "onSubmit",
   });
 
   return methods;
