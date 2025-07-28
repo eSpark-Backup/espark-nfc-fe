@@ -45,7 +45,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
   const renderLinks = () => (
     <List sx={linkListContainer}>
       {NAVITEMS.LINKS.map(({ label, icon, activeIcon, path }) => {
-        const isActive = location.pathname === path;
+        const isActive = location.pathname.startsWith(path);
         const isHovered = hoveredLabel === label;
 
         return (
