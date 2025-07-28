@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { Controller } from "react-hook-form";
 
 import {
@@ -12,9 +11,7 @@ import {
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-import { LOGIN } from "../../constants/Login";
-
-import { container, iconButton, link, linkContainer } from "./styles";
+import { container, iconButton, linkContainer } from "./styles";
 import { useState } from "react";
 
 const TextInput = ({
@@ -45,11 +42,6 @@ const TextInput = ({
         >
           <Box sx={linkContainer}>
             <InputLabel sx={inputStyles.label}>{label}</InputLabel>
-            {name === "password" && (
-              <Link to={"/"} style={link}>
-                {LOGIN.forgot}?
-              </Link>
-            )}
           </Box>
 
           <TextField
