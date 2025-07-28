@@ -1,10 +1,7 @@
 import * as yup from "yup";
 
-const emailValidation = yup
-  .string()
-  .trim()
-  .email("Enter a valid email")
-  .required("Email is required");
+const emailValidation = yup.string().trim().email("Enter a valid email");
+// .required("Email is required");
 
 const passwordValidation = yup
   .string()
@@ -12,9 +9,9 @@ const passwordValidation = yup
   .min(8, "Password must be at least 8 characters")
   .matches(/[a-z]/, "Must contain at least one lowercase letter")
   .matches(/[A-Z]/, "Must contain at least one uppercase letter")
-  .matches(/[0-9]/, "Must contain at least one number")
-  //  .matches(/[@$!%*?&]/, "Must contain at least one special character")
-  .required("Password is required");
+  .matches(/[0-9]/, "Must contain at least one number");
+//  .matches(/[@$!%*?&]/, "Must contain at least one special character")
+// .required("Password is required");
 
 const imageValidation = yup
   .mixed()

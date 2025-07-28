@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import {
   Drawer,
@@ -30,11 +30,14 @@ import {
   temporaryDrawerPaper,
   toolbar,
 } from "./styles";
+import { PATHS } from "../constants/Paths";
 
 const drawerWidth = 240;
 const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
-  const location = useLocation();
   const theme = useTheme();
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [hoveredLabel, setHoveredLabel] = useState(null);
   const [logoutDialog, setLogoutDialog] = useState(false);
@@ -103,6 +106,10 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
     </Box>
   );
 
+  const handleLogout = () => {
+    navigate(PATHS.home);
+  };
+
   return (
     <>
       <Drawer
@@ -137,7 +144,12 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
         {drawerContent}
       </Drawer>
 
-      <SmallDialog open={logoutDialog} setOpen={setLogoutDialog} logout />
+      <SmallDialog
+        open={logoutDialog}
+        setOpen={setLogoutDialog}
+        logout
+        handleLogout={handleLogout}
+      />
     </>
   );
 };

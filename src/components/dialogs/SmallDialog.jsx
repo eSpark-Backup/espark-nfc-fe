@@ -53,7 +53,11 @@ const SmallDialog = ({ open, setOpen, itemTitle, handleLogout, logout }) => {
             )}
           </IconButton>
 
-          <IconButton sx={smallDialogCrossButtonIcon}>
+          <IconButton
+            sx={smallDialogCrossButtonIcon}
+            onClick={handleClose}
+            disableRipple
+          >
             <img src={DIALOG.crossIcon} alt="Cross" />
           </IconButton>
         </Stack>
@@ -76,6 +80,7 @@ const SmallDialog = ({ open, setOpen, itemTitle, handleLogout, logout }) => {
               variant="outlined"
               onClick={handleClose}
               sx={smallDialogActionButton}
+              disableRipple
             >
               {DIALOG.cancel}
             </Button>
@@ -84,9 +89,9 @@ const SmallDialog = ({ open, setOpen, itemTitle, handleLogout, logout }) => {
               variant="containedError"
               sx={smallDialogActionButton}
               onClick={() => {
-                handleClose();
                 handleLogout();
               }}
+              disableRipple
             >
               {DIALOG.logoutTitle}
             </Button>
@@ -97,6 +102,10 @@ const SmallDialog = ({ open, setOpen, itemTitle, handleLogout, logout }) => {
             sx={{
               ...smallDialogActionButton,
               width: "100%",
+            }}
+            disableRipple
+            onClick={() => {
+              handleLogout();
             }}
           >
             {DIALOG.deleteTitle}

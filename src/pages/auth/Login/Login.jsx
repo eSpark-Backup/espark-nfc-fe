@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { Box, Typography } from "@mui/material";
 
 import GenericForm from "../../../components/GenericForm";
@@ -5,13 +7,15 @@ import GenericForm from "../../../components/GenericForm";
 import { loginFormSchema } from "../../../validations/schema";
 
 import { LOGINFIELDSCONFIG, LOGIN } from "../../../constants/Login";
+import { PATHS } from "../../../constants/Paths";
 
 import { backgroundImage, container, form } from "./styles";
 
 const Login = () => {
-  const handleFormSubmit = (data, methods) => {
-    console.log("Final Submitted:", data);
+  const navigate = useNavigate();
 
+  const handleFormSubmit = (data, methods) => {
+    navigate(PATHS.dashboard);
     methods.reset();
   };
 

@@ -8,16 +8,19 @@ import Department from "./pages/Department/Department";
 import Employee from "./pages/Employee/Employee";
 import Details from "./pages/Details/Details";
 
+import { PATHS } from "./constants/Paths";
+
 const AppRoutes = () => {
+  const { home, dashboard, department, employee, employee_detail } = PATHS;
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path={home} element={<Login />} />
 
       <Route element={<Layout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/department" element={<Department />} />
-        <Route path="/employee" element={<Employee />} />
-        <Route path="/employee-detail" element={<Details />} />
+        <Route path={dashboard} element={<Dashboard />} />
+        <Route path={department} element={<Department />} />
+        <Route path={employee} element={<Employee />} />
+        <Route path={employee_detail} element={<Details />} />
       </Route>
     </Routes>
   );
