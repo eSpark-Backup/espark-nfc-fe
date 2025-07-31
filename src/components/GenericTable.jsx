@@ -36,15 +36,17 @@ const GenericTable = ({
   columns,
   rows,
   totalRows,
+  page,
+  setPage,
+  rowsPerPage,
+  setRowsPerPage,
+  totalPages,
   loading = false,
   clickHandler,
   employee = false,
+  message,
 }) => {
   const [selected, setSelected] = useState([]);
-  const [rowsPerPage, setRowsPerPage] = useState(8);
-  const [page, setPage] = useState(1);
-
-  const totalPages = Math.ceil(totalRows / rowsPerPage);
 
   const isAllSelected = rows.length > 0 && selected.length === rows.length;
   const handleSelectAll = (checked) => {
@@ -60,15 +62,10 @@ const GenericTable = ({
     setSelected([]);
   }, [rows]);
 
-  const paginatedRows = rows.slice(
-    (page - 1) * rowsPerPage,
-    page * rowsPerPage
-  );
-
   return (
     <Box sx={tableBoxContainer}>
       <Stack sx={tableStackContainer}>
-        <SearchInput onSearch={clickHandler.onSearch} />
+        <SearchInput onSearch={clickHandler.onSearch} loading={loading} />
 
         <Stack direction="row" spacing={1} justifyContent="flex-end">
           {actionButton.map((el, index) => {
@@ -82,6 +79,7 @@ const GenericTable = ({
                     ? clickHandler.onSortClick
                     : clickHandler.onAddClick
                 }
+                loading={loading}
               />
             );
           })}
@@ -93,16 +91,17 @@ const GenericTable = ({
         <Table>
           <TableHead>
             <TableRow sx={{ bgcolor: "#F6F8FA" }}>
-              {!employee && (
+              {/*!employee && (
                 <TableCell padding="checkbox" sx={tableHeaderCell}>
                   <Checkbox
                     checked={isAllSelected}
                     onChange={(e) => handleSelectAll(e.target.checked)}
                     sx={checkbox}
                     disableRipple
+                    disabled={totalRows === 0}
                   />
                 </TableCell>
-              )}
+              ) */}
 
               {columns.map((col) => (
                 <TableCell key={col.id} sx={tableHeaderCell}>
@@ -116,11 +115,17 @@ const GenericTable = ({
 
           <TableBody>
             {loading
-              ? [...Array(rowsPerPage)].map((_, i) => (
+              ? [...Array(5)].map((_, i) => (
                   <TableRow key={i}>
-                    <TableCell padding="checkbox" sx={tableBodyCell}>
-                      <Skeleton variant="rectangular" width={20} height={20} />
-                    </TableCell>
+                    {/*!employee && (
+                      <TableCell padding="checkbox" sx={tableBodyCell}>
+                        <Skeleton
+                          variant="rectangular"
+                          width={20}
+                          height={20}
+                        />
+                      </TableCell>
+                    )*/}
 
                     {columns.map((col) => (
                       <TableCell key={col.id} sx={tableBodyCell}>
@@ -133,9 +138,9 @@ const GenericTable = ({
                     </TableCell>
                   </TableRow>
                 ))
-              : paginatedRows.map((row) => (
+              : rows?.map((row) => (
                   <TableRow key={row.id}>
-                    {!employee && (
+                    {/*!employee && (
                       <TableCell padding="checkbox" sx={tableBodyCell}>
                         <Checkbox
                           checked={selected.includes(row.id)}
@@ -144,7 +149,7 @@ const GenericTable = ({
                           disableRipple
                         />
                       </TableCell>
-                    )}
+                    )*/}
 
                     {columns.map((col) => (
                       <TableCell key={col.id} sx={tableBodyCell}>
@@ -163,7 +168,12 @@ const GenericTable = ({
                                   index === 1
                                     ? { xs: "0px 8px", mdLarge: "0px 12px" }
                                     : 0,
-                                borderRadius: 1,
+                                borderRadius: index !== 2 ? "50%" : 1,
+                                width: index !== 2 ? "23px" : "auto",
+                                height: index !== 2 ? "23px" : "auto",
+                                backgroundColor:
+                                  index !== 2 &&
+                                  "rgba(230, 237, 249, 1) !important",
                               }}
                               onClick={(e) => {
                                 clickHandler.onActionClick(e, row, index);
@@ -196,6 +206,18 @@ const GenericTable = ({
                     )}
                   </TableRow>
                 ))}
+
+            {!loading && rows.length === 0 && (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length + (employee ? 1 : 2)}
+                  align="center"
+                  sx={{ py: 4, fontSize: 16, color: "#888" }}
+                >
+                  {message}
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -208,6 +230,7 @@ const GenericTable = ({
         setRowsPerPage={setRowsPerPage}
         totalRows={totalRows}
         totalPages={totalPages}
+        loading={loading}
       />
     </Box>
   );

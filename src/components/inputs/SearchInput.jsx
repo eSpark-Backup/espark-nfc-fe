@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   InputAdornment,
   TextField,
@@ -9,24 +10,38 @@ import { Search } from "../../assets/images/svgs";
 
 import { searchInput } from "./styles";
 
-const SearchInput = ({ onSearch }) => {
+const SearchInput = ({ onSearch, loading }) => {
   const theme = useTheme();
   const isSmDown = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      onSearch?.(searchValue);
+    }, 300);
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchValue]);
 
   return (
     <TextField
       placeholder="Search..."
       size="small"
       fullWidth={isSmDown}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <img src={Search} alt="Search" />
-          </InputAdornment>
-        ),
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment position="start">
+              <img src={Search} alt="Search" />
+            </InputAdornment>
+          ),
+        },
       }}
       sx={searchInput}
-      onChange={(e) => onSearch?.(e.target.value)}
+      value={searchValue}
+      onChange={(e) => setSearchValue(e.target.value)}
+      disabled={loading}
     />
   );
 };

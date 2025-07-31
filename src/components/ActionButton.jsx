@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 
 import { actionButton } from "./styles";
 
-const ActionButton = ({ icon, onClick, text }) => {
+const ActionButton = ({ icon, onClick, text, loading }) => {
   return (
     <Button
       variant="containedInfo"
@@ -10,6 +10,7 @@ const ActionButton = ({ icon, onClick, text }) => {
       onClick={onClick}
       disableRipple
       sx={actionButton}
+      disabled={loading}
     >
       {text}
     </Button>

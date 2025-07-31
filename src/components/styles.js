@@ -4,15 +4,15 @@ const submitButton = {
 };
 
 // CARD
-const cardContainer = {
+const cardContainer = (loading) => ({
   display: "flex",
   gap: { xs: 3, sm: 5.5 },
-  p: { xs: "18px 21px", xl: "18px 29px" },
+  p: loading ? 0 : { xs: "18px 21px", xl: "18px 29px" },
   borderRadius: 1,
   border: 1,
   borderColor: "divider",
-  width: "100%",
-  maxWidth: { xs: "100%", xl: "85%" },
+  width: { xs: "100%", xl: "85%" },
+  height: { xs: "171px", xl: "171px" },
   justifyContent: "space-between",
   boxShadow: "none",
   transition: "box-shadow 0.3s ease-in-out",
@@ -23,13 +23,24 @@ const cardContainer = {
     boxShadow:
       "124px 126px 71px rgba(0, 0, 0, 0.01), 70px 71px 60px rgba(0, 0, 0, 0.02), 31px 32px 44px rgba(0, 0, 0, 0.04), 8px 8px 24px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)",
   },
-};
+
+  "@media (max-width:475px)": {
+    flexDirection: "column-reverse",
+    height: loading ? "220px" : "auto",
+    alignItems: "center",
+  },
+});
 
 const leftBoxContainer = {
   display: "flex",
   alignItems: "center",
   flexDirection: "column",
   placeItems: "baseline",
+
+  "@media (max-width:475px)": {
+    alignItems: "center",
+    width: "100%",
+  },
 };
 
 const leftBoxIconContainer = {
@@ -37,6 +48,10 @@ const leftBoxIconContainer = {
   width: { xs: "65px", xl: "75px" },
   height: { xs: "65px", xl: "75px" },
   mb: 1,
+
+  "@media (max-width:375px)": {
+    margin: "0px auto 8px",
+  },
 };
 
 const leftBoxSubtitle = {
@@ -44,16 +59,19 @@ const leftBoxSubtitle = {
   fontWeight: 400,
   color: "#1C1C1E",
   letterSpacing: "-0.01em",
-  marginTop: "2px",
+  marginTop: "8px",
 };
 
 const rightBoxContainer = {
   width: "232px",
-  maxWidth: "232px",
   borderRadius: 3,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+
+  "@media (max-width:475px)": {
+    height: "100px",
+  },
 };
 
 const rightBoxCount = {
@@ -85,7 +103,6 @@ const tableContainer = {
 };
 
 const tableHeaderCell = {
-  borderColor: "divider",
   color: "text.secondary",
   fontWeight: 400,
   fontSize: "12px",
@@ -106,7 +123,7 @@ const actionButton = {
   fontWeight: 400,
 
   ":hover": {
-    boxShadow: "0px 4px 20px rgba(0,0,0,0.1)", 
+    boxShadow: "0px 4px 20px rgba(0,0,0,0.1)",
   },
 };
 
@@ -117,7 +134,7 @@ const checkbox = {
     width: "19px",
     height: "19px",
   },
-};  
+};
 
 // PAGINATION
 const paginationContainer = {
@@ -188,11 +205,11 @@ const label = {
 };
 
 const formLayoutButton = {
-            fontWeight: 500,
-          fontSize: "18px",
-          lineHeight: "24px",
-          padding: "13px 12px",
-          textTransform: "capitalize",
+  fontWeight: 500,
+  fontSize: "18px",
+  lineHeight: "24px",
+  padding: "13px 12px",
+  textTransform: "capitalize",
 };
 
 // MENU
