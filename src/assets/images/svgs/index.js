@@ -37,11 +37,16 @@ import YouTube from "./youtube.svg";
 import Website from "./website.svg";
 // Other Icons
 import Acoustic from "./acoustic.svg";
+import AcousticMobile from "./acoustic-mobile.svg";
 import Action from "./action.svg";
 import Architectural from "./architectural.svg";
+import ArchitecturalMobile from "./architectural-mobile.svg";
 import DoorWindow from "./door-window.svg";
+import DoorWindowMobile from "./door-window-mobile.svg";
 import Interior from "./interior.svg";
+import InteriorMobile from "./interior-mobile.svg";
 import Outdoor from "./outdoor.svg";
+import OutdoorMobile from "./outdoor-mobile.svg";
 import Location from "./location.svg";
 import Logo from "./logo.svg";
 import DashboardActive from "./dashboard-active.svg";
@@ -87,11 +92,16 @@ export {
   Website,
   // Other Icons
   Acoustic,
+  AcousticMobile,
   Action,
   Architectural,
+  ArchitecturalMobile,
   DoorWindow,
+  DoorWindowMobile,
   Interior,
+  InteriorMobile,
   Outdoor,
+  OutdoorMobile,
   Location,
   Logo,
   DashboardActive,
