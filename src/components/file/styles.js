@@ -1,20 +1,24 @@
-const companyProfileContainer = (preview) => ({
+const companyProfileContainer = (preview, error) => ({
   width: "143px",
   height: "143px",
-  border: `5px ${preview ? "solid" : "dashed"} rgba(0, 0, 0, 0.13)`,
+  border: `2px ${preview ? "solid" : "dashed"} ${
+    error ? "#DF1C41" : "rgba(0, 0, 0, 0.13)"
+  }`,
   borderRadius: "50%",
   boxShadow: "inset 0px 0px 0px 11.2896px #FFFFFF",
   margin: "auto",
   padding: 0.5,
+  position: "relative",
 });
 
-const profileUploadContainer = {
+const profileUploadContainer = (edit) => ({
   width: "100%",
   height: "100%",
   borderRadius: "50%",
-  cursor: "pointer",
+  cursor: !edit ? "default" : "pointer",
   position: "relative",
-};
+  opacity: !edit ? "0.7" : "1",
+});
 
 const avatar = { width: "100%", height: "100%" };
 
@@ -32,10 +36,22 @@ const headingBoxIcon = { position: "absolute", opacity: 0.1, width: "50px" };
 
 const heading = { position: "relative", zIndex: 1, color: "#A2A6B0" };
 
-const profileContainer = (preview) => ({
+const filledEdit = {
+  width: "39px",
+  height: "39px",
+  position: "absolute",
+  right: '10px',
+  bottom: '-7px',
+  borderRadius: "50%",
+  backgroundColor: "#1C274C",
+};
+
+const profileContainer = (preview, error) => ({
   width: "100%",
   height: "98px",
-  border: `1px ${preview ? "solid" : "dashed"} #C6C8CD`,
+  border: `1px ${preview ? "solid" : "dashed"} ${
+    error ? "#DF1C41" : "rgba(0, 0, 0, 0.13)"
+  }`,
   borderRadius: 1,
 });
 
@@ -50,7 +66,6 @@ const profileAvatar = {
   },
 };
 
-
 export {
   companyProfileContainer,
   profileUploadContainer,
@@ -58,6 +73,7 @@ export {
   headingBox,
   headingBoxIcon,
   heading,
+  filledEdit,
   profileContainer,
   profileAvatar,
 };

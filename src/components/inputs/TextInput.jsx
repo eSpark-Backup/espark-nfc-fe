@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Controller } from "react-hook-form";
 
 import {
@@ -11,8 +13,9 @@ import {
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
+import { Edit } from "../../assets/images/svgs";
+
 import { container, iconButton, linkContainer } from "./styles";
-import { useState } from "react";
 
 const TextInput = ({
   control,
@@ -25,6 +28,10 @@ const TextInput = ({
   placeholder,
   inputStyles = {},
   gap = 1,
+  profile,
+  edit,
+  admin,
+  login,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -58,31 +65,52 @@ const TextInput = ({
             error={!!error}
             helperText={helperText}
             placeholder={placeholder}
-            value={value}
+            value={name === "password" && edit && admin ? "password" : value}
+            disabled={
+              name === "password" && edit && admin
+                ? true
+                : profile
+                ? !edit
+                : false
+            }
             slotProps={{
-              input: name === "password" && {
-                endAdornment: (
-                  <InputAdornment position="start">
-                    {showPassword ? (
-                      <IconButton
-                        disableRipple
-                        sx={iconButton}
-                        onClick={() => setShowPassword(false)}
-                      >
-                        <RemoveRedEyeOutlinedIcon />
-                      </IconButton>
-                    ) : (
-                      <IconButton
-                        disableRipple
-                        sx={iconButton}
-                        onClick={() => setShowPassword(true)}
-                      >
-                        <VisibilityOffOutlinedIcon />
-                      </IconButton>
-                    )}
-                  </InputAdornment>
-                ),
-              },
+              input:
+                (name === "password" && login) ||
+                (name === "password" && !edit && admin)
+                  ? {
+                      endAdornment: (
+                        <InputAdornment position="start">
+                          {showPassword ? (
+                            <IconButton
+                              disableRipple
+                              sx={iconButton}
+                              onClick={() => setShowPassword(false)}
+                            >
+                              <RemoveRedEyeOutlinedIcon />
+                            </IconButton>
+                          ) : (
+                            <IconButton
+                              disableRipple
+                              sx={iconButton}
+                              onClick={() => setShowPassword(true)}
+                            >
+                              <VisibilityOffOutlinedIcon />
+                            </IconButton>
+                          )}
+                        </InputAdornment>
+                      ),
+                    }
+                  : profile && edit
+                  ? {
+                      endAdornment: (
+                        <InputAdornment position="start">
+                          <Box>
+                            <Box component={"img"} src={Edit} />
+                          </Box>
+                        </InputAdornment>
+                      ),
+                    }
+                  : null,
             }}
           />
         </Stack>

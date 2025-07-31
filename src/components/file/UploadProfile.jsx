@@ -15,18 +15,22 @@ import {
   profileContainer,
   profileUploadContainer,
 } from "./styles";
+import { errorText } from "../inputs/styles";
 
 const UploadProfile = ({
   control,
   name,
+  value,
   label,
   error,
   helperText,
   setValue,
   inputStyles,
+  edit,
+  preview,
+  setPreview,
 }) => {
   const inputRef = useRef();
-  const [preview, setPreview] = useState();
 
   const handleClick = () => {
     inputRef.current.click();
@@ -58,7 +62,7 @@ const UploadProfile = ({
         >
           <InputLabel sx={inputStyles.label}>{label}</InputLabel>
 
-          <Box sx={profileContainer(preview)}>
+          <Box sx={profileContainer(preview || value, error)}>
             <input
               ref={inputRef}
               type="file"
@@ -68,8 +72,8 @@ const UploadProfile = ({
             />
 
             <Box sx={profileUploadContainer} onClick={handleClick}>
-              {preview ? (
-                <Avatar src={preview} sx={profileAvatar} />
+              {preview || value ? (
+                <Avatar src={preview || value} sx={profileAvatar} />
               ) : (
                 <Box sx={headingBox}>
                   <Box
@@ -91,13 +95,13 @@ const UploadProfile = ({
                 </Box>
               )}
             </Box>
-          </Box>
 
-          {!!error && (
-            <Typography color="error" fontSize={12} mt={1}>
-              {helperText}
-            </Typography>
-          )}
+            {!!error && (
+              <Typography color="error" sx={errorText}>
+                {helperText}
+              </Typography>
+            )}
+          </Box>
         </Stack>
       )}
     />
