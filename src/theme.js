@@ -174,8 +174,9 @@ const components = {
         },
 
         "&.Mui-disabled": {
-          backgroundColor: "#375DFB8A",
-          color: "#FCFCFD",
+          background:
+            "linear-gradient(180deg, rgba(55, 93, 251, 0.4) -74.48%, rgba(33, 55, 149, 0.4) 137.83%), rgba(21, 112, 239, 0.4)",
+          color: "rgba(252, 252, 253, 0.5)",
         },
       },
 
@@ -187,6 +188,16 @@ const components = {
       containedError: {
         backgroundColor: "#DF1C41",
         color: "#FFFFFF",
+
+        "&:hover": {
+          backgroundColor: "#C21736",
+          color: "#FFFFFF",
+        },
+
+        "&.Mui-disabled": {
+          backgroundColor: "#F4B7C2",
+          color: "#FFFFFF",
+        },
       },
 
       containedInfo: {
@@ -238,7 +249,7 @@ const components = {
     styleOverrides: {
       root: {
         borderRadius: 8,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: "#FFFFFF",
       },
     },
   },
