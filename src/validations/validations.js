@@ -1,61 +1,125 @@
 import * as yup from "yup";
 
-const emailValidation = yup.string().trim().email("Enter a valid email");
-// .required("Email is required");
+const objectIdRegex = /^[0-9a-fA-F]{24}$/;
 
-const passwordValidation = yup
+const emailValidation = yup
   .string()
   .trim()
-  .min(8, "Password must be at least 8 characters")
-  .matches(/[a-z]/, "Must contain at least one lowercase letter")
-  .matches(/[A-Z]/, "Must contain at least one uppercase letter")
-  .matches(/[0-9]/, "Must contain at least one number");
-//  .matches(/[@$!%*?&]/, "Must contain at least one special character")
-// .required("Password is required");
+  .email("Enter a valid email")
+  .lowercase()
+  .required("Email is required");
+
+const passwordValidation = (edit) =>
+  yup
+    .string()
+    .trim()
+    .when([], {
+      is: () => !edit,
+      then: (schema) =>
+        schema
+          .required("Password is required")
+          .matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[\S]{8,}$/,
+            "Password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces"
+          ),
+      otherwise: (schema) =>
+        schema.test(
+          "password-optional-check",
+          "Password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces",
+          (value) => {
+            if (!value) return true;
+            return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[\S]{8,}$/.test(
+              value
+            );
+          }
+        ),
+    });
+
+const codeValidation = yup
+  .string()
+  .required("Verification code is required")
+  .matches(/^\d{6}$/, "Code must be exactly 6 digits");
 
 const imageValidation = yup
   .mixed()
-  .required("Image is required")
-  .test("fileSize", "File size too large", (value) => {
-    return !value || (value && value.size <= 5 * 1024 * 1024);
+  .test("required", "Image is required", (value) => {
+    return value instanceof File || typeof value === "string";
   })
-  .test("fileType", "Unsupported file format", (value) => {
-    return (
-      !value ||
-      (value && ["image/jpeg", "image/png", "image/webp"].includes(value.type))
-    );
+  .test("fileSize", "File size too large", (value) => {
+    if (!value || !(value instanceof File)) return true;
+    return value.size <= 5 * 1024 * 1024;
+  })
+  .test("fileType", "Only JPEG, PNG, and WEBP formats are allowed", (value) => {
+    if (!value || !(value instanceof File)) return true;
+    return ["image/jpeg", "image/png", "image/webp"].includes(value.type);
   });
 
-const nameValidation = (label) =>
-  yup.string().required(`${label} name is required`);
+const nameValidation = (label = "Department") =>
+  yup
+    .string()
+    .trim()
+    .required(`${label} name is required`)
+    .max(100, "Name can be up to 100 characters")
+    .matches(
+      /[a-zA-Z]/,
+      "Department name must include at least one alphabet character"
+    );
+
+const companyNameValidation = yup
+  .string()
+  .required("Company name is required")
+  .max(150, "Company name must not exceed 150 characters");
+
+const departmentNameValidation = yup
+  .string()
+  .trim()
+  .required("Department name is required")
+  .max(100, "Name can be up to 100 characters")
+  .matches(
+    /[a-zA-Z]/,
+    "Department name must include at least one alphabet character"
+  );
 
 const websiteLinkValidation = yup
   .string()
+  .nullable()
+  .transform((value) => (value ? value.toLowerCase() : null))
   .url("Invalid website URL")
-  .required("Website link is required");
+  .notRequired();
 
 const establishedValidation = yup
   .string()
-  .matches(/^\d{4}$/, "Must be a valid 4-digit year")
-  .required("Established year is required");
+  .max(30, "Established field must not exceed 30 characters")
+  .notRequired();
 
-const addressValidation = yup.string().required("Address is required");
+const addressValidation = yup
+  .string()
+  .trim()
+  .required("Address is required")
+  .max(500, "Address must not exceed 500 characters");
 
-const buttonNameValidation = yup.string().required("Button name is required");
+const buttonNameValidation = yup
+  .string()
+  .max(50, "Button name must not exceed 50 characters")
+  .notRequired();
 
 const redirectedUrlValidation = yup
   .string()
+  .nullable()
+  .transform((value) => (value ? value.toLowerCase() : null))
   .url("Invalid redirect URL")
-  .required("Redirected URL is required");
+  .notRequired();
 
 const noOfEmpolyeesValidation = yup
   .number()
   .typeError("Must be a number")
-  .required("No. of employee is required")
   .min(1, "Must be at least 1");
 
 const dateTimeValidation = (label) =>
-  yup.date().typeError("Invalid date format").required(`${label} is required`);
+  yup
+    .date()
+    .required(`${label} date is required`)
+    .typeError("Invalid date format");
 
 const departmentValidation = yup.string().required("Department is required");
 
@@ -70,7 +134,7 @@ const ageValidation = yup
   .number()
   .typeError("Age must be a number")
   .min(18, "Minimum age is 18")
-  .max(99, "Maximum age is 99")
+  .max(100, "Maximum age is 100")
   .required("Age is required");
 
 const urlValidation = yup
@@ -78,11 +142,67 @@ const urlValidation = yup
   .url("Must be a valid URL")
   .required("URL is required");
 
+const designationValidation = yup
+  .string()
+  .trim()
+  .required("Designation is required")
+  .test(
+    "not-numeric-only",
+    "Designation cannot be only numbers",
+    (value) => !/^\d+$/.test(value || "")
+  );
+
+const departmentIdValidation = yup
+  .string()
+  .required("Department is required")
+  .matches(objectIdRegex, "Invalid department ID");
+
+const aboutMeValidation = yup
+  .string()
+  .trim()
+  .required("About employee is required")
+  .max(500, "About employee can be up to 500 characters");
+
+const facebookValidation = yup
+  .string()
+  .trim()
+  .lowercase()
+  .url("Invalid Facebook URL")
+  .nullable()
+  .notRequired();
+
+const twitterValidation = yup
+  .string()
+  .trim()
+  .lowercase()
+  .url("Invalid Twitter URL")
+  .nullable()
+  .notRequired();
+
+const instagramValidation = yup
+  .string()
+  .trim()
+  .lowercase()
+  .url("Invalid Instagram URL")
+  .nullable()
+  .notRequired();
+
+const youtubeValidation = yup
+  .string()
+  .trim()
+  .lowercase()
+  .url("Invalid YouTube URL")
+  .nullable()
+  .notRequired();
+
 export {
   emailValidation,
   passwordValidation,
+  codeValidation,
   imageValidation,
   nameValidation,
+  companyNameValidation,
+  departmentNameValidation,
   websiteLinkValidation,
   establishedValidation,
   addressValidation,
@@ -94,4 +214,11 @@ export {
   phoneNumberValidation,
   ageValidation,
   urlValidation,
+  designationValidation,
+  departmentIdValidation,
+  aboutMeValidation,
+  facebookValidation,
+  twitterValidation,
+  instagramValidation,
+  youtubeValidation,
 };
