@@ -9,29 +9,30 @@ export const departmentTableColumns = [
     render: (row) => (
       <Box display="flex" alignItems="center" gap={1}>
         <Avatar
-          src={row.image || "/default-avatar.png"}
-          alt={row.name}
+          src={row?.image?.image_url || "/default-avatar.png"}
+          alt={row?.name}
           sx={avatar}
         />
         <Box>
           <Typography variant="subtitle2" sx={name}>
-            {row.name}
+            {row?.name}
           </Typography>
 
-          <Typography sx={email}>{row.email}</Typography>
+          <Typography sx={email}>{row?.email}</Typography>
         </Box>
       </Box>
     ),
   },
   {
-    id: "no_of_empolyee",
+    id: "employee_count",
     label: "No of employees",
+    render: (row) => row?.employee_count ?? 0,
   },
   {
-    id: "creation_time",
+    id: "created_at",
     label: "Created Time",
     render: (row) =>
-      new Date(row.creation_time).toLocaleString("en-US", {
+      new Date(row?.created_at).toLocaleString("en-US", {
         year: "numeric",
         month: "short",
         day: "2-digit",
