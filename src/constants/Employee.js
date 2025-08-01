@@ -86,7 +86,7 @@ const EDIT = "edit";
 
 const EMPOLYEEFIELDSCONFIG = [
   {
-    name: "image",
+    name: "profile_image",
     label: "Upload Profie Image",
     type: "file",
     placeholder: "Upload Profie",
@@ -104,7 +104,7 @@ const EMPOLYEEFIELDSCONFIG = [
     placeholder: "Enter email",
   },
   {
-    name: "department",
+    name: "department_id",
     label: "Department name",
     type: "dropdown",
     placeholder: "Select department",
@@ -113,7 +113,7 @@ const EMPOLYEEFIELDSCONFIG = [
     name: "phone_number",
     label: "Phone Number",
     type: "number",
-    placeholder: "Enter contact",
+    placeholder: "Enter phone number",
   },
   {
     name: "age",
@@ -128,10 +128,46 @@ const EMPOLYEEFIELDSCONFIG = [
     placeholder: "Enter date of joining",
   },
   {
-    name: "url",
-    label: "Embeded URL",
+    name: "designation",
+    label: "Employee Designation",
     type: "text",
-    placeholder: "Enter url",
+    placeholder: "Enter employee designation",
+  },
+  {
+    name: "about_me",
+    label: "About Employee",
+    type: "textarea",
+    placeholder: "Enter employee details",
+  },
+  {
+    name: "address",
+    label: "Address",
+    type: "textarea",
+    placeholder: "Enter address",
+  },
+  {
+    name: "facebook",
+    label: "Facebook URL",
+    type: "text",
+    placeholder: "Enter facebook URL",
+  },
+  {
+    name: "twitter",
+    label: "Twitter URL",
+    type: "text",
+    placeholder: "Enter twitter URL",
+  },
+  {
+    name: "instagram",
+    label: "Instagram URL",
+    type: "text",
+    placeholder: "Enter instagram URL",
+  },
+  {
+    name: "youtube",
+    label: "Youtube URL",
+    type: "text",
+    placeholder: "Enter youtube URL",
   },
 ];
 

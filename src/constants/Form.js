@@ -1,6 +1,6 @@
 const FORM = {
-  add: "add",
-  save: "save",
+  add: "Add",
+  save: "Save",
   upload: "upload file",
 };
 
