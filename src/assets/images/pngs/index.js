@@ -1,7 +1,6 @@
 import Avatar from "./avatar.png";
 import DetailImage from "./detail.png";
 import LoginBG from "./login-bg.png";
-import Logo from "./logo.png";
 // Departments
 import BusinessDevelopment from "./bd.png";
 import Devops from "./devops.png";
