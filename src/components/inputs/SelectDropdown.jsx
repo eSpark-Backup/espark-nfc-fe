@@ -1,10 +1,23 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
 import { Controller } from "react-hook-form";
 
-import { InputLabel, MenuItem, Select, Stack } from "@mui/material";
+import {
+  Box,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 
-import { DEPARTMENTNAMES } from "../../constants/Form";
-
-import { inputPlaceholder, menuItem, selectInputRoot } from "./styles";
+import {
+  errorText,
+  inputPlaceholder,
+  menuItem,
+  selectInputRoot,
+} from "./styles";
 
 const SelectDropdown = ({
   control,
@@ -17,6 +30,20 @@ const SelectDropdown = ({
   inputStyles = {},
   gap = 1,
 }) => {
+  const { departments } = useSelector((state) => state.department);
+
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    if (departments) {
+      setOptions(
+        departments?.map((item) => {
+          return { label: item?.name, value: item?.id };
+        })
+      );
+    }
+  }, [departments]);
+
   return (
     <Controller
       name={name}
@@ -25,29 +52,46 @@ const SelectDropdown = ({
         <Stack gap={gap}>
           <InputLabel sx={inputStyles.label}>{label}</InputLabel>
 
-          <Select
-            {...field}
-            value={value}
-            displayEmpty
-            renderValue={(selected) =>
-              selected ? (
-                selected
+          <Box>
+            <Select
+              {...field}
+              value={value}
+              displayEmpty
+              renderValue={(selected) => {
+                const selectedOption = options.find(
+                  (opt) => opt.value === selected
+                );
+                return selectedOption ? (
+                  selectedOption.label
+                ) : (
+                  <span style={inputPlaceholder}>{placeholder}</span>
+                );
+              }}
+              slotProps={{
+                root: {
+                  sx: selectInputRoot(error),
+                },
+              }}
+            >
+              {options?.length ? (
+                options?.map((opt) => (
+                  <MenuItem key={opt.value} value={opt.value} sx={menuItem}>
+                    {opt.label}
+                  </MenuItem>
+                ))
               ) : (
-                <span style={inputPlaceholder}>{placeholder}</span>
-              )
-            }
-            slotProps={{
-              root: {
-                sx: selectInputRoot(error),
-              },
-            }}
-          >
-            {DEPARTMENTNAMES.map((opt) => (
-              <MenuItem key={opt.value} value={opt.value} sx={menuItem}>
-                {opt.label}
-              </MenuItem>
-            ))}
-          </Select>
+                <MenuItem key="default" value="" disabled sx={menuItem}>
+                  No departments found
+                </MenuItem>
+              )}
+            </Select>
+
+            {!!error && (
+              <Typography color="error" sx={errorText}>
+                {helperText}
+              </Typography>
+            )}
+          </Box>
         </Stack>
       )}
     />

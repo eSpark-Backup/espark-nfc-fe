@@ -36,7 +36,7 @@ const linkItemButton = (theme, isActive) => ({
   "& span": {
     lineHeight: "22.2px",
     fontSize: "17.32px",
-    fontWeight: isActive ? 500 : 400,
+    fontWeight: isActive ? 500 : 300,
   },
 
   ":hover": {
@@ -59,7 +59,7 @@ const logoutItemButton = (theme) => ({
   justifyContent: "flex-start",
   padding: "13px",
   color: theme.palette.error.main,
-  marginBottom: "13px",
+  margin: "0px 24px 13px 19px",
   backgroundColor: "transparent !important",
 
   "& span": {
@@ -139,6 +139,13 @@ const avatarContainer = {
   borderColor: "#000000",
   border: 1,
   marginRight: "4.5px",
+
+  "& img": {
+    borderRadius: "50%",
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
 };
 
 const typographyOrg = {

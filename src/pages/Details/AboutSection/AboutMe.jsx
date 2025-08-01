@@ -4,7 +4,7 @@ import { ABOUT } from "../../../constants/Details";
 
 import { sectionDetails, sectionDetailsBox, sectionHeading } from "../styles";
 
-const AboutMe = ({ data }) => {
+const AboutMe = ({ data, currentEmployee }) => {
   return (
     <>
       <Typography variant="h6" sx={sectionHeading}>
@@ -13,11 +13,7 @@ const AboutMe = ({ data }) => {
 
       <Box sx={sectionDetailsBox}>
         <Typography variant="body2" color="secondary.dark" sx={sectionDetails}>
-          {data?.details ||
-            `Lorem ipsum is a dummy or placeholder text commonly used in graphic
-          design, publishing, and web development.Lorem ipsum is a dummy or
-          placeholder text commonly used in graphic design, publishing, and web
-          development.`}
+          {currentEmployee?.about_me || "N/A"}
         </Typography>
       </Box>
     </>

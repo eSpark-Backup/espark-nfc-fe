@@ -72,10 +72,11 @@ const dateInput = (error) => ({
 const selectInputRoot = (error) => ({
   ...root(error),
   height: "48px",
+  width: "100%",
 
   "& .MuiSelect-select": {
     ...input,
-    minHeight: "auto",
+    minHeight: "auto !important",
   },
 });
 
@@ -85,6 +86,12 @@ const inputPlaceholder = {
   fontSize: "14px",
   lineHeight: "100%",
   color: "#98A2B3",
+};
+
+const errorText = {
+  fontSize: "12px",
+  lineHeight: 1.4,
+  margin: "3px 14px 0px",
 };
 
 export {
@@ -97,4 +104,5 @@ export {
   selectInputRoot,
   menuItem,
   inputPlaceholder,
+  errorText,
 };

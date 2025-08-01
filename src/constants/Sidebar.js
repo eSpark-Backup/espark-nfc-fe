@@ -19,13 +19,25 @@ const NAVITEMS = {
       label: "Departments",
       icon: Department,
       activeIcon: DepartmentActive,
-      path: "/department",
+      path: "/departments",
     },
     {
       label: "Employees",
       icon: Employee,
       activeIcon: EmployeeActive,
-      path: "/employee",
+      path: "/employees",
+    },
+    {
+      label: "Admins",
+      path: "/admins",
+    },
+    {
+      label: "Account",
+      path: "/manage-account",
+    },
+    {
+      label: "Reports",
+      path: "/reports",
     },
   ],
   LOGOUT: "Logout",

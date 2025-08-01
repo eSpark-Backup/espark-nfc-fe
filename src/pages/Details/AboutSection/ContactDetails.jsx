@@ -4,10 +4,14 @@ import { CONTACTDETAILS } from "../../../constants/Details";
 
 import { contactListContainer, contactListIcon, listItem } from "../styles";
 
-const     ContactDetails = () => {
+const ContactDetails = ({ currentEmployee }) => {
+  const displayDetails = CONTACTDETAILS.map((item) => ({
+    icon: item.icon,
+    details: currentEmployee[item.key] || "NA",
+  }));
   return (
     <Stack gap={1.375}>
-      {CONTACTDETAILS.map((el, i) => (
+      {displayDetails.map((el, i) => (
         <Stack key={i} sx={contactListContainer}>
           <Box sx={contactListIcon}>
             <Box component={"img"} src={el.icon} />

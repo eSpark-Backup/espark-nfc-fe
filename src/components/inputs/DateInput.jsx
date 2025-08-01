@@ -1,11 +1,11 @@
 import { Controller } from "react-hook-form";
 
-import { InputLabel, Stack } from "@mui/material";
+import { Box, InputLabel, Stack, Typography } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-import { dateInput } from "./styles";
+import { dateInput, errorText } from "./styles";
 
 const DateInput = ({
   control,
@@ -26,18 +26,26 @@ const DateInput = ({
         <Stack gap={gap}>
           <InputLabel sx={inputStyles.label}>{label}</InputLabel>
 
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              {...field}
-              value={value || null}
-              onChange={(val) => onChange(val)}
-              slotProps={{
-                textField: {
-                  sx: dateInput(error),
-                },
-              }}
-            />
-          </LocalizationProvider>
+          <Box>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                {...field}
+                value={value ? value : null}
+                onChange={(val) => onChange(val)}
+                slotProps={{
+                  textField: {
+                    sx: dateInput(error),
+                  },
+                }}
+              />
+            </LocalizationProvider>
+
+            {!!error && (
+              <Typography color="error" sx={errorText}>
+                {helperText}
+              </Typography>
+            )}
+          </Box>
         </Stack>
       )}
     />

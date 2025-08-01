@@ -2,15 +2,15 @@ import { Typography } from "@mui/material";
 
 import { department, title } from "./styles";
 
-const Title = ({ data }) => {
+const Title = ({ data, currentEmployee }) => {
   return (
     <>
       <Typography variant="h2" sx={title}>
-        {data?.title || "Jeremy Rose"}
+        {currentEmployee?.name || "N/A"}
       </Typography>
 
       <Typography sx={department}>
-        {data?.department || "Product Designer"}
+        {currentEmployee?.designation || "N/A"}
       </Typography>
     </>
   );

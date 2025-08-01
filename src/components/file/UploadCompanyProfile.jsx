@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 
 import { Avatar, Box, Typography } from "@mui/material";
 
-import { Upload } from "../../assets/images/svgs";
+import { FilledEdit, Upload } from "../../assets/images/svgs";
 
 import {
   avatar,
@@ -12,14 +12,17 @@ import {
   heading,
   headingBox,
   headingBoxIcon,
+  filledEdit,
 } from "./styles";
 
 const UploadCompanyProfile = ({
   control,
   name,
+  value,
   error,
   helperText,
   setValue,
+  edit,
 }) => {
   const inputRef = useRef();
   const [preview, setPreview] = useState();
@@ -47,7 +50,7 @@ const UploadCompanyProfile = ({
       control={control}
       render={({ field: { onChange } }) => (
         <Box>
-          <Box sx={companyProfileContainer(preview)}>
+          <Box sx={companyProfileContainer(preview, error)}>
             <input
               ref={inputRef}
               type="file"
@@ -56,9 +59,9 @@ const UploadCompanyProfile = ({
               onChange={(e) => handleFileChange(e, onChange)}
             />
 
-            <Box sx={profileUploadContainer} onClick={handleClick}>
-              {preview ? (
-                <Avatar src={preview} sx={avatar} />
+            <Box sx={profileUploadContainer(edit)} onClick={handleClick}>
+              {preview || value ? (
+                <Avatar src={preview || value} sx={avatar} />
               ) : (
                 <Box sx={headingBox}>
                   <Box
@@ -74,10 +77,16 @@ const UploadCompanyProfile = ({
                 </Box>
               )}
             </Box>
+
+            {edit && (
+              <Box sx={filledEdit} className="center">
+                <Box component={"img"} src={FilledEdit} />
+              </Box>
+            )}
           </Box>
 
           {!!error && (
-            <Typography color="error" fontSize={12} mt={1}>
+            <Typography color="error" fontSize={12} mt={1} textAlign={"center"}>
               {helperText}
             </Typography>
           )}

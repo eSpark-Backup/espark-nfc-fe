@@ -5,6 +5,7 @@ import {
   Select,
   Stack,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 
 import { LeftArrow, RightArrow } from "../assets/images/svgs";
@@ -28,8 +29,12 @@ const Pagination = ({
   setPage,
   page,
   totalRows,
-  totalPages
+  totalPages,
+  loading,
 }) => {
+  const isSmallScreen = useMediaQuery("(max-width:1000px)");
+  const maxVisiblePages = isSmallScreen ? 3 : 5; // You can customize thi
+
   return (
     <Stack sx={paginationContainer}>
       <Stack direction="row" alignItems="center" spacing={1.5}>
@@ -40,6 +45,7 @@ const Pagination = ({
           value={rowsPerPage}
           onChange={(e) => setRowsPerPage(Number(e.target.value))}
           sx={pageRowDropdown}
+          disabled={loading}
         >
           {PAGINTAION.count.map((num) => (
             <MenuItem
@@ -59,7 +65,7 @@ const Pagination = ({
       <Stack direction="row" spacing={1} alignItems="center">
         <IconButton
           onClick={() => setPage((p) => Math.max(p - 1, 1))}
-          disabled={page === 1}
+          disabled={page === 1 || loading}
           disableRipple
           sx={{
             ...pageChangeButton,
@@ -70,7 +76,7 @@ const Pagination = ({
           <Typography sx={pageChangeHeading}>{PAGINTAION.prev}</Typography>
         </IconButton>
 
-        {getPageNumbers(page, totalPages).map((p, i) =>
+        {getPageNumbers(page, totalPages, maxVisiblePages).map((p, i) =>
           typeof p === "number" ? (
             <Button
               key={i}
@@ -96,7 +102,7 @@ const Pagination = ({
 
         <IconButton
           onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-          disabled={page === totalPages}
+          disabled={page === totalPages || loading}
           disableRipple
           sx={{
             ...pageChangeButton,

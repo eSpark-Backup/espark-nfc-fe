@@ -90,13 +90,13 @@ const DEPARTMENTFIELDSCONFIG = [
     placeholder: "Enter email",
   },
   {
-    name: "no_of_empolyee",
+    name: "employee_count",
     label: "No. of Empolyee",
     type: "number",
     placeholder: "Enter no of empolyee",
   },
   {
-    name: "creation_time",
+    name: "created_at",
     label: "Created Date",
     type: "date",
     placeholder: "Enter creation time",

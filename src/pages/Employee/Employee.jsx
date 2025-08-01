@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 
 import { Alert, Snackbar } from "@mui/material";
 
@@ -9,20 +12,78 @@ import FormDialog from "../../components/dialogs/FormDialog";
 import SmallDialog from "../../components/dialogs/SmallDialog";
 import { employeeTableColumns } from "./tableColumns";
 
-import {
-  ADD,
-  EDIT,
-  EMPOLYEEFIELDSCONFIG,
-  ROWS,
-} from "../../constants/Employee";
-
 import { employeeFormSchema } from "../../validations/schema";
 
+import {
+  useAddEmployeeMutation,
+  useDeleteEmployeeMutation,
+  useGetEmployeeQuery,
+  useUpdateEmployeeMutation,
+} from "../../store/slices/employee/employeeApiSlice";
+
+import { setEmployees } from "../../store/slices/employee/employeeSlice";
+
+import {
+  handleCreateEmployeeMutation,
+  handleDeleteEmployeeMutation,
+  handleUpdateEmployeeMutation,
+} from "../../services/employee";
+
+import { ADD, EDIT, EMPOLYEEFIELDSCONFIG } from "../../constants/Employee";
+
+dayjs.extend(utc);
+
 const Employee = () => {
-  const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [searchText, setSearchText] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
+
+  const {
+    data: allEmployees,
+    isError,
+    error,
+    isLoading,
+    isSuccess,
+    isFetching,
+  } = useGetEmployeeQuery(
+    {
+      page,
+      limit: rowsPerPage,
+      sort_order: sortOrder,
+      search: searchText,
+    },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
+
+  const [addEmployee, { isLoading: addIsLoading }] = useAddEmployeeMutation();
+
+  const [updateEmployee, { isLoading: updateIsLoading }] =
+    useUpdateEmployeeMutation();
+
+  const [deleteEmployee, { isLoading: deleteIsLoading }] =
+    useDeleteEmployeeMutation();
+
+  const dispatch = useDispatch();
+  const { employees, loadingEmployees } = useSelector(
+    (state) => state.employee
+  );
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setEmployees(allEmployees?.employees || []));
+    }
+  }, [isSuccess, isLoading, allEmployees]);
+
+  useEffect(() => {
+    if (isError && error && error?.data?.error !== "Invalid or expired token") {
+      toast.error(error?.data?.error);
+    }
+  }, [isError, error]);
 
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
@@ -30,17 +91,37 @@ const Employee = () => {
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [rowDetails, setRowDetails] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [errora, setError] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [resetForm, setResetForm] = useState(null);
 
   useEffect(() => {
-    setData(ROWS);
-  }, []);
+    if (employees) {
+      setData(employees || []);
+    }
+  }, [employees]);
+
+  const handleSortClick = () => {
+    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+    setPage(1);
+  };
+
+  const handleSearch = (text) => {
+    setSearchText(text);
+    setPage(1);
+  };
 
   const handleClick = async (e, row, index) => {
     if (index === 0) {
-      await copyToClipboard(row.id);
-      //  setCopied(true);
+      await copyToClipboard(
+        `${window.location.origin}/employee-detail/${row.id}`
+      );
+      setCopied(true);
     } else if (index === 1) {
-      navigate("/employee-detail", { state: row });
+      window.open(
+        `${window.location.origin}/employee-detail/${row.id}`,
+        "_blank"
+      );
     } else {
       setRowDetails(row);
 
@@ -49,7 +130,7 @@ const Employee = () => {
     }
   };
 
-  const handleClickAdd = (row) => {
+  const handleClickAdd = () => {
     setOpen(true);
   };
 
@@ -58,17 +139,109 @@ const Employee = () => {
   };
 
   const handleClickEdit = () => {
+    const defaultVal = {
+      profile_image: rowDetails?.profile_image?.image_url,
+      name: rowDetails?.name,
+      email: rowDetails?.email,
+      department_id: rowDetails?.department_id?.id,
+      phone_number: rowDetails?.phone_number,
+      age: rowDetails?.age,
+      joining_date: rowDetails?.joining_date
+        ? dayjs.utc(rowDetails?.joining_date)
+        : null,
+      designation: rowDetails?.designation,
+      about_me: rowDetails?.about_me,
+      address: rowDetails?.address,
+      facebook: rowDetails?.social_links?.facebook,
+      twitter: rowDetails?.social_links?.twitter,
+      instagram: rowDetails?.social_links?.instagram,
+      youtube: rowDetails?.social_links?.youtube,
+    };
+
+    resetForm(defaultVal);
+
     setEdit(true);
     setOpen(true);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
+  const handleDelete = async () => {
+    const res = await handleDeleteEmployeeMutation(
+      rowDetails.id,
+      deleteEmployee,
+      setError,
+      handleCloseFormDialog
+    );
+
+    if (res && res.success) {
+      const updatedEmployees = employees?.filter(
+        (item) => item.id !== rowDetails.id
+      );
+
+      dispatch(setEmployees(updatedEmployees || []));
+    }
+  };
+
+  const handleSubmit = async (data, methods) => {
+    const payload = {
+      ...data,
+      joining_date: data.joining_date?.toISOString(),
+    };
+
+    if (edit) {
+      const res = await handleUpdateEmployeeMutation(
+        payload,
+        rowDetails.id,
+        updateEmployee,
+        setError,
+        methods,
+        handleCloseFormDialog
+      );
+
+      if (res && res.success) {
+        const updateEmp = employees?.map((item) => {
+          if (item.id === rowDetails.id) {
+            return res.employee;
+          }
+
+          return item;
+        });
+
+        dispatch(setEmployees(updateEmp));
+      }
+    } else {
+      const res = await handleCreateEmployeeMutation(
+        payload,
+        addEmployee,
+        setError,
+        methods,
+        handleCloseFormDialog
+      );
+
+      if (res && res.success) {
+        dispatch(setEmployees([res.employee, ...employees]));
+      }
+    }
   };
 
   const handleCloseFormDialog = () => {
     setOpen(false);
+    setDeleteDialog(false);
+
+    setTimeout(() => {
+      setEdit(false);
+      setRowDetails(null);
+      setPreview(null);
+      handleReset();
+    }, 100);
+  };
+
+  const handleReset = () => {
+    const emptyForm = EMPOLYEEFIELDSCONFIG.reduce((acc, field) => {
+      acc[field.name] = field.type === "date" ? null : "";
+      return acc;
+    }, {});
+
+    if (resetForm) resetForm(emptyForm);
   };
 
   const copyToClipboard = async (text) => {
@@ -79,20 +252,29 @@ const Employee = () => {
     }
   };
 
+  const totalRows = allEmployees?.total_count || 0;
+  const totalPages = allEmployees?.total_pages || 1;
+
   return (
     <>
       <GenericTable
         columns={employeeTableColumns}
         rows={data}
-        totalRows={data.length}
-        loading={loading}
+        totalRows={totalRows}
+        page={page}
+        setPage={setPage}
+        rowsPerPage={rowsPerPage}
+        setRowsPerPage={setRowsPerPage}
+        totalPages={totalPages}
+        loading={loadingEmployees || isLoading || isFetching}
         clickHandler={{
           onAddClick: handleClickAdd,
-          onSortClick: () => console.log("Sort clicked"),
-          onSearch: (text) => console.log("Search:", text),
+          onSortClick: handleSortClick,
+          onSearch: handleSearch,
           onActionClick: (e, row, index) => handleClick(e, row, index),
         }}
         employee
+        message={employees?.length === 0 ? allEmployees?.message : false}
       />
 
       <SlidePopover
@@ -115,9 +297,18 @@ const Employee = () => {
         edit={edit}
         rowDetails={rowDetails}
         handleClose={handleCloseFormDialog}
+        isLoading={addIsLoading || updateIsLoading}
+        preview={preview}
+        setPreview={setPreview}
+        exposeReset={(resetFn) => setResetForm(() => resetFn)}
       />
 
-      <SmallDialog open={deleteDialog} setOpen={setDeleteDialog} />
+      <SmallDialog
+        open={deleteDialog}
+        setOpen={setDeleteDialog}
+        handleDelete={handleDelete}
+        isLoading={deleteIsLoading}
+      />
 
       <Snackbar
         open={copied}
@@ -132,7 +323,7 @@ const Employee = () => {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          This is a success Alert inside a Snackbar!
+          Employee link copied
         </Alert>
       </Snackbar>
     </>

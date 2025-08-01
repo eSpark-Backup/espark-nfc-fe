@@ -35,6 +35,12 @@ const FormDialog = ({
   edit,
   rowDetails,
   handleClose,
+  isLoading,
+  preview,
+  setPreview,
+  exposeReset,
+  setSelectedDepartmentId,
+  admin
 }) => {
   return (
     <Dialog
@@ -87,6 +93,13 @@ const FormDialog = ({
           schema={schema}
           onSubmit={onSubmit}
           rowDetails={rowDetails}
+          isLoading={isLoading}
+          edit={edit}
+          preview={preview}
+          setPreview={setPreview}
+          exposeReset={exposeReset}
+          setSelectedDepartmentId={setSelectedDepartmentId}
+          admin={admin}
         />
       </DialogContent>
     </Dialog>

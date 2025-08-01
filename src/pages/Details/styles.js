@@ -1,17 +1,24 @@
-const mainContainer = {
-  padding: { xs: "30px 28px", lg: "35px 34px" },
+const mainContainer = (isMobile) => ({
+  padding: isMobile ? "26px 20px" : { xs: "30px 28px", lg: "35px 34px" },
+  height: isMobile ? "100vh" : "100%",
+  backgroundColor: isMobile ? "#E9E7E7" : "#ffffff",
+  overflowY: isMobile ? "auto" : "unset",
 
   "@media (max-width:374px)": {
-    padding: "25px 22px",
+    padding: "25px 20px",
   },
-};
+});
 
 const desktopImageBox = {
   width: { xs: "224px", mdS: "244px", mdLarge: "294px" },
   height: "222px",
 
   "& img": {
-    maxWidth: { xs: "224px", mdS: "244px", mdLarge: "294px" },
+    width: { xs: "224px", mdS: "244px", mdLarge: "294px" },
+    border: "1px solid #2684FC",
+    borderRadius: 1,
+    height: "100%",
+    objectFit: "cover",
   },
 };
 
@@ -38,6 +45,15 @@ const switchButtonsContainer = {
   width: {
     xs: "309px",
     smLarge: "371px",
+  },
+
+  "@media (max-width:374px)": {
+    width: "90%",
+    justifyContent: "space-between",
+
+    "& img": {
+      display: "none",
+    },
   },
 };
 
@@ -125,6 +141,33 @@ const gridContainer = {
   },
 };
 
+const ourSolutions = {
+  width: "45px",
+  height: "45px",
+  borderRadius: "50%",
+  backgroundColor: "rgba(39, 43, 49, 0.1)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+
+  "& img": {
+    width: "100%",
+    height: "100%",
+  },
+};
+
+const mobileTopContainer = {
+  backgroundColor: "#ffffff",
+  borderRadius: "9px",
+  padding: "30px 31px 27px 18px",
+};
+
+const mobileBottomContainer = {
+  backgroundColor: "#ffffff",
+  borderRadius: "9px",
+  padding: "54px 29px 50px 34px",
+};
+
 const mobileDetailsContainer = {
   flexDirection: "row",
   marginBottom: "25px",
@@ -146,27 +189,30 @@ const mobileImageBox = {
   height: "143px",
   borderRadius: "50%",
 
-  "@media (max-width:374px)": {
-    width: "133px",
+  "@media (max-width:400px)": {
+    width: "120px",
+    height: "120px",
   },
 
   "& img": {
     height: "100%",
-    borderRadius: "50%",
+    width: "100%",
     objectFit: "cover",
+    borderRadius: "50%",
   },
 };
 
 const mobileIconsContainer = {
   display: "flex",
   justifyContent: "center",
-  marginBottom: "17px",
+  marginTop: "25px",
 };
 
 const mobileButtonsContainer = {
   display: "flex",
   justifyContent: "center",
-  marginBottom: "30px",
+  position: "relative",
+  top: "-14px",
 };
 
 const footerContainer = { marginLeft: "9px", maxWidth: "450px" };
@@ -175,7 +221,7 @@ const footerButton = {
   padding: "10px 22px",
   fontSize: "12px",
   display: "block",
-  margin: { xs: "0px auto", sm: "0px 0px 0px auto" },
+  margin: { xs: "0px auto 22px" , sm: "0px 0px 22px auto" },
 };
 
 const footerLogo = { margin: { xs: "auto", sm: "0px" } };
@@ -218,6 +264,9 @@ export {
   contactListIcon,
   listItem,
   gridContainer,
+  ourSolutions,
+  mobileTopContainer,
+  mobileBottomContainer,
   mobileDetailsContainer,
   mobileTitleContainer,
   mobileImageBox,

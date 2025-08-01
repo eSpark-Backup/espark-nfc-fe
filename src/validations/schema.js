@@ -1,60 +1,89 @@
 import * as yup from "yup";
 
 import {
+  aboutMeValidation,
   addressValidation,
   ageValidation,
   buttonNameValidation,
+  codeValidation,
+  companyNameValidation,
   dateTimeValidation,
+  departmentNameValidation,
   departmentValidation,
+  designationValidation,
   emailValidation,
   establishedValidation,
+  facebookValidation,
   imageValidation,
+  instagramValidation,
   nameValidation,
   noOfEmpolyeesValidation,
   passwordValidation,
   phoneNumberValidation,
   redirectedUrlValidation,
-  urlValidation,
+  twitterValidation,
   websiteLinkValidation,
+  youtubeValidation,
 } from "./validations";
 
 const loginFormSchema = yup.object({
   email: emailValidation,
-  password: passwordValidation,
+  password: passwordValidation(),
+});
+
+const verifyEmailSchema = yup.object({
+  code: codeValidation,
 });
 
 const companyProfileFormSchema = yup.object({
-  image: imageValidation,
-  name: nameValidation("Company"),
+  profile_image: imageValidation,
+  company_name: companyNameValidation,
   website_link: websiteLinkValidation,
   established: establishedValidation,
   address: addressValidation,
   button_name: buttonNameValidation,
-  redirected_url: redirectedUrlValidation,
+  button_redirect_url: redirectedUrlValidation,
 });
 
 const departmentFormSchema = yup.object({
   image: imageValidation,
-  name: nameValidation("Department"),
+  name: departmentNameValidation,
   email: emailValidation,
-  no_of_empolyee: noOfEmpolyeesValidation,
-  creation_time: dateTimeValidation("Creation Time"),
+  employee_count: noOfEmpolyeesValidation,
+  created_at: dateTimeValidation("Creation"),
 });
 
 const employeeFormSchema = yup.object({
-  image: imageValidation,
+  profile_image: imageValidation,
   name: nameValidation("Employee"),
   email: emailValidation,
-  department: departmentValidation,
+  department_id: departmentValidation,
   phone_number: phoneNumberValidation,
   age: ageValidation,
-  joining_date: dateTimeValidation("Joining date"),
-  agurle: urlValidation,
+  joining_date: dateTimeValidation("Joining"),
+  designation: designationValidation,
+  about_me: aboutMeValidation,
+  address: addressValidation,
+  facebook: facebookValidation,
+  twitter: twitterValidation,
+  instagram: instagramValidation,
+  youtube: youtubeValidation,
 });
+
+const adminFormSchema = (edit) =>
+  yup.object({
+    profile_image: imageValidation,
+    full_name: nameValidation("Admin"),
+    email: emailValidation,
+    phone_number: phoneNumberValidation,
+    password: passwordValidation(edit),
+  });
 
 export {
   loginFormSchema,
+  verifyEmailSchema,
   companyProfileFormSchema,
   departmentFormSchema,
   employeeFormSchema,
+  adminFormSchema
 };
