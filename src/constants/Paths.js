@@ -1,7 +1,10 @@
 export const PATHS = {
   home: "/",
+  verify_email: "/verify-email",
   dashboard: "/dashboard",
-  department: "/department",
-  employee: "/employee",
-  employee_detail: "/employee-detail",
+  department: "/departments",
+  employee: "/employees",
+  admin: "/admins",
+  report: "/reports",
+  employee_detail: "/employee-detail/:id",
 };

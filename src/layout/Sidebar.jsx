@@ -11,11 +11,17 @@ import {
   Box,
   useTheme,
 } from "@mui/material";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
+import ViewListIcon from "@mui/icons-material/ViewList";
 
 import SmallDialog from "../components/dialogs/SmallDialog";
 
 import { Logo } from "../assets/images/pngs";
 import { Logout } from "../assets/images/svgs";
+
+import { handleLogoutUser } from "../utils/auth";
+import { getRole } from "../utils/tokenManager";
 
 import { NAVITEMS } from "../constants/Sidebar";
 
@@ -30,7 +36,6 @@ import {
   temporaryDrawerPaper,
   toolbar,
 } from "./styles";
-import { PATHS } from "../constants/Paths";
 
 const drawerWidth = 240;
 const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
@@ -45,6 +50,14 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
   const renderLinks = () => (
     <List sx={linkListContainer}>
       {NAVITEMS.LINKS.map(({ label, icon, activeIcon, path }) => {
+        if (
+          (label === "Admins" || label === "Reports") &&
+          getRole() !== "super-admin"
+        )
+          return null;
+
+        if (label === "Account" && getRole() !== "admin") return null;
+
         const isActive = location.pathname.startsWith(path);
         const isHovered = hoveredLabel === label;
 
@@ -59,10 +72,30 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
             sx={linkItemButton(theme, isActive)}
           >
             <ListItemIcon sx={linkItemIcon}>
-              <img
-                src={isActive || isHovered ? activeIcon : icon}
-                alt={label}
-              />
+              {label === "Admins" ? (
+                <AdminPanelSettingsIcon
+                  sx={{
+                    color: isActive || isHovered ? "#2684FC" : "inherit",
+                  }}
+                />
+              ) : label === "Account" ? (
+                <ManageAccountsOutlinedIcon
+                  sx={{
+                    color: isActive || isHovered ? "#2684FC" : "inherit",
+                  }}
+                />
+              ) : label === "Reports" ? (
+                <ViewListIcon
+                  sx={{
+                    color: isActive || isHovered ? "#2684FC" : "inherit",
+                  }}
+                />
+              ) : (
+                <img
+                  src={isActive || isHovered ? activeIcon : icon}
+                  alt={label}
+                />
+              )}
             </ListItemIcon>
 
             <ListItemText primary={label} />
@@ -107,7 +140,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
   );
 
   const handleLogout = () => {
-    navigate(PATHS.home);
+    handleLogoutUser(navigate);
   };
 
   return (
