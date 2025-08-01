@@ -21,7 +21,15 @@ import {
   smallDialogPaper,
 } from "./styles";
 
-const SmallDialog = ({ open, setOpen, itemTitle, handleLogout, logout }) => {
+const SmallDialog = ({
+  open,
+  setOpen,
+  itemTitle,
+  handleLogout,
+  logout,
+  handleDelete,
+  isLoading,
+}) => {
   const handleClose = () => {
     setOpen(false);
   };
@@ -78,7 +86,9 @@ const SmallDialog = ({ open, setOpen, itemTitle, handleLogout, logout }) => {
           <>
             <Button
               variant="outlined"
-              onClick={handleClose}
+              onClick={() => {
+                handleClose();
+              }}
               sx={smallDialogActionButton}
               disableRipple
             >
@@ -104,8 +114,9 @@ const SmallDialog = ({ open, setOpen, itemTitle, handleLogout, logout }) => {
               width: "100%",
             }}
             disableRipple
+            disabled={isLoading}
             onClick={() => {
-              handleLogout();
+              handleDelete();
             }}
           >
             {DIALOG.deleteTitle}

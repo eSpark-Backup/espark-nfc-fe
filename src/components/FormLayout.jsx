@@ -1,43 +1,50 @@
-import { Button, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 
 import GenericForm from "./GenericForm";
 
 import { FORM } from "../constants/Form";
 
-import { formLayoutButton, label } from "./styles";
+import { label } from "./styles";
 
 const FormLayout = ({
-  title,
-  editTitle,
-  detail,
   fieldsConfig,
   schema,
   onSubmit,
   edit,
   profile,
-  editBtn,
-  rowDetails,
+  defaultValues,
+  isLoading,
+  text,
+  preview,
+  setPreview,
+  exposeReset,
+  setSelectedDepartmentId,
+  admin
 }) => {
   return (
     <Stack
       sx={{
         gap: 3,
         padding: { xs: 2, sm: 3 },
-        paddingTop: '0px !important',
+        paddingTop: "0px !important",
       }}
     >
       <GenericForm
-        defaultValues={rowDetails}
+        defaultValues={defaultValues}
         fieldsConfig={fieldsConfig}
         schema={schema}
         onSubmit={onSubmit}
         inputStyles={{ label }}
         profile={profile}
+        submitText={profile ? text : edit ? FORM.save : FORM.add}
+        isLoading={isLoading}
+        edit={edit}
+        preview={preview}
+        setPreview={setPreview}
+        exposeReset={exposeReset}
+        setSelectedDepartmentId={setSelectedDepartmentId}
+        admin={admin}
       />
-
-      <Button type="submit" variant="contained" fullWidth sx={formLayoutButton}>
-        {edit ? FORM.save : profile ? editBtn : FORM.add}
-      </Button>
     </Stack>
   );
 };
