@@ -13,24 +13,28 @@ import { DetailImage } from "../../assets/images/pngs";
 
 import { desktopImageBox } from "./styles";
 
-const DetailsInDektop = ({ isAbout, setIsAbout, data }) => {
+const DetailsInDektop = ({ isAbout, setIsAbout, data, currentEmployee }) => {
   return (
-    <Stack flexDirection={"row"} gap={{ xs: 1.625, mdS: 2.625 }}>
+    <Stack
+      flexDirection={"row"}
+      gap={{ xs: 1.625, mdS: 2.625 }}
+      justifyContent={"center"}
+    >
       <Box sx={desktopImageBox}>
         <Box
           component={"img"}
-          src={data?.profile || DetailImage}
+          src={currentEmployee?.profile_image?.image_url || DetailImage}
           alt="Profile"
         />
       </Box>
 
       <Stack>
         <Box marginBottom={"37px"}>
-          <Title data={data} />
+          <Title data={data} currentEmployee={currentEmployee} />
         </Box>
 
         <Box marginBottom={"63px"}>
-          <SocialIcons />
+          <SocialIcons currentEmployee={currentEmployee} />
         </Box>
 
         <Box marginBottom={"30px"}>
@@ -38,11 +42,19 @@ const DetailsInDektop = ({ isAbout, setIsAbout, data }) => {
         </Box>
 
         <Box marginBottom={"19px"}>
-          {isAbout ? <AboutMe data={data} /> : <AboutCompany data={data} />}
+          {isAbout ? (
+            <AboutMe data={data} currentEmployee={currentEmployee} />
+          ) : (
+            <AboutCompany data={data} currentEmployee={currentEmployee} />
+          )}
         </Box>
 
         <Box marginBottom={"37px"}>
-          {isAbout ? <ContactDetails /> : <OurSolutions />}
+          {isAbout ? (
+            <ContactDetails currentEmployee={currentEmployee} />
+          ) : (
+            <OurSolutions />
+          )}
         </Box>
 
         <Footer isAbout={isAbout} />

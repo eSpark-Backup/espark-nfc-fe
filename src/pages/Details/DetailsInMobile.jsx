@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 
 import Title from "./Title";
 import SocialIcons from "./SocialIcons";
@@ -12,47 +12,65 @@ import Footer from "./Footer";
 import { DetailImage } from "../../assets/images/pngs";
 
 import {
+  mobileBottomContainer,
   mobileButtonsContainer,
   mobileDetailsContainer,
   mobileIconsContainer,
   mobileImageBox,
   mobileTitleContainer,
+  mobileTopContainer,
 } from "./styles";
 
-const DetailsInMobile = ({ isAbout, setIsAbout, data }) => {
+const DetailsInMobile = ({ isAbout, setIsAbout, data, currentEmployee, isMobile }) => {
   return (
     <>
-      <Stack sx={mobileDetailsContainer}>
-        <Box sx={mobileTitleContainer}>
-          <Title data={data} />
-        </Box>
+      <Box sx={mobileTopContainer}>
+        <Grid container alignItems={"center"}>
+          <Grid size={7}>
+            <Box sx={mobileTitleContainer}>
+              <Title data={data} currentEmployee={currentEmployee} />
+            </Box>
+          </Grid>
 
-        <Box sx={mobileImageBox}>
-          <Box
-            component={"img"}
-            src={data?.profile || DetailImage}
-            alt="Profile"
-          />
-        </Box>
-      </Stack>
+          <Grid size={5}>
+            <Box sx={mobileImageBox}>
+              <Box
+                component={"img"}
+                src={currentEmployee?.profile_image?.image_url || DetailImage}
+                alt="Profile"
+              />
+            </Box>
+          </Grid>
+        </Grid>
 
-      <Box sx={mobileIconsContainer}>
-        <SocialIcons />
+        <Box sx={mobileIconsContainer}>
+          <SocialIcons currentEmployee={currentEmployee} />
+        </Box>
       </Box>
 
       <Box sx={mobileButtonsContainer}>
         <SwitchButtons isAbout={isAbout} setIsAbout={setIsAbout} />
       </Box>
 
-      <Box marginBottom={"19px"}>
-        {isAbout ? <AboutMe data={data} /> : <AboutCompany data={data} />}
-      </Box>
+      <Box sx={mobileBottomContainer}>
+        <Box marginBottom={"25px"}>
+          {isAbout ? (
+            <AboutMe data={data} currentEmployee={currentEmployee} />
+          ) : (
+            <AboutCompany data={data} currentEmployee={currentEmployee} />
+          )}
+        </Box>
 
-      <Box marginBottom={"37px"}>
-        {isAbout ? <ContactDetails /> : <OurSolutions />}
-      </Box>
+        <Box marginBottom={isAbout ? "75px" : "5px"}>
+          {isAbout ? (
+            <ContactDetails currentEmployee={currentEmployee} />
+          ) : (
+            <OurSolutions isMobile={isMobile} />
+          )}
+        </Box>
 
-      <Footer isAbout={isAbout} />
+        <Footer isAbout={isAbout} />
+      </Box>
     </>
   );
 };

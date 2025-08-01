@@ -3,7 +3,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import { OURSOLUTION, OURSOLUTIONS } from "../../../constants/Details";
 
 import { gridContainer, listItem, sectionHeading } from "../styles";
-const OurSolutions = () => {
+const OurSolutions = ({ isMobile }) => {
   return (
     <>
       <Typography
@@ -22,7 +22,7 @@ const OurSolutions = () => {
               alignItems="center"
               gap={{ xs: 1.625, lg: 2.625 }}
             >
-              <Box component="img" src={el.icon} />
+              <Box component="img" src={isMobile ? el.iconMobile : el.icon} />
 
               <Typography sx={listItem}>{el.details}</Typography>
             </Box>

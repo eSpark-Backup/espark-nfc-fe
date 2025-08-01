@@ -1,16 +1,16 @@
 const ADD = "profile";
-const EDITHEADING = "edit profile";
-const EDITBTN = "edit";
+const EDITHEADING = "Edit profile";
+const EDITBTN = "Edit";
 
 const COMPANYFIELDSCONFIG = [
   {
-    name: "image",
+    name: "profile_image",
     label: "Upload Image",
     type: "file",
     placeholder: "Upload image",
   },
   {
-    name: "name",
+    name: "company_name",
     label: "Company Name",
     type: "text",
     placeholder: "Enter name",
@@ -29,8 +29,8 @@ const COMPANYFIELDSCONFIG = [
   },
   {
     name: "address",
-    label: "Adress",
-    type: "text",
+    label: "Address",
+    type: "textarea",
     placeholder: "Enter address",
   },
   {
@@ -40,7 +40,7 @@ const COMPANYFIELDSCONFIG = [
     placeholder: "Enter button name",
   },
   {
-    name: "redirected_url",
+    name: "button_redirect_url",
     label: "Button Redirect URL",
     type: "text",
     placeholder: "Enter redirected url",
