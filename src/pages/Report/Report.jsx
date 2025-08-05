@@ -6,6 +6,7 @@ import {
   Avatar,
   Typography,
   CircularProgress,
+  Box,
 } from "@mui/material";
 import { fetchReports } from "../../api/reports";
 
@@ -28,7 +29,19 @@ const Report = () => {
     loadReports();
   }, []);
 
-  if (loading) return <CircularProgress sx={{ m: 3 }} />;
+  if (loading)
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   if (teamMembers.length === 0)
     return <Typography sx={{ m: 3 }}>No reports available.</Typography>;
 
