@@ -50,12 +50,10 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
   const renderLinks = () => (
     <List sx={linkListContainer}>
       {NAVITEMS.LINKS.map(({ label, icon, activeIcon, path }) => {
-        if (
-          (label === "Admins" || label === "Reports") &&
-          getRole() !== "super-admin"
-        )
-          return null;
+        // Restrict Admins only to super-admin
+        if (label === "Admins" && getRole() !== "super-admin") return null;
 
+        // Restrict Account only to admin
         if (label === "Account" && getRole() !== "admin") return null;
 
         const isActive = location.pathname.startsWith(path);
@@ -74,21 +72,15 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
             <ListItemIcon sx={linkItemIcon}>
               {label === "Admins" ? (
                 <AdminPanelSettingsIcon
-                  sx={{
-                    color: isActive || isHovered ? "#2684FC" : "inherit",
-                  }}
+                  sx={{ color: isActive || isHovered ? "#2684FC" : "inherit" }}
                 />
               ) : label === "Account" ? (
                 <ManageAccountsOutlinedIcon
-                  sx={{
-                    color: isActive || isHovered ? "#2684FC" : "inherit",
-                  }}
+                  sx={{ color: isActive || isHovered ? "#2684FC" : "inherit" }}
                 />
               ) : label === "Reports" ? (
                 <ViewListIcon
-                  sx={{
-                    color: isActive || isHovered ? "#2684FC" : "inherit",
-                  }}
+                  sx={{ color: isActive || isHovered ? "#2684FC" : "inherit" }}
                 />
               ) : (
                 <img
