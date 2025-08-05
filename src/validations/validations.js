@@ -9,7 +9,7 @@ const emailValidation = yup
   .lowercase()
   .required("Email is required");
 
-const passwordValidation = (edit) =>
+const passwordValidation = (edit, confirm) =>
   yup
     .string()
     .trim()
@@ -17,15 +17,21 @@ const passwordValidation = (edit) =>
       is: () => !edit,
       then: (schema) =>
         schema
-          .required("Password is required")
+          .required(
+            `${confirm ? `${confirm} password` : "Password"} is required`
+          )
           .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[\S]{8,}$/,
-            "Password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces"
+            `${
+              confirm ? `${confirm} password` : "Password"
+            } must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces`
           ),
       otherwise: (schema) =>
         schema.test(
           "password-optional-check",
-          "Password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces",
+          `${
+            confirm ? `${confirm} password` : "Password"
+          } must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces`,
           (value) => {
             if (!value) return true;
             return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[\S]{8,}$/.test(
