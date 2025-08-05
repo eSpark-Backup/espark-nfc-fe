@@ -79,11 +79,17 @@ const adminFormSchema = (edit) =>
     password: passwordValidation(edit),
   });
 
+const changePasswordSchema = yup.object({
+  current_password: passwordValidation(),
+  new_password: passwordValidation("", 'New'),
+});
+
 export {
   loginFormSchema,
   verifyEmailSchema,
   companyProfileFormSchema,
   departmentFormSchema,
   employeeFormSchema,
-  adminFormSchema
+  adminFormSchema,
+  changePasswordSchema,
 };

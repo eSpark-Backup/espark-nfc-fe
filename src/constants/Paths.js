@@ -7,4 +7,5 @@ export const PATHS = {
   admin: "/admins",
   report: "/reports",
   employee_detail: "/employee-detail/:id",
+  manage_account: "/manage-account",
 };

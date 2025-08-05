@@ -1,11 +1,11 @@
 import Avatar from "./avatar.png";
 import DetailImage from "./detail.png";
 import LoginBG from "./login-bg.png";
-import Logo from "./logo.png";
 // Departments
 import BusinessDevelopment from "./bd.png";
 import Devops from "./devops.png";
 import HR from "./hr.png";
+import Logo from './Logo.png';
 import Marketing from "./marketing.png";
 import Sales from "./sales.png";
 import SoftwareEngineering from "./se.png";

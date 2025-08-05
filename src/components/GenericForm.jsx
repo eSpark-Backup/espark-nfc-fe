@@ -4,7 +4,7 @@ import { Button, Stack } from "@mui/material";
 
 import TextInput from "./inputs/TextInput";
 import UploadCompanyProfile from "./file/UploadCompanyProfile";
-import UploadProfile from "./File/UploadProfile";
+import UploadProfile from "./file/UploadProfile";
 import DateInput from "./inputs/DateInput";
 import SelectDropdown from "./inputs/SelectDropdown";
 import TextareaInput from "./inputs/TextareaInput";

@@ -226,7 +226,7 @@ const Admin = () => {
           onAddClick: handleClickAdd,
           onSortClick: handleSortClick,
           onSearch: handleSearch,
-           onActionClick: (e, row) => handleClick(e, row),  
+          onActionClick: (e, row) => handleClick(e, row),
         }}
         message={admins?.length === 0 ? allAdmins?.message : false}
       />
