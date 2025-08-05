@@ -1,4 +1,4 @@
-import { ADMIN } from "../../../api/apiEndPoints";
+import { ADMIN, CHANGE_PASSWORD } from "../../../api/apiEndPoints";
 
 import { apiSlice } from "../../../api/apiSlice";
 
@@ -61,6 +61,13 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+    changePassword: builder.mutation({
+      query: (body) => ({
+        url: `${CHANGE_PASSWORD}`,
+        method: "PUT",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -69,4 +76,5 @@ export const {
   useGetAdminQuery,
   useUpdateAdminMutation,
   useDeleteAdminMutation,
+  useChangePasswordMutation,
 } = adminApiSlice;

@@ -103,4 +103,19 @@ const ADMINTFIELDSCONFIG = [
   },
 ];
 
-export { ROWS, ADD, EDIT, ADMINTFIELDSCONFIG };
+const CHANGEPASSWORDFIELDS = [
+  {
+    name: "current_password",
+    label: "Current Password",
+    type: "password",
+    placeholder: "Enter current password",
+  },
+  {
+    name: "new_password",
+    label: "New Password",
+    type: "password",
+    placeholder: "Enter new password",
+  },
+];
+
+export { ROWS, ADD, EDIT, ADMINTFIELDSCONFIG, CHANGEPASSWORDFIELDS };

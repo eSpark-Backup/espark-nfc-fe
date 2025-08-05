@@ -110,8 +110,45 @@ const handleDeleteAdminMutation = async (
   }
 };
 
+const handleChangePasswordMutation = async (
+  body, // { current_password, new_password }
+  changePasswordFn, // mutation function like mutation.mutateAsync or changePassword().unwrap()
+  setError, // RHF setError
+  methods, // RHF methods
+  handleCloseFormDialog // optional: modal/dialog close
+) => {
+  try {
+    const res = await changePasswordFn(body).unwrap();
+
+    if (res.success) {
+      toast.success(res?.message || "Password updated successfully");
+
+      handleCloseFormDialog?.(); // optional
+
+      methods.reset();
+      return res;
+    }
+  } catch (error) {
+    const errors = error?.data;
+
+    if (typeof errors?.errors === "object") {
+      setError(errors?.errors);
+    } else {
+      toast.error(
+        errors?.message || errors?.error || errors || "Password update failed",
+        {
+          id: "global-error",
+        }
+      );
+    }
+
+    return null;
+  }
+};
+
 export {
   handleCreateAdminMutation,
   handleUpdateAdminMutation,
   handleDeleteAdminMutation,
+  handleChangePasswordMutation,
 };

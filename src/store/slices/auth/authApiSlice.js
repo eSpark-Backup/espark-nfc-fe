@@ -1,4 +1,4 @@
-import { LOGIN, VERIFY_EMAIL } from "../../../api/apiEndPoints";
+import { EMAIL_VERIFICATION, LOGIN, VERIFY_EMAIL } from "../../../api/apiEndPoints";
 import { apiSlice } from "../../../api/apiSlice";
 
 import { logOut, setCredentials } from "./authSlice";
@@ -45,8 +45,20 @@ export const authApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+    resendVerificationEmail: builder.mutation({
+      query: () => {
+        return {
+          url: EMAIL_VERIFICATION,
+          method: "POST",
+        };
+      },
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useVerifyEmailMutation } =
-  authApiSlice;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useVerifyEmailMutation,
+  useResendVerificationEmailMutation,
+} = authApiSlice;
