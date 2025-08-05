@@ -5,6 +5,8 @@ import {
   DepartmentActive,
   Employee,
   EmployeeActive,
+  Report,
+  ReportActive,
 } from "../assets/images/svgs";
 
 const NAVITEMS = {
@@ -37,6 +39,8 @@ const NAVITEMS = {
     },
     {
       label: "Reports",
+      icon: Report,
+      activeIcon: ReportActive,
       path: "/reports",
     },
   ],

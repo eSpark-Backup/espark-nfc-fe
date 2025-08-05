@@ -51,6 +51,8 @@ import Location from "./location.svg";
 import Logo from "./logo.svg";
 import DashboardActive from "./dashboard-active.svg";
 import Dashboard from "./dashboard.svg";
+import Report from "./Report.svg";
+import ReportActive from "./ReportActive.svg"
 
 export {
   // UI Icons
@@ -106,4 +108,6 @@ export {
   Logo,
   DashboardActive,
   Dashboard,
+  Report,
+  ReportActive,
 };

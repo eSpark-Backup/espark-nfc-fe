@@ -20,3 +20,6 @@ export const EMPLOYEE = '/employees';                           // Get all emplo
 
 // COMPANY PROFILE ENDPOINT
 export const COMPANY_PROFILE = '/company-profile';              // Get, update and delete company profile
+
+// REPORT ENDPOINT
+export const EMPLOYEE_REPORTS = '/employees/reports';
