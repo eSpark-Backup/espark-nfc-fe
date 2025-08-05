@@ -19,4 +19,7 @@ export const DEPARTMENT = "/departments"; // Get all department, update and dele
 export const EMPLOYEE = "/employees"; // Get all employees and update and delete employees by ID
 
 // COMPANY PROFILE ENDPOINT
-export const COMPANY_PROFILE = "/company-profile"; // Get, update and delete company profile
+export const COMPANY_PROFILE = '/company-profile';              // Get, update and delete company profile
+
+// REPORT ENDPOINT
+export const EMPLOYEE_REPORTS = '/employees/reports';
