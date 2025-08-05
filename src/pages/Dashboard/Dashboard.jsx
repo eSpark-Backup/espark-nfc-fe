@@ -6,33 +6,53 @@ import { Box, Grid } from "@mui/material";
 import InfoCard from "../../components/InfoCard";
 
 import { DASHBOARDITEMS } from "../../constants/Dashboard";
+import { useGetAllDepartmentsQuery, useGetAllEmployeesQuery } from "../../store/slices/employee/employeeApiSlice";
 
 const Dashboard = () => {
-  const { departments, loadingDepartments } = useSelector(
-    (state) => state.department
-  );
-  const { employees, loadingEmployees } = useSelector(
-    (state) => state.employee
-  );
+  const { loadingDepartments } = useSelector((state) => state.department);
+  const { loadingEmployees } = useSelector((state) => state.employee);
 
   const [loading, setLoading] = useState(
     loadingDepartments || loadingEmployees
   );
   const [items, setItems] = useState(DASHBOARDITEMS);
 
+  const {
+    data: departments,
+    isSuccess: isDepartmentSuccess,
+    isLoading: isDepartmentLoading,
+  } = useGetAllDepartmentsQuery(
+    {
+    }
+  );
+
+  const {
+    data: employees,
+    isSuccess: isEmployeeSuccess,
+    isLoading: isEmployeeLoading,
+  } = useGetAllEmployeesQuery(
+    {
+    }
+  );
+
   useEffect(() => {
     setLoading(loadingDepartments || loadingEmployees);
   }, [loadingDepartments, loadingEmployees]);
 
   useEffect(() => {
-    if (!loading) {
+    if (
+      !isDepartmentLoading &&
+      isDepartmentSuccess &&
+      !isEmployeeLoading &&
+      isEmployeeSuccess
+    ) {
       const updateItems = DASHBOARDITEMS.map((item, i) => {
         let value = 0;
 
         if (i === 0) {
-          value = Array.isArray(departments) ? departments.length : 0;
+          value = departments?.total_departments;
         } else {
-          value = Array.isArray(employees) ? employees.length : 0;
+          value = employees?.total_employees;
         }
 
         return { ...item, value };
@@ -40,7 +60,14 @@ const Dashboard = () => {
 
       setItems(updateItems);
     }
-  }, [departments, employees, loading]);
+  }, [
+    departments,
+    employees,
+    isDepartmentLoading,
+    isDepartmentSuccess,
+    isEmployeeSuccess,
+    isEmployeeLoading,
+  ]);
 
   return (
     <Box width="100%" padding={{ xs: "20px 18px", lg: "20px 24px" }}>

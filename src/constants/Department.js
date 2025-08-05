@@ -89,12 +89,12 @@ const DEPARTMENTFIELDSCONFIG = [
     type: "email",
     placeholder: "Enter email",
   },
-  {
-    name: "employee_count",
-    label: "No. of Empolyee",
-    type: "number",
-    placeholder: "Enter no of empolyee",
-  },
+  // {
+  //   name: "employee_count",
+  //   label: "No. of Empolyee",
+  //   type: "number",
+  //   placeholder: "Enter no of empolyee",
+  // },
   {
     name: "created_at",
     label: "Created Date",

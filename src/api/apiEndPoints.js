@@ -8,9 +8,9 @@ export const RESET_PASSWORD = "/reset-password"; // Reset admin password by supe
 export const RESTORE = "/restore"; // Restore soft-deleted admin
 
 // ADMIN ENDPOINTS
-export const EMAIL_VERIFICATION = '/admins/send-email-verification';   // Send email verification code to admin
-export const VERIFY_EMAIL = '/admins/verify-email';                    // Verify admin email using the code
-export const CHANGE_PASSWORD = '/admins/change-password';              // Change password for logged-in admin
+export const EMAIL_VERIFICATION = "/admins/send-email-verification"; // Send email verification code to admin
+export const VERIFY_EMAIL = "/admins/verify-email"; // Verify admin email using the code
+export const CHANGE_PASSWORD = "/admins/change-password"; // Change password for logged-in admin
 
 // DEPARTMENT ENDPOINT
 export const DEPARTMENT = "/departments"; // Get all department, update and delete department by ID
@@ -23,3 +23,6 @@ export const COMPANY_PROFILE = '/company-profile';              // Get, update a
 
 // REPORT ENDPOINT
 export const EMPLOYEE_REPORTS = '/employees/reports';
+// EMPLOYEES AND DEPARTMENT COUNT
+export const GET_ALL_EMPLOYEES = "/employees/count";
+export const GET_ALL_DEPARTMENTS = "/departments/count";

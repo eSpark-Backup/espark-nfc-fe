@@ -49,7 +49,7 @@ const departmentFormSchema = yup.object({
   image: imageValidation,
   name: departmentNameValidation,
   email: emailValidation,
-  employee_count: noOfEmpolyeesValidation,
+  // employee_count: noOfEmpolyeesValidation,
   created_at: dateTimeValidation("Creation"),
 });
 

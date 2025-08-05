@@ -1,4 +1,4 @@
-import { EMPLOYEE } from "../../../api/apiEndPoints";
+import { EMPLOYEE, GET_ALL_DEPARTMENTS, GET_ALL_EMPLOYEES } from "../../../api/apiEndPoints";
 
 import { apiSlice } from "../../../api/apiSlice";
 
@@ -68,6 +68,24 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+    getAllEmployees: builder.query({
+      query: ({ id }) => {
+        return {
+          // url: `${EMPLOYEE}/${id}`,
+          url : GET_ALL_EMPLOYEES,
+          method: "GET",
+        };
+      },
+    }),
+      getAllDepartments: builder.query({
+      query: ({ id }) => {
+        return {
+          // url: `${EMPLOYEE}/${id}`,
+          url: GET_ALL_DEPARTMENTS,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
@@ -77,4 +95,6 @@ export const {
   useGetEmployeeByIdQuery,
   useUpdateEmployeeMutation,
   useDeleteEmployeeMutation,
+  useGetAllDepartmentsQuery,
+  useGetAllEmployeesQuery
 } = employeeApiSlice;
