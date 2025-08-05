@@ -17,9 +17,11 @@ import { useVerifyEmailMutation } from "../../../store/slices/auth/authApiSlice"
 import { handleVerifyEmailMutation } from "../../../services/auth";
 
 import { backgroundImage, container, form } from "./styles";
+import { useDispatch } from "react-redux";
 
 const EmailVerify = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
 
@@ -31,7 +33,8 @@ const EmailVerify = () => {
       verifyEmail,
       setError,
       navigate,
-      methods
+      methods,
+      dispatch
     );
     if (!res) return;
   };

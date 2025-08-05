@@ -15,6 +15,7 @@ import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
 import { PATHS } from "../constants/Paths";
+import Accounts from "../pages/Accounts/Accounts";
 
 const AppRoutes = () => {
   const {
@@ -26,13 +27,13 @@ const AppRoutes = () => {
     admin,
     report,
     employee_detail,
+    manage_account
   } = PATHS;
 
   return (
     <Routes>
       <Route element={<PublicRoute />}>
         <Route path={home} element={<Login />} />
-        <Route path={verify_email} element={<EmailVerify />} />
       </Route>
 
       <Route element={<PrivateRoute />}>
@@ -42,10 +43,12 @@ const AppRoutes = () => {
           <Route path={employee} element={<Employee />} />
           <Route path={admin} element={<Admin />} />
           <Route path={report} element={<Report />} />
+          <Route path={manage_account} element={<Accounts />} />
         </Route>
       </Route>
 
       <Route path={employee_detail} element={<Details />} />
+      <Route path={verify_email} element={<EmailVerify />} />
     </Routes>
   );
 };
