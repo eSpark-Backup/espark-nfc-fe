@@ -28,7 +28,6 @@ const AppRoutes = () => {
     report,
     manage_account,
     employee_detail,
-    manage_account
   } = PATHS;
 
   return (
