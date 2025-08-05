@@ -15,6 +15,8 @@ const SlidePopover = ({
   setVisible,
   handleDelete,
   handleEdit,
+  handleResetPassword,
+  reset,
 }) => {
   const handleClose = () => {
     setVisible(false);
@@ -58,6 +60,27 @@ const SlidePopover = ({
           </Button>
 
           <Divider />
+
+          {reset && (
+            <>
+              <Button
+                variant="text"
+                onClick={() => {
+                  handleClose();
+                  handleResetPassword();
+                }}
+                disableRipple
+                sx={{
+                  ...slidePopoverButtons,
+                  color: "text.secondary",
+                }}
+              >
+                {TABLEBUTTONPOPUP[2]}
+              </Button>
+
+              <Divider />
+            </>
+          )}
 
           <Button
             variant="text"

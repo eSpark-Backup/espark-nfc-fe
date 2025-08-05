@@ -132,6 +132,15 @@ const Admin = () => {
     setOpen(true);
   };
 
+  const handleClickResetPassword = () => {
+    const defaultVal = {
+      new_password: rowDetails?.profile_image?.image_url,
+    };
+    resetForm(defaultVal);
+    setEdit(true);
+    // setOpen(true);
+  };
+
   const handleDelete = async () => {
     const res = await handleDeleteAdminMutation(
       rowDetails.id,
@@ -238,6 +247,8 @@ const Admin = () => {
         setVisible={setVisible}
         handleDelete={handleClickDelete}
         handleEdit={handleClickEdit}
+        handleResetPassword={handleClickResetPassword}
+        reset
       />
 
       <FormDialog
