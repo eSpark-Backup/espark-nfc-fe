@@ -4,7 +4,10 @@ const breakpoints = {
   values: {
     xs: 0,
     sm: 600,
+    smLarge: 680,
     md: 900,
+    mdS: 1000,
+    mdLarge: 1025,
     lg: 1200,
     xl: 1536,
   },
@@ -68,67 +71,86 @@ const palette = {
 };
 
 const typography = {
-  fontFamily: `'Roboto', 'Helvetica', 'Arial', sans-serif`,
+  fontFamily: "Poppins, sans-serif",
+
   h1: {
-    fontSize: "3rem",
-    lineHeight: 1.2,
-    fontWeight: 700,
+    fontSize: "1.75rem",
+    lineHeight: "100%",
+    fontWeight: 600,
   },
+
   h2: {
-    fontSize: "2.25rem",
-    lineHeight: 1.3,
-    fontWeight: 600,
+    fontSize: "1.5625rem",
+    lineHeight: "24px",
+    fontWeight: 500,
   },
+
   h3: {
-    fontSize: "1.875rem",
-    lineHeight: 1.4,
+    fontSize: "1.5rem",
+    lineHeight: "32px",
+    fontWeight: 500,
+  },
+
+  h4: {
+    fontSize: "1.3125rem",
+    lineHeight: "normal",
     fontWeight: 600,
   },
-  h4: {
-    fontSize: "1.5rem",
-    lineHeight: 1.5,
-    fontWeight: 500,
-  },
+
   h5: {
-    fontSize: "1.25rem",
-    lineHeight: 1.5,
-    fontWeight: 500,
-  },
-  h6: {
     fontSize: "1.125rem",
-    lineHeight: 1.5,
+    lineHeight: "24px",
     fontWeight: 500,
   },
-  subtitle1: {
-    fontSize: "1rem",
-    lineHeight: 1.6,
+
+  h6: {
+    fontSize: "1.0825rem",
+    lineHeight: "16.6px",
+    fontWeight: 600,
   },
-  subtitle2: {
+
+  subtitle1: {
     fontSize: "0.875rem",
     lineHeight: 1.6,
   },
+
+  subtitle2: {
+    fontSize: "0.8125rem",
+    lineHeight: 1.6,
+  },
+
   body1: {
     fontSize: "1rem",
     lineHeight: 1.6,
   },
+
   body2: {
     fontSize: "0.875rem",
     lineHeight: 1.6,
   },
+
   button: {
-    fontSize: "0.875rem",
+    fontSize: "1rem",
     fontWeight: 600,
     textTransform: "none",
-    lineHeight: 1.6,
+    lineHeight: "100%",
   },
+
   caption: {
     fontSize: "0.75rem",
     lineHeight: 1.4,
   },
+
   overline: {
     fontSize: "0.75rem",
     textTransform: "uppercase",
     lineHeight: 1.4,
+  },
+
+  tableName: {
+    fontSize: "0.825rem",
+    lineHeight: "19.6px",
+    fontWeight: 400,
   },
 };
 
@@ -136,17 +158,25 @@ const components = {
   MuiButton: {
     styleOverrides: {
       root: {
-        borderRadius: 10,
+        borderRadius: 8,
         textTransform: "none",
         boxShadow: "none",
       },
 
       containedPrimary: {
-        background: "linear-gradient(180deg, #375DFB -74.48%, #213795 137.83%)",
+        background:
+          "linear-gradient(180deg, #375DFB -74.48%, #213795 137.83%), #1570EF",
         color: "#FCFCFD",
+
+        "&:hover": {
+          background:
+            "linear-gradient(180deg, #2F4FDB -74.48%, #1B2D7F 137.83%), #1259D6",
+        },
+
         "&.Mui-disabled": {
-          backgroundColor: "#375DFB8A",
-          color: "#FCFCFD",
+          background:
+            "linear-gradient(180deg, rgba(55, 93, 251, 0.4) -74.48%, rgba(33, 55, 149, 0.4) 137.83%), rgba(21, 112, 239, 0.4)",
+          color: "rgba(252, 252, 253, 0.5)",
         },
       },
 
@@ -158,6 +188,16 @@ const components = {
       containedError: {
         backgroundColor: "#DF1C41",
         color: "#FFFFFF",
+
+        "&:hover": {
+          backgroundColor: "#C21736",
+          color: "#FFFFFF",
+        },
+
+        "&.Mui-disabled": {
+          backgroundColor: "#F4B7C2",
+          color: "#FFFFFF",
+        },
       },
 
       containedInfo: {
@@ -172,7 +212,7 @@ const components = {
     styleOverrides: {
       root: {
         color: "#344054",
-        fontSize: "0.875rem",
+        fontSize: "1rem",
       },
     },
   },
@@ -194,14 +234,22 @@ const components = {
   MuiTextField: {
     defaultProps: {
       variant: "outlined",
-      size: "small",
+    },
+  },
+
+  MuiOutlinedInput: {
+    styleOverrides: {
+      notchedOutline: {
+        borderColor: "#D0D5DD",
+      },
     },
   },
 
   MuiPaper: {
     styleOverrides: {
       root: {
-        borderRadius: 12,
+        borderRadius: 8,
+        backgroundColor: "#FFFFFF",
       },
     },
   },
