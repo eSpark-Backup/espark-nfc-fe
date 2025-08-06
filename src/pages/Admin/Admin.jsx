@@ -253,8 +253,8 @@ const Admin = () => {
     if (resetForm) resetForm(emptyForm);
   };
 
-  const totalRows = allAdmins?.total_count || 0;
-  const totalPages = allAdmins?.total_pages || 1;
+  const totalRows = allAdmins?.pagination?.total_count || 0;
+  const totalPages = allAdmins?.pagination?.total_pages || 1;
 
   return (
     <>

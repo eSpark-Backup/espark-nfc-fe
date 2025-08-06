@@ -215,8 +215,8 @@ const Department = () => {
     if (resetForm) resetForm(emptyForm);
   };
 
-  const totalRows = allDepartments?.total_count || 0;
-  const totalPages = allDepartments?.total_pages || 1;
+  const totalRows = allDepartments?.pagination?.total_count || 0;
+  const totalPages = allDepartments?.pagination?.total_pages || 1;
 
   return (
     <>
