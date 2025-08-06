@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import {
   Grid,
   Card,
@@ -8,28 +7,12 @@ import {
   CircularProgress,
   Box,
 } from "@mui/material";
-import { fetchReports } from "../../api/reports";
+import { useGetAllReportsQuery } from "../../store/slices/employee/employeeApiSlice";
 
 const Report = () => {
-  const [teamMembers, setTeamMembers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data: reports, isLoading, isError } = useGetAllReportsQuery({});
 
-  useEffect(() => {
-    const loadReports = async () => {
-      try {
-        const reports = await fetchReports();
-        setTeamMembers(reports);
-      } catch (error) {
-        console.error("🚨 Error fetching employee reports:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadReports();
-  }, []);
-
-  if (loading)
+  if (isLoading)
     return (
       <Box
         sx={{
@@ -42,7 +25,24 @@ const Report = () => {
         <CircularProgress />
       </Box>
     );
-  if (teamMembers.length === 0)
+
+  if (isError) {
+    return (
+      <Typography
+        sx={{
+          height: "100vh",
+          color: "red",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Failed to load reports.
+      </Typography>
+    );
+  }
+
+  if (!reports || reports?.data?.length === 0)
     return <Typography sx={{ m: 3 }}>No reports available.</Typography>;
 
   return (
@@ -51,7 +51,7 @@ const Report = () => {
       spacing={3}
       sx={{ p: 3, justifyContent: { xs: "center", md: "flex-start" } }}
     >
-      {teamMembers.map((member) => (
+      {reports?.data?.map((member) => (
         <Grid item xs={12} sm={6} md={3} key={member.id}>
           <Card
             sx={{

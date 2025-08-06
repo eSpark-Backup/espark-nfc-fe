@@ -1,4 +1,9 @@
-import { EMPLOYEE, GET_ALL_DEPARTMENTS, GET_ALL_EMPLOYEES } from "../../../api/apiEndPoints";
+import {
+  EMPLOYEE,
+  EMPLOYEE_REPORTS,
+  GET_ALL_DEPARTMENTS,
+  GET_ALL_EMPLOYEES,
+} from "../../../api/apiEndPoints";
 
 import { apiSlice } from "../../../api/apiSlice";
 
@@ -69,19 +74,25 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
       },
     }),
     getAllEmployees: builder.query({
-      query: ({ id }) => {
+      query: () => {
         return {
-          // url: `${EMPLOYEE}/${id}`,
-          url : GET_ALL_EMPLOYEES,
+          url: GET_ALL_EMPLOYEES,
           method: "GET",
         };
       },
     }),
-      getAllDepartments: builder.query({
-      query: ({ id }) => {
+    getAllDepartments: builder.query({
+      query: () => {
         return {
-          // url: `${EMPLOYEE}/${id}`,
           url: GET_ALL_DEPARTMENTS,
+          method: "GET",
+        };
+      },
+    }),
+    getAllReports: builder.query({
+      query: () => {
+        return {
+          url: EMPLOYEE_REPORTS,
           method: "GET",
         };
       },
@@ -96,5 +107,6 @@ export const {
   useUpdateEmployeeMutation,
   useDeleteEmployeeMutation,
   useGetAllDepartmentsQuery,
-  useGetAllEmployeesQuery
+  useGetAllEmployeesQuery,
+  useGetAllReportsQuery,
 } = employeeApiSlice;
