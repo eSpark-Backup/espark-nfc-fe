@@ -119,7 +119,7 @@ const GenericTable = ({
               <TableCell
                 sx={{
                   ...tableHeaderCell,
-                  textAlign: "center", 
+                  textAlign: "center",
                 }}
               >
                 Action

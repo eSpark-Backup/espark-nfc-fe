@@ -49,7 +49,7 @@ const Employee = () => {
     isFetching,
   } = useGetEmployeeQuery(
     {
-      page,
+      page: page,
       limit: rowsPerPage,
       sort_order: sortOrder,
       search: searchText,
@@ -253,8 +253,8 @@ const Employee = () => {
     }
   };
 
-  const totalRows = allEmployees?.total_count || 0;
-  const totalPages = allEmployees?.total_pages || 1;
+  const totalRows = allEmployees?.pagination?.total_count || 0;
+  const totalPages = allEmployees?.pagination?.total_pages || 1;
 
   return (
     <>
