@@ -102,14 +102,28 @@ const GenericTable = ({
                   />
                 </TableCell>
               ) */}
-
               {columns.map((col) => (
-                <TableCell key={col.id} sx={tableHeaderCell}>
+                <TableCell
+                  key={col.id}
+                  sx={{
+                    ...tableHeaderCell,
+                    ...(["employee_count", "created_at"].includes(col.id) && {
+                      textAlign: "center",
+                    }),
+                  }}
+                >
                   {col.label}
                 </TableCell>
               ))}
 
-              <TableCell sx={tableHeaderCell}>Action</TableCell>
+              <TableCell
+                sx={{
+                  ...tableHeaderCell,
+                  textAlign: "center", 
+                }}
+              >
+                Action
+              </TableCell>
             </TableRow>
           </TableHead>
 
@@ -152,7 +166,17 @@ const GenericTable = ({
                     )*/}
 
                     {columns.map((col) => (
-                      <TableCell key={col.id} sx={tableBodyCell}>
+                      <TableCell
+                        key={col.id}
+                        sx={{
+                          ...tableBodyCell,
+                          ...(["employee_count", "created_at"].includes(
+                            col.id
+                          ) && {
+                            textAlign: "center",
+                          }),
+                        }}
+                      >
                         {col.render ? col.render(row) : row[col.id]}
                       </TableCell>
                     ))}
@@ -192,7 +216,13 @@ const GenericTable = ({
                         })}
                       </TableCell>
                     ) : (
-                      <TableCell sx={tableBodyCell}>
+                      <TableCell
+                        sx={{
+                          ...tableBodyCell,
+                          textAlign: "center",
+                          verticalAlign: "middle",
+                        }}
+                      >
                         <IconButton
                           sx={{
                             padding: 1,
