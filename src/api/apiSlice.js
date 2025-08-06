@@ -8,7 +8,7 @@ import { navigate } from "../utils/navigateService";
 import { handleLogoutUser } from "../utils/auth";
 import { getToken } from "../utils/tokenManager";
 
-const baseURL = import.meta.env.VITE_API_URL;
+const baseURL = import.meta.env.VITE_API_URL || "https://nfc-be.stg.esparkconsultants.com/api";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
