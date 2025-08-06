@@ -1,7 +1,5 @@
 import { useState } from "react";
-
 import { Controller } from "react-hook-form";
-
 import {
   Box,
   TextField,
@@ -12,9 +10,7 @@ import {
 } from "@mui/material";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-
 import { Edit } from "../../assets/images/svgs";
-
 import { container, iconButton, linkContainer } from "./styles";
 
 const TextInput = ({
@@ -35,6 +31,8 @@ const TextInput = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const isPasswordField = name === "password" || name === "new_password";
+
   return (
     <Controller
       name={name}
@@ -54,9 +52,9 @@ const TextInput = ({
           <TextField
             {...field}
             type={
-              name === "password" && showPassword
+              isPasswordField && showPassword
                 ? "text"
-                : name === "password" && !showPassword
+                : isPasswordField
                 ? "password"
                 : type
             }
@@ -65,18 +63,14 @@ const TextInput = ({
             error={!!error}
             helperText={helperText}
             placeholder={placeholder}
-            value={name === "password" && edit && admin ? "password" : value}
+            value={isPasswordField && edit && admin ? "password" : value}
             disabled={
-              name === "password" && edit && admin
-                ? true
-                : profile
-                ? !edit
-                : false
+              isPasswordField && edit && admin ? true : profile ? !edit : false
             }
             slotProps={{
               input:
-                (name === "password" && login) ||
-                (name === "password" && !edit && admin)
+                (isPasswordField && login) ||
+                (isPasswordField && !edit && admin)
                   ? {
                       endAdornment: (
                         <InputAdornment position="start">

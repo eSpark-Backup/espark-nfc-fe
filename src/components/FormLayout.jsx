@@ -14,12 +14,13 @@ const FormLayout = ({
   profile,
   defaultValues,
   isLoading,
+  reset,
   text,
   preview,
   setPreview,
   exposeReset,
   setSelectedDepartmentId,
-  admin
+  admin,
 }) => {
   return (
     <Stack
@@ -36,7 +37,7 @@ const FormLayout = ({
         onSubmit={onSubmit}
         inputStyles={{ label }}
         profile={profile}
-        submitText={profile ? text : edit ? FORM.save : FORM.add}
+        submitText={reset || profile ? text : edit ? FORM.save : FORM.add}
         isLoading={isLoading}
         edit={edit}
         preview={preview}

@@ -9,13 +9,14 @@ import FormDialog from "../../components/dialogs/FormDialog";
 import SmallDialog from "../../components/dialogs/SmallDialog";
 import { adminTableColumns } from "./tableColumns";
 
-import { adminFormSchema } from "../../validations/schema";
+import { adminFormSchema, resetPasswordSchema } from "../../validations/schema";
 
 import {
   useAddAdminMutation,
   useDeleteAdminMutation,
   useGetAdminQuery,
   useUpdateAdminMutation,
+  useResetPasswordMutation,
 } from "../../store/slices/admin/adminApiSlice";
 
 import { setAdmins } from "../../store/slices/admin/adminSlice";
@@ -23,10 +24,17 @@ import { setAdmins } from "../../store/slices/admin/adminSlice";
 import {
   handleCreateAdminMutation,
   handleDeleteAdminMutation,
+  handleResetPasswordMutation,
   handleUpdateAdminMutation,
 } from "../../services/admin";
 
-import { ADMINTFIELDSCONFIG, ADD, EDIT } from "../../constants/Admin";
+import {
+  ADMINTFIELDSCONFIG,
+  ADD,
+  EDIT,
+  RESETPASSWORD,
+  RESETPASSWORDFIELDSCONFIG,
+} from "../../constants/Admin";
 
 const Admin = () => {
   const [page, setPage] = useState(1);
@@ -61,6 +69,9 @@ const Admin = () => {
   const [deleteAdmin, { isLoading: deleteIsLoading }] =
     useDeleteAdminMutation();
 
+  const [resetPassword, { isLoading: resetIsLoading }] =
+    useResetPasswordMutation();
+
   const dispatch = useDispatch();
   const { admins, loadingAdmins } = useSelector((state) => state.admin);
 
@@ -80,6 +91,7 @@ const Admin = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openResetDialog, setOpenResetDialog] = useState(false);
   const [edit, setEdit] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [rowDetails, setRowDetails] = useState(null);
@@ -134,11 +146,10 @@ const Admin = () => {
 
   const handleClickResetPassword = () => {
     const defaultVal = {
-      new_password: rowDetails?.profile_image?.image_url,
+      new_password: "",
     };
     resetForm(defaultVal);
-    setEdit(true);
-    // setOpen(true);
+    setOpenResetDialog(true);
   };
 
   const handleDelete = async () => {
@@ -195,10 +206,36 @@ const Admin = () => {
     }
   };
 
+  const handleResetPasswordSubmit = async (data, methods) => {
+    const payload = {
+      id: rowDetails?.id,
+      body: { new_password: data.new_password },
+    };
+
+    const res = await handleResetPasswordMutation(
+      payload,
+      resetPassword,
+      methods.setError,
+      methods,
+      handleCloseResetPasswordDialog
+    );
+  };
+
   const handleCloseFormDialog = () => {
     setOpen(false);
     setDeleteDialog(false);
 
+    setTimeout(() => {
+      setEdit(false);
+      setRowDetails(null);
+      setPreview(null);
+      handleReset();
+    }, 100);
+  };
+
+  const handleCloseResetPasswordDialog = () => {
+    setOpenResetDialog(false);
+    setDeleteDialog(false);
     setTimeout(() => {
       setEdit(false);
       setRowDetails(null);
@@ -267,6 +304,24 @@ const Admin = () => {
         setPreview={setPreview}
         exposeReset={(resetFn) => setResetForm(() => resetFn)}
         admin
+      />
+
+      <FormDialog
+        open={openResetDialog}
+        setOpen={setOpenResetDialog}
+        ADD={RESETPASSWORD}
+        fieldsConfig={RESETPASSWORDFIELDSCONFIG}
+        schema={resetPasswordSchema}
+        onSubmit={handleResetPasswordSubmit}
+        rowDetails={rowDetails}
+        handleClose={handleCloseResetPasswordDialog}
+        isLoading={addIsLoading || updateIsLoading}
+        preview={preview}
+        setPreview={setPreview}
+        exposeReset={(resetFn) => setResetForm(() => resetFn)}
+        admin
+        reset
+        text="Reset"
       />
 
       <SmallDialog
