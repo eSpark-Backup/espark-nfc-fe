@@ -90,12 +90,11 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
       },
     }),
     getAllReports: builder.query({
-      query: () => {
-        return {
-          url: EMPLOYEE_REPORTS,
-          method: "GET",
-        };
-      },
+      query: ({ page = 1, limit = 10,  search = "" }) => ({
+        url: EMPLOYEE_REPORTS,
+        params: { page, limit, search },
+        method: "GET",
+      }),
     }),
   }),
 });
