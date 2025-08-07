@@ -21,7 +21,7 @@ const Report = () => {
     data: reports,
     isLoading,
     isError,
-  } = useGetAllReportsQuery({ page, limit: rowsPerPage });
+  } = useGetAllReportsQuery({ page, limit: rowsPerPage, search: searchTerm });
 
   const handleSearch = (value) => {
     setSearchTerm(value.toLowerCase());
@@ -61,19 +61,9 @@ const Report = () => {
   if (!reports || !reports.data || reports.data.length === 0)
     return <Typography sx={{ m: 3 }}>No reports available.</Typography>;
 
-  const filteredReports = reports.data.filter(
-    (member) =>
-      member.name.toLowerCase().includes(searchTerm) ||
-      member.designation?.toLowerCase().includes(searchTerm)
-  );
-
-  const totalRows = filteredReports.length;
-  const totalPages = Math.ceil(totalRows / rowsPerPage);
-
-  const displayedReports = filteredReports.slice(
-    (page - 1) * rowsPerPage,
-    page * rowsPerPage
-  );
+  const displayedReports = reports?.data || [];
+  const totalRows = reports?.pagination?.total_count || 0;
+  const totalPages = reports?.pagination?.total_pages || 1;
 
   return (
     <Box
@@ -96,7 +86,17 @@ const Report = () => {
       >
         <SearchInput onSearch={handleSearch} loading={isLoading} />
 
-        <Box sx={{ flex: 1, overflowY: "auto", pr: 5, minHeight: 0 }}>
+        <Box
+          sx={{
+            flex: 1,
+            overflowY: "auto",
+            pr: 5,
+            minHeight: 0,
+            scrollBehavior: "smooth",
+            pb: 3,
+            pt: 5,
+          }}
+        >
           <Grid
             container
             spacing={3}
