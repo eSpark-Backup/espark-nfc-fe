@@ -31,7 +31,10 @@ const TextInput = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const isPasswordField = name === "password" || name === "new_password";
+  const isPasswordField =
+    name === "password" ||
+    name === "new_password" ||
+    name === "current_password";
 
   return (
     <Controller
@@ -68,43 +71,33 @@ const TextInput = ({
               isPasswordField && edit && admin ? true : profile ? !edit : false
             }
             slotProps={{
-              input:
-                (isPasswordField && login) ||
-                (isPasswordField && !edit && admin)
-                  ? {
-                      endAdornment: (
-                        <InputAdornment position="start">
+              input: isPasswordField
+                ? {
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <IconButton
+                          disableRipple
+                          sx={iconButton}
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
                           {showPassword ? (
-                            <IconButton
-                              disableRipple
-                              sx={iconButton}
-                              onClick={() => setShowPassword(false)}
-                            >
-                              <RemoveRedEyeOutlinedIcon />
-                            </IconButton>
+                            <RemoveRedEyeOutlinedIcon />
                           ) : (
-                            <IconButton
-                              disableRipple
-                              sx={iconButton}
-                              onClick={() => setShowPassword(true)}
-                            >
-                              <VisibilityOffOutlinedIcon />
-                            </IconButton>
+                            <VisibilityOffOutlinedIcon />
                           )}
-                        </InputAdornment>
-                      ),
-                    }
-                  : profile && edit
-                  ? {
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <Box>
-                            <Box component={"img"} src={Edit} />
-                          </Box>
-                        </InputAdornment>
-                      ),
-                    }
-                  : null,
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }
+                : profile && edit
+                ? {
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <Box component={"img"} src={Edit} />
+                      </InputAdornment>
+                    ),
+                  }
+                : null,
             }}
           />
         </Stack>

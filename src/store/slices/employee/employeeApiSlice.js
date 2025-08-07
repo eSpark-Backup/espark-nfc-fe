@@ -38,9 +38,8 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     getEmployeeById: builder.query({
-      query: (id) => ({
-        url: EMPLOYEE,
-        params: id,
+      query: ({ id }) => ({
+        url: `${EMPLOYEE}/${id}`,
         method: "GET",
       }),
     }),
@@ -90,7 +89,7 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
       },
     }),
     getAllReports: builder.query({
-      query: ({ page = 1, limit = 10,  search = "" }) => ({
+      query: ({ page = 1, limit = 10, search = "" }) => ({
         url: EMPLOYEE_REPORTS,
         params: { page, limit, search },
         method: "GET",

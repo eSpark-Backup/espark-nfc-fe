@@ -137,16 +137,15 @@ const Admin = () => {
       email: rowDetails?.email,
       phone_number: rowDetails?.phone_number,
     };
-
+    console.log(defaultVal, "rowDetails");
     resetForm(defaultVal);
-
     setEdit(true);
     setOpen(true);
   };
 
   const handleClickResetPassword = () => {
     const defaultVal = {
-      new_password: "",
+      new_password: rowDetails?.full_name,
     };
     resetForm(defaultVal);
     setOpenResetDialog(true);

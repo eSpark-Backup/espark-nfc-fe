@@ -41,6 +41,23 @@ const passwordValidation = (edit, confirm) =>
         ),
     });
 
+export const newPasswordValidation = (
+  currentField = "current_password",
+  label = "New"
+) =>
+  yup
+    .string()
+    .trim()
+    .required(`${label} password is required`)
+    .notOneOf(
+      [yup.ref(currentField)],
+      `${label} password must be different from current password`
+    )
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[\S]{8,}$/,
+      `${label} password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces`
+    );
+
 const codeValidation = yup
   .string()
   .required("Verification code is required")

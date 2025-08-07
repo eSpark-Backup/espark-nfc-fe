@@ -120,7 +120,7 @@ const Employee = () => {
       setCopied(true);
     } else if (index === 1) {
       window.open(
-        `${window.location.origin}/employee-detail/${row.id}`,
+        `${window.location.origin}/employee-detail/${row?.id}`,
         "_blank"
       );
     } else {

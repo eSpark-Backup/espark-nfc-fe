@@ -43,8 +43,8 @@ const Details = () => {
   const [currentEmployee, setCurrentEmployee] = useState(null);
 
   useEffect(() => {
-    if (isSuccess && allEmployees?.employees?.length) {
-      const currEmp = allEmployees?.employees?.find((item) => item?.id === id);
+    if (isSuccess && allEmployees) {
+      const currEmp = allEmployees?.employee;
       setCurrentEmployee(currEmp);
     }
   }, [allEmployees, isSuccess]);
