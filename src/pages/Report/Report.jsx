@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Grid,
   Card,
@@ -7,10 +8,25 @@ import {
   CircularProgress,
   Box,
 } from "@mui/material";
+import Pagination from "../../components/Pagination";
 import { useGetAllReportsQuery } from "../../store/slices/employee/employeeApiSlice";
+import SearchInput from "../../components/inputs/SearchInput";
 
 const Report = () => {
-  const { data: reports, isLoading, isError } = useGetAllReportsQuery({});
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const {
+    data: reports,
+    isLoading,
+    isError,
+  } = useGetAllReportsQuery({ page, limit: rowsPerPage });
+
+  const handleSearch = (value) => {
+    setSearchTerm(value.toLowerCase());
+    setPage(1);
+  };
 
   if (isLoading)
     return (
@@ -42,62 +58,125 @@ const Report = () => {
     );
   }
 
-  if (!reports || reports?.data?.length === 0)
+  if (!reports || !reports.data || reports.data.length === 0)
     return <Typography sx={{ m: 3 }}>No reports available.</Typography>;
 
+  const filteredReports = reports.data.filter(
+    (member) =>
+      member.name.toLowerCase().includes(searchTerm) ||
+      member.designation?.toLowerCase().includes(searchTerm)
+  );
+
+  const totalRows = filteredReports.length;
+  const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+  const displayedReports = filteredReports.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
+
   return (
-    <Grid
-      container
-      spacing={3}
-      sx={{ p: 3, justifyContent: { xs: "center", md: "flex-start" } }}
+    <Box
+      sx={{
+        p: 3,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100%",
+      }}
     >
-      {reports?.data?.map((member) => (
-        <Grid item xs={12} sm={6} md={3} key={member.id}>
-          <Card
-            sx={{
-              textAlign: "center",
-              borderRadius: "11px",
-              p: 2,
-              boxShadow: "none",
-              width: "238px",
-              height: "208px",
-              border: "1px solid #CCC8C8",
-              bgcolor: "#F6F8FA",
-            }}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          flex: 1,
+          minHeight: 0,
+        }}
+      >
+        <SearchInput onSearch={handleSearch} loading={isLoading} />
+
+        <Box sx={{ flex: 1, overflowY: "auto", pr: 5, minHeight: 0 }}>
+          <Grid
+            container
+            spacing={3}
+            sx={{ justifyContent: { xs: "center", md: "flex-start" } }}
           >
-            <Avatar
-              src={member.profile_image?.image_url || "/default-avatar.png"}
-              alt={member.name}
-              sx={{
-                width: "95px",
-                height: "92px",
-                mx: "auto",
-                border: "2px solid #eee",
-              }}
-            />
-            <CardContent sx={{ padding: "0" }}>
-              <Typography fontWeight="500" fontSize="25px">
-                {member.name}
-              </Typography>
-              <Typography fontSize="15px" fontWeight="400" color="#606061">
-                {member.designation}
-              </Typography>
-              <Typography fontSize="15px" fontWeight="400" color="#606061">
-                Num of Views:
-                <Typography
-                  component="span"
-                  color="#2684FC"
-                  fontWeight="600"
-                  pl="5px"
+            {displayedReports.map((member) => (
+              <Grid item xs={12} sm={6} md={3} key={member.id}>
+                <Card
+                  sx={{
+                    textAlign: "center",
+                    borderRadius: "11px",
+                    p: 2,
+                    boxShadow: "none",
+                    width: "238px",
+                    height: "208px",
+                    border: "1px solid #CCC8C8",
+                    bgcolor: "#F6F8FA",
+                  }}
                 >
-                  {member.view_count}
-                </Typography>
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+                  <Avatar
+                    src={
+                      member.profile_image?.image_url || "/default-avatar.png"
+                    }
+                    alt={member.name}
+                    sx={{
+                      width: "95px",
+                      height: "92px",
+                      mx: "auto",
+                      border: "2px solid #eee",
+                    }}
+                  />
+                  <CardContent sx={{ padding: 0 }}>
+                    <Typography fontWeight="500" fontSize="25px">
+                      {member.name}
+                    </Typography>
+                    <Typography
+                      fontSize="15px"
+                      fontWeight="400"
+                      color="#606061"
+                    >
+                      {member.designation}
+                    </Typography>
+                    <Typography
+                      fontSize="15px"
+                      fontWeight="400"
+                      color="#606061"
+                    >
+                      Num of Views:
+                      <Typography
+                        component="span"
+                        color="#2684FC"
+                        fontWeight="600"
+                        pl="5px"
+                      >
+                        {member.view_count}
+                      </Typography>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Box>
+
+      <Box sx={{ mt: 3, width: "100%" }}>
+        <Pagination
+          page={page}
+          rowsPerPage={rowsPerPage}
+          setPage={setPage}
+          setRowsPerPage={(limit) => {
+            setRowsPerPage(limit);
+            setPage(1);
+          }}
+          totalRows={totalRows}
+          totalPages={totalPages}
+          loading={isLoading}
+        />
+      </Box>
+    </Box>
   );
 };
 
