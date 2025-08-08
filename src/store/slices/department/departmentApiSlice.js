@@ -67,6 +67,7 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
 export const {
   useAddDepartmentMutation,
   useGetDepartmentQuery,
+  useLazyGetDepartmentQuery,
   useUpdateDepartmentMutation,
   useDeleteDepartmentMutation,
 } = departmentApiSlice;

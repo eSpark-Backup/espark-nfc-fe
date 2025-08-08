@@ -31,6 +31,11 @@ import {
 
 import { ADD, EDIT, EMPOLYEEFIELDSCONFIG } from "../../constants/Employee";
 import { toast } from "sonner";
+import { useLazyGetDepartmentQuery } from "../../store/slices/department/departmentApiSlice";
+import {
+  setDepartments,
+  setLoadingDepartments,
+} from "../../store/slices/department/departmentSlice";
 
 dayjs.extend(utc);
 
@@ -95,6 +100,7 @@ const Employee = () => {
   const [errora, setError] = useState(null);
   const [preview, setPreview] = useState(null);
   const [resetForm, setResetForm] = useState(null);
+  const [triggerGetDepartment] = useLazyGetDepartmentQuery();
 
   useEffect(() => {
     if (employees) {
@@ -139,7 +145,28 @@ const Employee = () => {
     setDeleteDialog(true);
   };
 
+  const handleFetchDepartments = async () => {
+    try {
+      dispatch(setLoadingDepartments(true));
+
+      const res = await triggerGetDepartment({
+        page: 1,
+        limit: 10,
+        sort_order: "desc",
+      }).unwrap();
+
+      if (res && res?.success) {
+        dispatch(setDepartments(res.departments || []));
+      }
+    } catch (error) {
+      console?.error("Failed to fetch departments", error);
+    } finally {
+      dispatch(setLoadingDepartments(false));
+    }
+  };
+
   const handleClickEdit = () => {
+    handleFetchDepartments();
     const defaultVal = {
       profile_image: rowDetails?.profile_image?.image_url,
       name: rowDetails?.name,
@@ -158,7 +185,7 @@ const Employee = () => {
       instagram: rowDetails?.social_links?.instagram,
       youtube: rowDetails?.social_links?.youtube,
     };
-
+    console.log(defaultVal, "rowDetails");
     resetForm(defaultVal);
 
     setEdit(true);
