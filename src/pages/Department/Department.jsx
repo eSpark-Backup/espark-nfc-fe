@@ -35,6 +35,7 @@ const Department = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchText, setSearchText] = useState("");
   const [sortOrder, setSortOrder] = useState("desc");
+  const [localSearch, setLocalSearch] = useState(""); 
 
   const {
     data: allDepartments,
@@ -103,9 +104,17 @@ const Department = () => {
     setPage(1);
   };
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setSearchText(localSearch);
+      setPage(1);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [localSearch]);
+
   const handleSearch = (text) => {
-    setSearchText(text);
-    setPage(1);
+    setLocalSearch(text);
   };
 
   const handleClick = (e, row) => {
@@ -125,11 +134,11 @@ const Department = () => {
 
   const handleClickEdit = () => {
     const defaultVal = {
-      image: rowDetails?.image?.image_url,
-      name: rowDetails?.name,
-      email: rowDetails?.email,
-      created_at: rowDetails?.created_at ? dayjs(rowDetails?.created_at) : null,
-      employee_count: rowDetails?.employee_count,
+      image: rowDetails?.image?.image_url || "",
+      name: rowDetails?.name || "",
+      email: rowDetails?.email || "",
+      created_at: rowDetails?.created_at ? dayjs(rowDetails.created_at) : null,
+      employee_count: rowDetails?.employee_count || 0,
     };
 
     resetForm(defaultVal);
@@ -168,15 +177,19 @@ const Department = () => {
       );
 
       if (res && res.success) {
-        const updateDepart = departments?.map((item) => {
+        const updatedDepartments = departments?.map((item) => {
           if (item.id === rowDetails.id) {
-            return res.department;
+            return {
+              ...res.department,
+              created_at: data.created_at
+                ? dayjs(data.created_at).toISOString()
+                : null,
+            };
           }
-
           return item;
         });
 
-        dispatch(setDepartments(updateDepart));
+        dispatch(setDepartments(updatedDepartments));
       }
     } else {
       const res = await handleCreateDepartmentMutation(
@@ -189,7 +202,17 @@ const Department = () => {
       );
 
       if (res && res.success) {
-        dispatch(setDepartments([res.department, ...departments]));
+        dispatch(
+          setDepartments([
+            {
+              ...res.department,
+              created_at: data.created_at
+                ? dayjs(data.created_at).toISOString()
+                : null,
+            },
+            ...departments,
+          ])
+        );
       }
     }
   };
@@ -268,6 +291,7 @@ const Department = () => {
       <SmallDialog
         open={deleteDialog}
         setOpen={setDeleteDialog}
+        itemTitle={rowDetails?.name}
         handleDelete={handleDelete}
         isLoading={deleteIsLoading}
       />
