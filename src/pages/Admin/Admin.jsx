@@ -150,7 +150,7 @@ const Admin = () => {
 
   const handleClickResetPassword = () => {
     const defaultVal = {
-      new_password: rowDetails?.full_name,
+      new_password: '',
     };
 
     if (resetPasswordForm) {
