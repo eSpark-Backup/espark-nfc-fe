@@ -44,7 +44,6 @@ const GenericForm = ({
     if (exposeReset) exposeReset(reset);
   }, [exposeReset, reset]);
 
-
   return (
     <FormProvider {...methods}>
       <form

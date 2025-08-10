@@ -80,14 +80,6 @@ const adminFormSchema = (edit) =>
     password: passwordValidation(edit),
   });
 
-const editAdminFormSchema = () =>
-  yup.object({
-    profile_image: imageValidation,
-    full_name: nameValidation("Admin"),
-    email: emailValidation,
-    phone_number: phoneNumberValidation,
-  });
-
 const changePasswordSchema = yup.object({
   current_password: passwordValidation(),
   new_password: newPasswordValidation(),
@@ -104,7 +96,6 @@ export {
   departmentFormSchema,
   employeeFormSchema,
   adminFormSchema,
-  editAdminFormSchema,
   changePasswordSchema,
   resetPasswordSchema,
 };

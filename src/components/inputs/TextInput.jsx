@@ -36,7 +36,6 @@ const TextInput = ({
     name === "new_password" ||
     name === "current_password";
 
-
   return (
     <Controller
       name={name}
@@ -67,37 +66,38 @@ const TextInput = ({
             error={!!error}
             helperText={helperText}
             placeholder={placeholder}
-            value={isPasswordField && edit && admin ? value : value}
-            disabled={isPasswordField && admin ? true : profile ? !edit : false}
+            value={isPasswordField && edit && admin ? "password" : value}
+            disabled={
+              isPasswordField && edit && admin ? true : profile ? !edit : false
+            }
             slotProps={{
-              input:
-                (isPasswordField && login) || (isPasswordField && !edit)
-                  ? {
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <IconButton
-                            disableRipple
-                            sx={iconButton}
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            {showPassword ? (
-                              <RemoveRedEyeOutlinedIcon />
-                            ) : (
-                              <VisibilityOffOutlinedIcon />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }
-                  : profile && edit
-                  ? {
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <Box component={"img"} src={Edit} />
-                        </InputAdornment>
-                      ),
-                    }
-                  : null,
+              input: isPasswordField
+                ? {
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <IconButton
+                          disableRipple
+                          sx={iconButton}
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? (
+                            <RemoveRedEyeOutlinedIcon />
+                          ) : (
+                            <VisibilityOffOutlinedIcon />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }
+                : profile && edit
+                ? {
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <Box component={"img"} src={Edit} />
+                      </InputAdornment>
+                    ),
+                  }
+                : null,
             }}
           />
         </Stack>

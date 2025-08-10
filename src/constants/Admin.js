@@ -104,33 +104,6 @@ const ADMINTFIELDSCONFIG = [
   },
 ];
 
-const EDITADMINTFIELDSCONFIG = [
-  {
-    name: "profile_image",
-    label: "Upload Profile",
-    type: "file",
-    placeholder: "Upload image",
-  },
-  {
-    name: "full_name",
-    label: "Admin Name",
-    type: "text",
-    placeholder: "Enter name",
-  },
-  {
-    name: "email",
-    label: "Email",
-    type: "email",
-    placeholder: "Enter email",
-  },
-  {
-    name: "phone_number",
-    label: "Phone Number",
-    type: "number",
-    placeholder: "Enter phone number",
-  },
-];
-
 const RESETPASSWORDFIELDSCONFIG = [
   {
     name: "new_password",
@@ -161,7 +134,6 @@ export {
   EDIT,
   RESETPASSWORD,
   ADMINTFIELDSCONFIG,
-  EDITADMINTFIELDSCONFIG,
   CHANGEPASSWORDFIELDS,
   RESETPASSWORDFIELDSCONFIG,
 };

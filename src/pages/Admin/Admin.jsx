@@ -9,11 +9,7 @@ import FormDialog from "../../components/dialogs/FormDialog";
 import SmallDialog from "../../components/dialogs/SmallDialog";
 import { adminTableColumns } from "./tableColumns";
 
-import {
-  adminFormSchema,
-  editAdminFormSchema,
-  resetPasswordSchema,
-} from "../../validations/schema";
+import { adminFormSchema, resetPasswordSchema } from "../../validations/schema";
 
 import {
   useAddAdminMutation,
@@ -38,7 +34,6 @@ import {
   EDIT,
   RESETPASSWORD,
   RESETPASSWORDFIELDSCONFIG,
-  EDITADMINTFIELDSCONFIG,
 } from "../../constants/Admin";
 
 const Admin = () => {
@@ -136,15 +131,15 @@ const Admin = () => {
   };
 
   const handleClickEdit = () => {
-    setEdit(true);
     const defaultVal = {
+      profile_image: rowDetails?.profile_image?.image_url,
       full_name: rowDetails?.full_name,
       email: rowDetails?.email,
       phone_number: rowDetails?.phone_number,
-      profile_image: rowDetails?.profile_image?.image_url,
     };
-    setResetForm(defaultVal);
-
+    console.log(defaultVal, "rowDetails");
+    resetForm(defaultVal);
+    setEdit(true);
     setOpen(true);
   };
 
@@ -152,15 +147,14 @@ const Admin = () => {
     const defaultVal = {
       new_password: rowDetails?.full_name,
     };
-
-    setResetForm(defaultVal);
+    resetForm(defaultVal);
     setOpenResetDialog(true);
   };
 
   const handleDelete = async () => {
     const res = await handleDeleteAdminMutation(
       rowDetails.id,
-      deleteAdmin,
+      deleteDepartment,
       setError,
       handleCloseFormDialog
     );
@@ -214,7 +208,7 @@ const Admin = () => {
   const handleResetPasswordSubmit = async (data, methods) => {
     const payload = {
       id: rowDetails?.id,
-      body: { new_password: data?.new_password },
+      body: { new_password: data.new_password },
     };
 
     const res = await handleResetPasswordMutation(
@@ -255,7 +249,7 @@ const Admin = () => {
       return acc;
     }, {});
 
-    if (resetForm) setResetForm(emptyForm);
+    if (resetForm) resetForm(emptyForm);
   };
 
   const totalRows = allAdmins?.pagination?.total_count || 0;
@@ -299,7 +293,7 @@ const Admin = () => {
         ADD={ADD}
         EDIT={EDIT}
         fieldsConfig={ADMINTFIELDSCONFIG}
-        schema={editAdminFormSchema()}
+        schema={adminFormSchema(edit)}
         onSubmit={handleSubmit}
         edit={edit}
         rowDetails={rowDetails}
@@ -308,6 +302,7 @@ const Admin = () => {
         preview={preview}
         setPreview={setPreview}
         exposeReset={(resetFn) => setResetForm(() => resetFn)}
+        admin
       />
 
       <FormDialog
@@ -323,6 +318,7 @@ const Admin = () => {
         preview={preview}
         setPreview={setPreview}
         exposeReset={(resetFn) => setResetForm(() => resetFn)}
+        admin
         reset
         text="Reset"
       />
