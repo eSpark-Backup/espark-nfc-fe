@@ -185,7 +185,6 @@ const Employee = () => {
       instagram: rowDetails?.social_links?.instagram,
       youtube: rowDetails?.social_links?.youtube,
     };
-    console.log(defaultVal, "rowDetails");
     resetForm(defaultVal);
 
     setEdit(true);
