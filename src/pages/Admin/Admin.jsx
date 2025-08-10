@@ -97,7 +97,7 @@ const Admin = () => {
   const [rowDetails, setRowDetails] = useState(null);
   const [errora, setError] = useState(null);
   const [preview, setPreview] = useState(null);
-  
+
   const [resetAdminForm, setResetAdminForm] = useState(null);
   const [resetPasswordForm, setResetPasswordForm] = useState(null);
 
@@ -152,18 +152,18 @@ const Admin = () => {
     const defaultVal = {
       new_password: rowDetails?.full_name,
     };
-    
+
     if (resetPasswordForm) {
       resetPasswordForm(defaultVal);
     }
-    
+
     setOpenResetDialog(true);
   };
 
   const handleDelete = async () => {
     const res = await handleDeleteAdminMutation(
       rowDetails.id,
-      deleteDepartment,
+      deleteAdmin,
       setError,
       handleCloseFormDialog
     );
@@ -346,6 +346,7 @@ const Admin = () => {
         setOpen={setDeleteDialog}
         handleDelete={handleDelete}
         isLoading={deleteIsLoading}
+        itemTitle={rowDetails?.full_name}
       />
     </>
   );

@@ -270,6 +270,7 @@ const Department = () => {
         setOpen={setDeleteDialog}
         handleDelete={handleDelete}
         isLoading={deleteIsLoading}
+        itemTitle={rowDetails?.name}
       />
     </>
   );
