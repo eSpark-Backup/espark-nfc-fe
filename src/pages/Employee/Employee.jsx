@@ -331,6 +331,7 @@ const Employee = () => {
       />
 
       <SmallDialog
+        itemTitle={rowDetails?.name || ""}
         open={deleteDialog}
         setOpen={setDeleteDialog}
         handleDelete={handleDelete}
