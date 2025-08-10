@@ -150,8 +150,8 @@ const Employee = () => {
       dispatch(setLoadingDepartments(true));
 
       const res = await triggerGetDepartment({
-        page: 1,
-        limit: 10,
+        page: "",
+        limit: "",
         sort_order: "desc",
       }).unwrap();
 

@@ -26,7 +26,7 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
       },
     }),
     getDepartment: builder.query({
-      query: ({ page = 1, limit = 10, sort_order = "desc", search = "" }) => ({
+      query: ({ page = "", limit = "", sort_order = "desc", search = "" }) => ({
         url: DEPARTMENT,
         params: { page, limit, sort_order, search },
         method: "GET",
