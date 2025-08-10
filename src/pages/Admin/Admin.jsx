@@ -97,7 +97,9 @@ const Admin = () => {
   const [rowDetails, setRowDetails] = useState(null);
   const [errora, setError] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [resetForm, setResetForm] = useState(null);
+  
+  const [resetAdminForm, setResetAdminForm] = useState(null);
+  const [resetPasswordForm, setResetPasswordForm] = useState(null);
 
   useEffect(() => {
     if (admins) {
@@ -137,8 +139,11 @@ const Admin = () => {
       email: rowDetails?.email,
       phone_number: rowDetails?.phone_number,
     };
-    console.log(defaultVal, "rowDetails");
-    resetForm(defaultVal);
+
+    if (resetAdminForm) {
+      resetAdminForm(defaultVal);
+    }
+
     setEdit(true);
     setOpen(true);
   };
@@ -147,7 +152,11 @@ const Admin = () => {
     const defaultVal = {
       new_password: rowDetails?.full_name,
     };
-    resetForm(defaultVal);
+    
+    if (resetPasswordForm) {
+      resetPasswordForm(defaultVal);
+    }
+    
     setOpenResetDialog(true);
   };
 
@@ -228,7 +237,7 @@ const Admin = () => {
       setEdit(false);
       setRowDetails(null);
       setPreview(null);
-      handleReset();
+      handleResetAdminForm();
     }, 100);
   };
 
@@ -239,17 +248,26 @@ const Admin = () => {
       setEdit(false);
       setRowDetails(null);
       setPreview(null);
-      handleReset();
+      handleResetPasswordFormReset();
     }, 100);
   };
 
-  const handleReset = () => {
+  const handleResetAdminForm = () => {
     const emptyForm = ADMINTFIELDSCONFIG.reduce((acc, field) => {
       acc[field.name] = field.type === "date" ? null : "";
       return acc;
     }, {});
 
-    if (resetForm) resetForm(emptyForm);
+    if (resetAdminForm) resetAdminForm(emptyForm);
+  };
+
+  const handleResetPasswordFormReset = () => {
+    const emptyForm = RESETPASSWORDFIELDSCONFIG.reduce((acc, field) => {
+      acc[field.name] = field.type === "date" ? null : "";
+      return acc;
+    }, {});
+
+    if (resetPasswordForm) resetPasswordForm(emptyForm);
   };
 
   const totalRows = allAdmins?.pagination?.total_count || 0;
@@ -301,7 +319,7 @@ const Admin = () => {
         isLoading={addIsLoading || updateIsLoading}
         preview={preview}
         setPreview={setPreview}
-        exposeReset={(resetFn) => setResetForm(() => resetFn)}
+        exposeReset={(resetFn) => setResetAdminForm(() => resetFn)}
         admin
       />
 
@@ -314,10 +332,10 @@ const Admin = () => {
         onSubmit={handleResetPasswordSubmit}
         rowDetails={rowDetails}
         handleClose={handleCloseResetPasswordDialog}
-        isLoading={addIsLoading || updateIsLoading}
+        isLoading={resetIsLoading}
         preview={preview}
         setPreview={setPreview}
-        exposeReset={(resetFn) => setResetForm(() => resetFn)}
+        exposeReset={(resetFn) => setResetPasswordForm(() => resetFn)}
         admin
         reset
         text="Reset"

@@ -71,7 +71,7 @@ const TextInput = ({
               isPasswordField && edit && admin ? true : profile ? !edit : false
             }
             slotProps={{
-              input: isPasswordField
+              input:   (isPasswordField && login) || (isPasswordField && !edit)
                 ? {
                     endAdornment: (
                       <InputAdornment position="start">
