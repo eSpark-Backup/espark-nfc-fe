@@ -17,6 +17,7 @@ import {
   imageValidation,
   instagramValidation,
   nameValidation,
+  newPasswordValidation,
   noOfEmpolyeesValidation,
   passwordValidation,
   phoneNumberValidation,
@@ -81,7 +82,7 @@ const adminFormSchema = (edit) =>
 
 const changePasswordSchema = yup.object({
   current_password: passwordValidation(),
-  new_password: passwordValidation("", "New"),
+  new_password: newPasswordValidation(),
 });
 
 const resetPasswordSchema = yup.object({

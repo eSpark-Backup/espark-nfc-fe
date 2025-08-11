@@ -97,7 +97,7 @@ const Admin = () => {
   const [rowDetails, setRowDetails] = useState(null);
   const [errora, setError] = useState(null);
   const [preview, setPreview] = useState(null);
-  
+
   const [resetAdminForm, setResetAdminForm] = useState(null);
   const [resetPasswordForm, setResetPasswordForm] = useState(null);
 
@@ -150,13 +150,13 @@ const Admin = () => {
 
   const handleClickResetPassword = () => {
     const defaultVal = {
-      new_password: "",
+      new_password: '',
     };
-    
+
     if (resetPasswordForm) {
       resetPasswordForm(defaultVal);
     }
-    
+
     setOpenResetDialog(true);
   };
 

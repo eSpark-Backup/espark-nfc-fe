@@ -1,7 +1,9 @@
 import { getToken } from "../utils/tokenManager";
 import { EMPLOYEE_REPORTS } from "./apiEndPoints";
 
-const baseURL = import.meta.env.VITE_API_URL || "https://nfc-be.stg.esparkconsultants.com/api";
+const baseURL =
+  import.meta.env.VITE_API_URL ||
+  "https://nfc-be.stg.esparkconsultants.com/api";
 
 export const fetchReports = async () => {
   const token = getToken();
