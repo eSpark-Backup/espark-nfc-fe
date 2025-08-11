@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import * as yup from "yup";
 
 const objectIdRegex = /^[0-9a-fA-F]{24}$/;
@@ -142,8 +143,11 @@ const dateTimeValidation = (label) =>
   yup
     .date()
     .required(`${label} date is required`)
-    .typeError("Invalid date format");
-
+    .typeError("Invalid date format")
+    .max(
+      dayjs().endOf("day").toDate(),
+      `${label} date cannot be in the future`
+    );
 const departmentValidation = yup.string().required("Department is required");
 
 const phoneNumberValidation = yup

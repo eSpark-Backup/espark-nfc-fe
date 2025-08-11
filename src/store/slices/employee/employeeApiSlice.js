@@ -38,11 +38,12 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     getEmployeeById: builder.query({
-      query: ({ id }) => ({
-        url: `${EMPLOYEE}/${id}`,
+      query: (id) => ({
+        url: `${EMPLOYEE}/${id}`, 
         method: "GET",
       }),
     }),
+
     updateEmployee: builder.mutation({
       query: ({ body, id }) => {
         const formData = new FormData();
