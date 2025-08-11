@@ -161,17 +161,21 @@ const Admin = () => {
   };
 
   const handleDelete = async () => {
-    const res = await handleDeleteAdminMutation(
-      rowDetails.id,
-      deleteDepartment,
-      setError,
-      handleCloseFormDialog
-    );
+    dispatch(setAdmins(admins.filter((item) => item.id !== rowDetails.id)));
 
-    if (res && res.success) {
-      const updatedAdmins = admins?.filter((item) => item.id !== rowDetails.id);
+    try {
+      const res = await handleDeleteAdminMutation(
+        rowDetails.id,
+        deleteAdmin,
+        setError,
+        handleCloseFormDialog
+      );
 
-      dispatch(setAdmins(updatedAdmins || []));
+      if (!res?.success) {
+        dispatch(setAdmins(admins));
+      }
+    } catch (err) {
+      dispatch(setAdmins(admins)); 
     }
   };
 
@@ -344,6 +348,7 @@ const Admin = () => {
       <SmallDialog
         open={deleteDialog}
         setOpen={setDeleteDialog}
+        itemTitle={rowDetails?.full_name} 
         handleDelete={handleDelete}
         isLoading={deleteIsLoading}
       />
