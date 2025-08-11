@@ -132,9 +132,21 @@ const Report = () => {
                     }}
                   />
                   <CardContent sx={{ padding: 0 }}>
-                    <Typography fontWeight="500" fontSize="25px">
+                    <Typography
+                      fontWeight="500"
+                      fontSize="25px"
+                      noWrap
+                      sx={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        maxWidth: "100%", // Ensures it respects container width
+                      }}
+                      title={member.name} // Shows full name on hover
+                    >
                       {member.name}
                     </Typography>
+
                     <Typography
                       fontSize="15px"
                       fontWeight="400"

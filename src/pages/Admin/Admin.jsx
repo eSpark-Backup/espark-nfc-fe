@@ -161,8 +161,6 @@ const Admin = () => {
   };
 
   const handleDelete = async () => {
-    dispatch(setAdmins(admins.filter((item) => item.id !== rowDetails.id)));
-
     try {
       const res = await handleDeleteAdminMutation(
         rowDetails.id,
@@ -171,11 +169,11 @@ const Admin = () => {
         handleCloseFormDialog
       );
 
-      if (!res?.success) {
-        dispatch(setAdmins(admins));
+      if (res?.success) {
+        dispatch(setAdmins(admins.filter((item) => item.id !== rowDetails.id)));
       }
     } catch (err) {
-      dispatch(setAdmins(admins)); 
+      toast.error("Failed to delete admin");
     }
   };
 
@@ -348,7 +346,7 @@ const Admin = () => {
       <SmallDialog
         open={deleteDialog}
         setOpen={setDeleteDialog}
-        itemTitle={rowDetails?.full_name} 
+        itemTitle={rowDetails?.full_name}
         handleDelete={handleDelete}
         isLoading={deleteIsLoading}
       />
