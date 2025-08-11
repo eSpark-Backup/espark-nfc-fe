@@ -39,7 +39,7 @@ const Details = () => {
   });
 
   const [isAbout, setIsAbout] = useState(true);
-  console.log(profileData?.company_profile, "profileData");
+  
   return (
     <Box sx={mainContainer(isMobile)}>
       {isLoading || isFetching ? (

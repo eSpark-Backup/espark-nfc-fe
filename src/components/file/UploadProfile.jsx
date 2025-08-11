@@ -1,10 +1,15 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Controller } from "react-hook-form";
-
-import { Avatar, Box, InputLabel, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  InputLabel,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 import { Upload } from "../../assets/images/svgs";
-
 import { FORM } from "../../constants/Form";
 
 import {
@@ -24,9 +29,7 @@ const UploadProfile = ({
   label,
   error,
   helperText,
-  setValue,
   inputStyles,
-  edit,
   preview,
   setPreview,
 }) => {
@@ -43,10 +46,8 @@ const UploadProfile = ({
       const imageUrl = URL.createObjectURL(file);
       setPreview(imageUrl);
       onChange(file);
-    } else {
-      onChange(null);
-      setValue(name, null, { shouldValidate: true });
     }
+    e.target.value = "";
   };
 
   return (
@@ -54,13 +55,8 @@ const UploadProfile = ({
       name={name}
       control={control}
       render={({ field: { onChange } }) => (
-        <Stack
-          sx={{
-            order: 2,
-            gap: 1,
-          }}
-        >
-          <InputLabel sx={inputStyles.label}>{label}</InputLabel>
+        <Stack sx={{ order: 2, gap: 1 }}>
+          <InputLabel sx={inputStyles?.label}>{label}</InputLabel>
 
           <Box sx={profileContainer(preview || value, error)}>
             <input
@@ -82,13 +78,9 @@ const UploadProfile = ({
                     src={Upload}
                     alt="Upload"
                   />
-
                   <Typography
                     variant="body2"
-                    sx={{
-                      ...heading,
-                      textTransform: "capitalize",
-                    }}
+                    sx={{ ...heading, textTransform: "capitalize" }}
                   >
                     {FORM.upload}
                   </Typography>
