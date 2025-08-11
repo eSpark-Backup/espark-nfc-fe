@@ -21,7 +21,10 @@ const Report = () => {
     data: reports,
     isLoading,
     isError,
-  } = useGetAllReportsQuery({ page, limit: rowsPerPage, search: searchTerm });
+  } = useGetAllReportsQuery(
+    { page, limit: rowsPerPage, search: searchTerm },
+    { refetchOnMountOrArgChange: true }
+  );
 
   const handleSearch = (value) => {
     setSearchTerm(value.toLowerCase());
