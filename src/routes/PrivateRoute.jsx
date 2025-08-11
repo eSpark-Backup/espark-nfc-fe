@@ -7,9 +7,9 @@ const PrivateRoute = () => {
   const isEmailVerified = user?.email_verified;
   if (!isAuthenticated) return <Navigate to="/" replace />;
 
-    if (isAdmin && !isEmailVerified) {
-      return <Navigate to="/verify-email" replace />;
-    }
+  if (isAdmin && !isEmailVerified && location.pathname !== "/verify-email") {
+    return <Navigate to="/verify-email" replace />;
+  }
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
 };

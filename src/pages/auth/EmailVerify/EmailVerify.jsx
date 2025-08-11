@@ -28,7 +28,7 @@ const EmailVerify = () => {
 
   const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
   const [resendEmail, { isLoading: isResending }] =
-    useResendVerificationEmailMutation(); 
+    useResendVerificationEmailMutation();
 
   const [error, setError] = useState(null);
 
@@ -58,8 +58,30 @@ const EmailVerify = () => {
     }
   };
 
+  const handleLoginWithDifferentAccount = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+    localStorage.removeItem("role");
+    toast.success("Logged out successfully");
+
+    navigate("/", { replace: true });
+  };
+
   return (
     <Box sx={container} className="center">
+      <Button
+        onClick={handleLoginWithDifferentAccount}
+        sx={{
+          position: "absolute",
+          top: 20,
+          right: 20,
+          zIndex: 1000,
+        }}
+        variant="contained"
+      >
+        Logout
+      </Button>
+
       <Box sx={backgroundImage} className="center">
         <Box sx={form} className="center">
           <Typography variant="h1" color="#101828">

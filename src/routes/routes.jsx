@@ -37,18 +37,20 @@ const AppRoutes = () => {
       </Route>
 
       <Route element={<PrivateRoute />}>
-        <Route element={<Layout />}>
-          <Route path={dashboard} element={<Dashboard />} />
-          <Route path={department} element={<Department />} />
-          <Route path={employee} element={<Employee />} />
-          <Route path={admin} element={<Admin />} />
-          <Route path={report} element={<Report />} />
-          <Route path={manage_account} element={<Accounts />} />
+        <Route path={verify_email} element={<EmailVerify />} />
+        <Route>
+          <Route element={<Layout />}>
+            <Route path={dashboard} element={<Dashboard />} />
+            <Route path={department} element={<Department />} />
+            <Route path={employee} element={<Employee />} />
+            <Route path={admin} element={<Admin />} />
+            <Route path={report} element={<Report />} />
+            <Route path={manage_account} element={<Accounts />} />
+          </Route>
         </Route>
       </Route>
 
       <Route path={employee_detail} element={<Details />} />
-      <Route path={verify_email} element={<EmailVerify />} />
     </Routes>
   );
 };
