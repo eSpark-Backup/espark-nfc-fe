@@ -24,6 +24,9 @@ const DetailsInDektop = ({ isAbout, setIsAbout, data, currentEmployee }) => {
         <Box
           component={"img"}
           src={currentEmployee?.profile_image?.image_url || DetailImage}
+          onError={(e) => {
+            e.target.src = DetailImage;
+          }}
           alt="Profile"
         />
       </Box>
