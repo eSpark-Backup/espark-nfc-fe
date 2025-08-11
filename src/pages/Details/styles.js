@@ -221,7 +221,7 @@ const footerButton = {
   padding: "10px 22px",
   fontSize: "12px",
   display: "block",
-  margin: { xs: "0px auto 22px" , sm: "0px 0px 22px auto" },
+  margin: { xs: "0px auto 22px", sm: "0px 0px 22px auto" },
 };
 
 const footerLogo = { margin: { xs: "auto", sm: "0px" } };
@@ -239,6 +239,7 @@ const partnersItem = {
   letterSpacing: "-0.015em",
   color: "#48494A",
   textTransform: "uppercase",
+  mr: 1,
 };
 
 const partnersBorder = {
