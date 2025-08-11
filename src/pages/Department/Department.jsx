@@ -137,6 +137,7 @@ const Department = () => {
       image: rowDetails?.image?.image_url || "",
       name: rowDetails?.name || "",
       email: rowDetails?.email || "",
+      created_at: rowDetails?.created_at ? rowDetails?.created_at : null,
       employee_count: rowDetails?.employee_count || 0,
     };
 
@@ -201,13 +202,18 @@ const Department = () => {
       );
 
       if (res && res.success) {
+        console.log("created_at raw value:", data?.created_at);
+
+        const isValidDate =
+          data?.created_at &&
+          dayjs(data.created_at).isValid() &&
+          data.created_at !== "0";
+
         dispatch(
           setDepartments([
             {
               ...res.department,
-              created_at: data.created_at
-                ? dayjs(data.created_at).toISOString()
-                : null,
+              created_at: isValidDate ? dayjs(data.created_at) : dayjs(), // current date/time
             },
             ...departments,
           ])
