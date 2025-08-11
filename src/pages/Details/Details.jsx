@@ -15,6 +15,7 @@ import DetailsInMobile from "./DetailsInMobile";
 import { useGetEmployeeByIdQuery } from "../../store/slices/employee/employeeApiSlice";
 
 import { mainContainer } from "./styles";
+import { useGetCompanyQuery } from "../../store/slices/companyProfile/companyProfileApiSlice";
 
 const Details = () => {
   const theme = useTheme();
@@ -33,8 +34,12 @@ const Details = () => {
     refetchOnMountOrArgChange: true,
   });
 
-  const [isAbout, setIsAbout] = useState(true);
+  const { data: profileData } = useGetCompanyQuery(id, {
+    refetchOnMountOrArgChange: true,
+  });
 
+  const [isAbout, setIsAbout] = useState(true);
+  console.log(profileData?.company_profile, "profileData");
   return (
     <Box sx={mainContainer(isMobile)}>
       {isLoading || isFetching ? (
@@ -64,7 +69,8 @@ const Details = () => {
                 <DetailsInMobile
                   isAbout={isAbout}
                   setIsAbout={setIsAbout}
-                  currentEmployee={employeeData.employee} 
+                  companyProfile={profileData?.company_profile}
+                  currentEmployee={employeeData.employee}
                   isMobile={isMobile}
                 />
               )
@@ -72,7 +78,8 @@ const Details = () => {
                 <DetailsInDektop
                   isAbout={isAbout}
                   setIsAbout={setIsAbout}
-                  currentEmployee={employeeData.employee} 
+                  currentEmployee={employeeData?.employee}
+                  companyProfile={profileData?.company_profile}
                 />
               )}
         </>

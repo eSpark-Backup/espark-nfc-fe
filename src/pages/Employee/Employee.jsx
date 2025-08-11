@@ -31,7 +31,7 @@ import {
 
 import { ADD, EDIT, EMPOLYEEFIELDSCONFIG } from "../../constants/Employee";
 import { toast } from "sonner";
-import { useLazyGetDepartmentQuery } from "../../store/slices/department/departmentApiSlice";
+import { useLazyGetDepartmentDropdownQuery } from "../../store/slices/department/departmentApiSlice";
 import {
   setDepartments,
   setLoadingDepartments,
@@ -100,7 +100,7 @@ const Employee = () => {
   const [errora, setError] = useState(null);
   const [preview, setPreview] = useState(null);
   const [resetForm, setResetForm] = useState(null);
-  const [triggerGetDepartment] = useLazyGetDepartmentQuery();
+  const [triggerGetDepartmentDropdown] = useLazyGetDepartmentDropdownQuery();
 
   useEffect(() => {
     if (employees) {
@@ -137,10 +137,6 @@ const Employee = () => {
     }
   };
 
-  const handleClickAdd = () => {
-    setOpen(true);
-  };
-
   const handleClickDelete = () => {
     setDeleteDialog(true);
   };
@@ -149,20 +145,21 @@ const Employee = () => {
     try {
       dispatch(setLoadingDepartments(true));
 
-      const res = await triggerGetDepartment({
-        page: "",
-        limit: "",
-        sort_order: "desc",
-      }).unwrap();
+      const res = await triggerGetDepartmentDropdown().unwrap();
 
-      if (res && res?.success) {
+      if (res?.success) {
         dispatch(setDepartments(res.departments || []));
       }
     } catch (error) {
-      console?.error("Failed to fetch departments", error);
+      console.error("Failed to fetch departments", error);
     } finally {
       dispatch(setLoadingDepartments(false));
     }
+  };
+
+  const handleClickAdd = () => {
+    setOpen(true);
+    handleFetchDepartments();
   };
 
   const handleClickEdit = () => {
@@ -185,7 +182,6 @@ const Employee = () => {
       instagram: rowDetails?.social_links?.instagram,
       youtube: rowDetails?.social_links?.youtube,
     };
-    console.log(defaultVal, "rowDetails");
     resetForm(defaultVal);
 
     setEdit(true);

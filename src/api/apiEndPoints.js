@@ -14,15 +14,16 @@ export const CHANGE_PASSWORD = "/admins/change-password"; // Change password for
 
 // DEPARTMENT ENDPOINT
 export const DEPARTMENT = "/departments"; // Get all department, update and delete department by ID
+export const DEPARTMENT_DROPDOWN = "/departments/dropdown"; // Get all department, update and delete department by ID
 
 // EMPLOYEE ENDPOINT
 export const EMPLOYEE = "/employees"; // Get all employees and update and delete employees by ID
 
 // COMPANY PROFILE ENDPOINT
-export const COMPANY_PROFILE = '/company-profile';              // Get, update and delete company profile
+export const COMPANY_PROFILE = "/company-profile"; // Get, update and delete company profile
 
 // REPORT ENDPOINT
-export const EMPLOYEE_REPORTS = '/employees/reports';
+export const EMPLOYEE_REPORTS = "/employees/reports";
 // EMPLOYEES AND DEPARTMENT COUNT
 export const GET_ALL_EMPLOYEES = "/employees/count";
 export const GET_ALL_DEPARTMENTS = "/departments/count";

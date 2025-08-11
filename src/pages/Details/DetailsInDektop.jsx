@@ -13,7 +13,13 @@ import { DetailImage } from "../../assets/images/pngs";
 
 import { desktopImageBox } from "./styles";
 
-const DetailsInDektop = ({ isAbout, setIsAbout, data, currentEmployee }) => {
+const DetailsInDektop = ({
+  isAbout,
+  setIsAbout,
+  data,
+  currentEmployee,
+  companyProfile,
+}) => {
   return (
     <Stack
       flexDirection={"row"}
@@ -60,7 +66,11 @@ const DetailsInDektop = ({ isAbout, setIsAbout, data, currentEmployee }) => {
           )}
         </Box>
 
-        <Footer isAbout={isAbout} />
+        <Footer
+          isAbout={isAbout}
+          currentEmployee={currentEmployee}
+          companyProfile={companyProfile}
+        />
       </Stack>
     </Stack>
   );

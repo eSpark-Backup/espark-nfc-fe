@@ -61,7 +61,7 @@ const UploadCompanyProfile = ({
 
             <Box
               sx={profileUploadContainer(edit)}
-              onClick={edit && handleClick}
+              onClick={edit ? handleClick : () => {}}
             >
               {preview || value ? (
                 <Avatar src={preview || value} sx={avatar} />

@@ -86,7 +86,7 @@ const PARTNERS = ["uk", "uae", "qatar", "ksa"];
 const COMPANY = "About Company";
 const ABOUT = "About Me";
 const OURSOLUTION = "Our Solution";
-const VIEW = "View Website";
+const VIEW = "Visit Site";
 
 export {
   SOCIALICONS,

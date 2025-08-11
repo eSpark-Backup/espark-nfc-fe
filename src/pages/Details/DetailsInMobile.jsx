@@ -21,7 +21,14 @@ import {
   mobileTopContainer,
 } from "./styles";
 
-const DetailsInMobile = ({ isAbout, setIsAbout, data, currentEmployee, isMobile }) => {
+const DetailsInMobile = ({
+  isAbout,
+  setIsAbout,
+  data,
+  currentEmployee,
+  companyProfile,
+  isMobile,
+}) => {
   return (
     <>
       <Box sx={mobileTopContainer}>
@@ -69,7 +76,11 @@ const DetailsInMobile = ({ isAbout, setIsAbout, data, currentEmployee, isMobile 
           )}
         </Box>
 
-        <Footer isAbout={isAbout} />
+        <Footer
+          isAbout={isAbout}
+          currentEmployee={currentEmployee}
+          companyProfile={companyProfile}
+        />
       </Box>
     </>
   );

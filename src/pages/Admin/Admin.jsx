@@ -73,6 +73,7 @@ const Admin = () => {
     useResetPasswordMutation();
 
   const dispatch = useDispatch();
+  
   const { admins, loadingAdmins } = useSelector((state) => state.admin);
 
   useEffect(() => {
@@ -134,7 +135,7 @@ const Admin = () => {
 
   const handleClickEdit = () => {
     const defaultVal = {
-      profile_image: rowDetails?.profile_image?.image_url,
+      profile_image: rowDetails?.profile_image?.image_url || "",
       full_name: rowDetails?.full_name,
       email: rowDetails?.email,
       phone_number: rowDetails?.phone_number,
@@ -150,7 +151,7 @@ const Admin = () => {
 
   const handleClickResetPassword = () => {
     const defaultVal = {
-      new_password: '',
+      new_password: "",
     };
 
     if (resetPasswordForm) {
