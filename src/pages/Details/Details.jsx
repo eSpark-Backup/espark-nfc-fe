@@ -70,7 +70,7 @@ const Details = () => {
                   isAbout={isAbout}
                   setIsAbout={setIsAbout}
                   companyProfile={profileData?.company_profile}
-                  currentEmployee={employeeData.employee}
+                  currentEmployee={employeeData?.employee}
                   isMobile={isMobile}
                 />
               )

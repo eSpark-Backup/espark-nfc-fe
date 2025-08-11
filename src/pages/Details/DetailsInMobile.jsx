@@ -44,6 +44,9 @@ const DetailsInMobile = ({
               <Box
                 component={"img"}
                 src={currentEmployee?.profile_image?.image_url || DetailImage}
+                onError={(e) => {
+                  e.target.src = DetailImage;
+                }}
                 alt="Profile"
               />
             </Box>
