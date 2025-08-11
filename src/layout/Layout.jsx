@@ -21,6 +21,7 @@ import {
   layoutContainer,
   layoutMainContainer,
 } from "./styles";
+import { USER_TYPE } from "../utils/auth";
 
 const drawerWidth = 240;
 
@@ -29,7 +30,9 @@ const Layout = () => {
     data: company,
     isSuccess: isCompanySuccess,
     isLoading: isCompanyLoading,
-  } = useGetCompanyQuery(null, { skip: !getToken() });
+  } = useGetCompanyQuery(null, {
+    skip: !getToken() || USER_TYPE !== "super-admin",
+  });
 
   const dispatch = useDispatch();
 

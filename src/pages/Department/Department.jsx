@@ -294,6 +294,7 @@ const Department = () => {
         itemTitle={rowDetails?.name}
         handleDelete={handleDelete}
         isLoading={deleteIsLoading}
+        itemTitle={rowDetails?.name}
       />
     </>
   );
