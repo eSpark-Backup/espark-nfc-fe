@@ -35,7 +35,7 @@ const Department = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchText, setSearchText] = useState("");
   const [sortOrder, setSortOrder] = useState("desc");
-  const [localSearch, setLocalSearch] = useState(""); 
+  const [localSearch, setLocalSearch] = useState("");
 
   const {
     data: allDepartments,
@@ -137,7 +137,6 @@ const Department = () => {
       image: rowDetails?.image?.image_url || "",
       name: rowDetails?.name || "",
       email: rowDetails?.email || "",
-      created_at: rowDetails?.created_at ? dayjs(rowDetails.created_at) : null,
       employee_count: rowDetails?.employee_count || 0,
     };
 
@@ -294,7 +293,6 @@ const Department = () => {
         itemTitle={rowDetails?.name}
         handleDelete={handleDelete}
         isLoading={deleteIsLoading}
-        itemTitle={rowDetails?.name}
       />
     </>
   );
