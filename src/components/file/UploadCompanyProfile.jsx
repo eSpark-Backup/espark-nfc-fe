@@ -38,10 +38,14 @@ const UploadCompanyProfile = ({
       const imageUrl = URL.createObjectURL(file);
       setPreview(imageUrl);
       onChange(file);
-    } else {
-      onChange(null);
-      setValue(name, null, { shouldValidate: true });
     }
+    e.target.value = "";
+  };
+
+  const handleRemove = (onChange) => {
+    setPreview(null);
+    onChange(null);
+    setValue(name, null, { shouldValidate: true });
   };
 
   return (
@@ -50,7 +54,7 @@ const UploadCompanyProfile = ({
       control={control}
       render={({ field: { onChange } }) => (
         <Box>
-          <Box sx={companyProfileContainer(preview, error)}>
+          <Box sx={companyProfileContainer(preview || value, error)}>
             <input
               ref={inputRef}
               type="file"
@@ -59,7 +63,10 @@ const UploadCompanyProfile = ({
               onChange={(e) => handleFileChange(e, onChange)}
             />
 
-            <Box sx={profileUploadContainer(edit)} onClick={handleClick}>
+            <Box
+              sx={profileUploadContainer(edit)}
+              onClick={edit ? handleClick : () => {}}
+            >
               {preview || value ? (
                 <Avatar src={preview || value} sx={avatar} />
               ) : (
@@ -70,7 +77,6 @@ const UploadCompanyProfile = ({
                     src={Upload}
                     alt="Upload"
                   />
-
                   <Typography variant="body2" sx={heading}>
                     Upload File
                   </Typography>
@@ -78,8 +84,15 @@ const UploadCompanyProfile = ({
               )}
             </Box>
 
-            {edit && (
-              <Box sx={filledEdit} className="center">
+            {edit && (preview || value) && (
+              <Box
+                sx={filledEdit}
+                className="center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemove(onChange);
+                }}
+              >
                 <Box component={"img"} src={FilledEdit} />
               </Box>
             )}

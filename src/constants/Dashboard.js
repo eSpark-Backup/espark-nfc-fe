@@ -5,12 +5,12 @@ export const DASHBOARDITEMS = [
     heading1: "Departments",
     heading2: "Company Names",
     icon: DepartmentCard,
-    path: "/department",
+    path: "/departments",
   },
   {
     heading1: "Employees",
     heading2: "Number of Employees ",
     icon: EmployeeCard,
-    path: "/employee",
+    path: "/employees",
   },
 ];

@@ -9,13 +9,14 @@ import FormDialog from "../../components/dialogs/FormDialog";
 import SmallDialog from "../../components/dialogs/SmallDialog";
 import { adminTableColumns } from "./tableColumns";
 
-import { adminFormSchema } from "../../validations/schema";
+import { adminFormSchema, resetPasswordSchema } from "../../validations/schema";
 
 import {
   useAddAdminMutation,
   useDeleteAdminMutation,
   useGetAdminQuery,
   useUpdateAdminMutation,
+  useResetPasswordMutation,
 } from "../../store/slices/admin/adminApiSlice";
 
 import { setAdmins } from "../../store/slices/admin/adminSlice";
@@ -23,10 +24,17 @@ import { setAdmins } from "../../store/slices/admin/adminSlice";
 import {
   handleCreateAdminMutation,
   handleDeleteAdminMutation,
+  handleResetPasswordMutation,
   handleUpdateAdminMutation,
 } from "../../services/admin";
 
-import { ADMINTFIELDSCONFIG, ADD, EDIT } from "../../constants/Admin";
+import {
+  ADMINTFIELDSCONFIG,
+  ADD,
+  EDIT,
+  RESETPASSWORD,
+  RESETPASSWORDFIELDSCONFIG,
+} from "../../constants/Admin";
 
 const Admin = () => {
   const [page, setPage] = useState(1);
@@ -61,7 +69,11 @@ const Admin = () => {
   const [deleteAdmin, { isLoading: deleteIsLoading }] =
     useDeleteAdminMutation();
 
+  const [resetPassword, { isLoading: resetIsLoading }] =
+    useResetPasswordMutation();
+
   const dispatch = useDispatch();
+  
   const { admins, loadingAdmins } = useSelector((state) => state.admin);
 
   useEffect(() => {
@@ -80,12 +92,15 @@ const Admin = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openResetDialog, setOpenResetDialog] = useState(false);
   const [edit, setEdit] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [rowDetails, setRowDetails] = useState(null);
   const [errora, setError] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [resetForm, setResetForm] = useState(null);
+
+  const [resetAdminForm, setResetAdminForm] = useState(null);
+  const [resetPasswordForm, setResetPasswordForm] = useState(null);
 
   useEffect(() => {
     if (admins) {
@@ -120,30 +135,46 @@ const Admin = () => {
 
   const handleClickEdit = () => {
     const defaultVal = {
-      profile_image: rowDetails?.profile_image?.image_url,
+      profile_image: rowDetails?.profile_image?.image_url || "",
       full_name: rowDetails?.full_name,
       email: rowDetails?.email,
       phone_number: rowDetails?.phone_number,
     };
 
-    resetForm(defaultVal);
+    if (resetAdminForm) {
+      resetAdminForm(defaultVal);
+    }
 
     setEdit(true);
     setOpen(true);
   };
 
+  const handleClickResetPassword = () => {
+    const defaultVal = {
+      new_password: "",
+    };
+
+    if (resetPasswordForm) {
+      resetPasswordForm(defaultVal);
+    }
+
+    setOpenResetDialog(true);
+  };
+
   const handleDelete = async () => {
-    const res = await handleDeleteAdminMutation(
-      rowDetails.id,
-      deleteDepartment,
-      setError,
-      handleCloseFormDialog
-    );
+    try {
+      const res = await handleDeleteAdminMutation(
+        rowDetails.id,
+        deleteAdmin,
+        setError,
+        handleCloseFormDialog
+      );
 
-    if (res && res.success) {
-      const updatedAdmins = admins?.filter((item) => item.id !== rowDetails.id);
-
-      dispatch(setAdmins(updatedAdmins || []));
+      if (res?.success) {
+        dispatch(setAdmins(admins.filter((item) => item.id !== rowDetails.id)));
+      }
+    } catch (err) {
+      toast.error("Failed to delete admin");
     }
   };
 
@@ -186,6 +217,21 @@ const Admin = () => {
     }
   };
 
+  const handleResetPasswordSubmit = async (data, methods) => {
+    const payload = {
+      id: rowDetails?.id,
+      body: { new_password: data.new_password },
+    };
+
+    const res = await handleResetPasswordMutation(
+      payload,
+      resetPassword,
+      methods.setError,
+      methods,
+      handleCloseResetPasswordDialog
+    );
+  };
+
   const handleCloseFormDialog = () => {
     setOpen(false);
     setDeleteDialog(false);
@@ -194,21 +240,41 @@ const Admin = () => {
       setEdit(false);
       setRowDetails(null);
       setPreview(null);
-      handleReset();
+      handleResetAdminForm();
     }, 100);
   };
 
-  const handleReset = () => {
+  const handleCloseResetPasswordDialog = () => {
+    setOpenResetDialog(false);
+    setDeleteDialog(false);
+    setTimeout(() => {
+      setEdit(false);
+      setRowDetails(null);
+      setPreview(null);
+      handleResetPasswordFormReset();
+    }, 100);
+  };
+
+  const handleResetAdminForm = () => {
     const emptyForm = ADMINTFIELDSCONFIG.reduce((acc, field) => {
       acc[field.name] = field.type === "date" ? null : "";
       return acc;
     }, {});
 
-    if (resetForm) resetForm(emptyForm);
+    if (resetAdminForm) resetAdminForm(emptyForm);
   };
 
-  const totalRows = allAdmins?.total_count || 0;
-  const totalPages = allAdmins?.total_pages || 1;
+  const handleResetPasswordFormReset = () => {
+    const emptyForm = RESETPASSWORDFIELDSCONFIG.reduce((acc, field) => {
+      acc[field.name] = field.type === "date" ? null : "";
+      return acc;
+    }, {});
+
+    if (resetPasswordForm) resetPasswordForm(emptyForm);
+  };
+
+  const totalRows = allAdmins?.pagination?.total_count || 0;
+  const totalPages = allAdmins?.pagination?.total_pages || 1;
 
   return (
     <>
@@ -238,6 +304,8 @@ const Admin = () => {
         setVisible={setVisible}
         handleDelete={handleClickDelete}
         handleEdit={handleClickEdit}
+        handleResetPassword={handleClickResetPassword}
+        reset
       />
 
       <FormDialog
@@ -254,13 +322,32 @@ const Admin = () => {
         isLoading={addIsLoading || updateIsLoading}
         preview={preview}
         setPreview={setPreview}
-        exposeReset={(resetFn) => setResetForm(() => resetFn)}
+        exposeReset={(resetFn) => setResetAdminForm(() => resetFn)}
         admin
+      />
+
+      <FormDialog
+        open={openResetDialog}
+        setOpen={setOpenResetDialog}
+        ADD={RESETPASSWORD}
+        fieldsConfig={RESETPASSWORDFIELDSCONFIG}
+        schema={resetPasswordSchema}
+        onSubmit={handleResetPasswordSubmit}
+        rowDetails={rowDetails}
+        handleClose={handleCloseResetPasswordDialog}
+        isLoading={resetIsLoading}
+        preview={preview}
+        setPreview={setPreview}
+        exposeReset={(resetFn) => setResetPasswordForm(() => resetFn)}
+        admin
+        reset
+        text="Reset"
       />
 
       <SmallDialog
         open={deleteDialog}
         setOpen={setDeleteDialog}
+        itemTitle={rowDetails?.full_name}
         handleDelete={handleDelete}
         isLoading={deleteIsLoading}
       />

@@ -1,4 +1,4 @@
-import { DEPARTMENT } from "../../../api/apiEndPoints";
+import { DEPARTMENT, DEPARTMENT_DROPDOWN } from "../../../api/apiEndPoints";
 
 import { apiSlice } from "../../../api/apiSlice";
 
@@ -26,9 +26,15 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
       },
     }),
     getDepartment: builder.query({
-      query: ({ page = 1, limit = 10, sort_order = "desc", search = "" }) => ({
+      query: ({ page = "", limit = "", sort_order = "desc", search = "" }) => ({
         url: DEPARTMENT,
         params: { page, limit, sort_order, search },
+        method: "GET",
+      }),
+    }),
+    getDepartmentDropdown: builder.query({
+      query: () => ({
+        url: DEPARTMENT_DROPDOWN,
         method: "GET",
       }),
     }),
@@ -67,6 +73,8 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
 export const {
   useAddDepartmentMutation,
   useGetDepartmentQuery,
+  useLazyGetDepartmentQuery,
+  useLazyGetDepartmentDropdownQuery,
   useUpdateDepartmentMutation,
   useDeleteDepartmentMutation,
 } = departmentApiSlice;

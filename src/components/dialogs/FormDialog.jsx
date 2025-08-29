@@ -40,7 +40,9 @@ const FormDialog = ({
   setPreview,
   exposeReset,
   setSelectedDepartmentId,
-  admin
+  admin,
+  reset,
+  text,
 }) => {
   return (
     <Dialog
@@ -100,6 +102,8 @@ const FormDialog = ({
           exposeReset={exposeReset}
           setSelectedDepartmentId={setSelectedDepartmentId}
           admin={admin}
+          reset={reset}
+          text={text}
         />
       </DialogContent>
     </Dialog>

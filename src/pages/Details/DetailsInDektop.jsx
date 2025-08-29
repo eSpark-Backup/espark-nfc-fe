@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Avatar, Box, Stack } from "@mui/material";
 
 import Title from "./Title";
 import SocialIcons from "./SocialIcons";
@@ -9,24 +9,40 @@ import AboutCompany from "./AboutSection/AboutCompany";
 import OurSolutions from "./AboutSection/OurSolutions";
 import Footer from "./Footer";
 
-import { DetailImage } from "../../assets/images/pngs";
-
 import { desktopImageBox } from "./styles";
+import { useState } from "react";
 
-const DetailsInDektop = ({ isAbout, setIsAbout, data, currentEmployee }) => {
+const DetailsInDektop = ({
+  isAbout,
+  setIsAbout,
+  data,
+  currentEmployee,
+  companyProfile,
+}) => {
+  const [imageError, setImageError] = useState(false);
+
   return (
     <Stack
       flexDirection={"row"}
       gap={{ xs: 1.625, mdS: 2.625 }}
       justifyContent={"center"}
     >
-      <Box sx={desktopImageBox}>
-        <Box
-          component={"img"}
-          src={currentEmployee?.profile_image?.image_url || DetailImage}
-          alt="Profile"
+      {!currentEmployee?.profile_image?.image_url || imageError ? (
+        <Avatar
+          src={currentEmployee?.name}
+          alt={currentEmployee?.name}
+          sx={{ width: 60, height: 60 }}
         />
-      </Box>
+      ) : (
+        <Box sx={desktopImageBox}>
+          <Box
+            component="img"
+            src={currentEmployee?.profile_image?.image_url}
+            alt="Profile"
+            onError={() => setImageError(true)}
+          />
+        </Box>
+      )}
 
       <Stack>
         <Box marginBottom={"37px"}>
@@ -57,7 +73,11 @@ const DetailsInDektop = ({ isAbout, setIsAbout, data, currentEmployee }) => {
           )}
         </Box>
 
-        <Footer isAbout={isAbout} />
+        <Footer
+          isAbout={isAbout}
+          currentEmployee={currentEmployee}
+          companyProfile={companyProfile}
+        />
       </Stack>
     </Stack>
   );

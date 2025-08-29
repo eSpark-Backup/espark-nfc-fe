@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import {
   Box,
@@ -15,40 +15,31 @@ import DetailsInMobile from "./DetailsInMobile";
 import { useGetEmployeeByIdQuery } from "../../store/slices/employee/employeeApiSlice";
 
 import { mainContainer } from "./styles";
+import { useGetCompanyQuery } from "../../store/slices/companyProfile/companyProfileApiSlice";
 
 const Details = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(600));
 
   const { id } = useParams();
-  const { state } = useLocation();
 
   const {
-    data: allEmployees,
+    data: employeeData,
     isError,
     error,
     isLoading,
     isSuccess,
     isFetching,
-  } = useGetEmployeeByIdQuery(
-    {
-      id,
-    },
-    {
-      refetchOnMountOrArgChange: true,
-    }
-  );
+  } = useGetEmployeeByIdQuery(id, {
+    refetchOnMountOrArgChange: true,
+  });
+
+  const { data: profileData } = useGetCompanyQuery(id, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const [isAbout, setIsAbout] = useState(true);
-  const [currentEmployee, setCurrentEmployee] = useState(null);
-
-  useEffect(() => {
-    if (isSuccess && allEmployees?.employees?.length) {
-      const currEmp = allEmployees?.employees?.find((item) => item?.id === id);
-      setCurrentEmployee(currEmp);
-    }
-  }, [allEmployees, isSuccess]);
-
+  
   return (
     <Box sx={mainContainer(isMobile)}>
       {isLoading || isFetching ? (
@@ -66,9 +57,7 @@ const Details = () => {
             }}
           />
         </Box>
-      ) : isError &&
-        error &&
-        error?.data?.error !== "Invalid or expired token" ? (
+      ) : isError && error?.data?.error !== "Invalid or expired token" ? (
         <Typography color="error">
           {error?.data?.error ||
             "Something went wrong while fetching employee details."}
@@ -76,21 +65,21 @@ const Details = () => {
       ) : (
         <>
           {isMobile
-            ? currentEmployee && (
+            ? employeeData?.employee && (
                 <DetailsInMobile
                   isAbout={isAbout}
                   setIsAbout={setIsAbout}
-                  data={state}
-                  currentEmployee={currentEmployee}
+                  companyProfile={profileData?.company_profile}
+                  currentEmployee={employeeData?.employee}
                   isMobile={isMobile}
                 />
               )
-            : currentEmployee && (
+            : employeeData?.employee && (
                 <DetailsInDektop
                   isAbout={isAbout}
                   setIsAbout={setIsAbout}
-                  data={state}
-                  currentEmployee={currentEmployee}
+                  currentEmployee={employeeData?.employee}
+                  companyProfile={profileData?.company_profile}
                 />
               )}
         </>

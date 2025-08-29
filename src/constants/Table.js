@@ -33,7 +33,7 @@ const TABLEACTIONBUTTONS = [
   },
 ];
 
-const TABLEBUTTONPOPUP = ["Edit", "Delete"];
+const TABLEBUTTONPOPUP = ["Edit", "Delete", "Reset password"];
 
 const TABLEDELETEPOPUP = {
   icon: Delete,

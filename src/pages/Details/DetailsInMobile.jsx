@@ -20,8 +20,17 @@ import {
   mobileTitleContainer,
   mobileTopContainer,
 } from "./styles";
+import { useState } from "react";
 
-const DetailsInMobile = ({ isAbout, setIsAbout, data, currentEmployee, isMobile }) => {
+const DetailsInMobile = ({
+  isAbout,
+  setIsAbout,
+  data,
+  currentEmployee,
+  companyProfile,
+  isMobile,
+}) => {
+  const [imageError, setImageError] = useState(false);
   return (
     <>
       <Box sx={mobileTopContainer}>
@@ -33,13 +42,22 @@ const DetailsInMobile = ({ isAbout, setIsAbout, data, currentEmployee, isMobile 
           </Grid>
 
           <Grid size={5}>
-            <Box sx={mobileImageBox}>
-              <Box
-                component={"img"}
-                src={currentEmployee?.profile_image?.image_url || DetailImage}
-                alt="Profile"
+            {!currentEmployee?.profile_image?.image_url || imageError ? (
+              <Avatar
+                src={currentEmployee?.name}
+                alt={currentEmployee?.name}
+                sx={{ width: 60, height: 60 }}
               />
-            </Box>
+            ) : (
+              <Box sx={mobileImageBox}>
+                <Box
+                  component="img"
+                  src={currentEmployee?.profile_image?.image_url}
+                  alt="Profile"
+                  onError={() => setImageError(true)}
+                />
+              </Box>
+            )}
           </Grid>
         </Grid>
 
@@ -69,7 +87,11 @@ const DetailsInMobile = ({ isAbout, setIsAbout, data, currentEmployee, isMobile 
           )}
         </Box>
 
-        <Footer isAbout={isAbout} />
+        <Footer
+          isAbout={isAbout}
+          currentEmployee={currentEmployee}
+          companyProfile={companyProfile}
+        />
       </Box>
     </>
   );

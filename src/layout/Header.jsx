@@ -47,6 +47,8 @@ const Header = ({ onMenuClick, refetch }) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const role = localStorage.getItem("role");
+
   return (
     <>
       <AppBar position="sticky" color="default" elevation={1} sx={appBar}>
@@ -57,45 +59,47 @@ const Header = ({ onMenuClick, refetch }) => {
             </IconButton>
           )}
 
-          <Button
-            variant="contained"
-            onClick={handleOpen}
-            sx={formOpenButton(theme)}
-            disabled={loadingCompanyProfile}
-          >
-            <Box sx={avatarContainer} className="center">
-              {loadingCompanyProfile ? (
-                <Skeleton variant="circular" width="100%" height="100%" />
-              ) : (
-                <img
-                  src={companyProfile?.profile_image["image_url"] || User}
-                  alt="User"
-                />
-              )}
-            </Box>
-
-            <Stack flexDirection={"column"} mr={"10px"}>
-              <Typography sx={typographyOrg}>
+          {role === "super-admin" && (
+            <Button
+              variant="contained"
+              onClick={handleOpen}
+              sx={formOpenButton(theme)}
+              disabled={loadingCompanyProfile}
+            >
+              <Box sx={avatarContainer} className="center">
                 {loadingCompanyProfile ? (
-                  <Skeleton variant="text" width="75px" />
+                  <Skeleton variant="circular" width="100%" height="100%" />
                 ) : (
-                  companyProfile?.company_name || HEADER.cooperative
+                  <img
+                    src={companyProfile?.profile_image["image_url"] || User}
+                    alt="User"
+                  />
                 )}
-              </Typography>
+              </Box>
 
-              <Typography sx={typographyRole}>
-                {loadingCompanyProfile ? (
-                  <Skeleton variant="text" width="50px" />
-                ) : (
-                  HEADER.admin
-                )}
-              </Typography>
-            </Stack>
+              <Stack flexDirection={"column"} mr={"10px"}>
+                <Typography sx={typographyOrg}>
+                  {loadingCompanyProfile ? (
+                    <Skeleton variant="text" width="75px" />
+                  ) : (
+                    companyProfile?.company_name || HEADER.cooperative
+                  )}
+                </Typography>
 
-            <Box sx={dropdownContainer} className="center">
-              <img src={ColoredDownArrow} alt="User" />
-            </Box>
-          </Button>
+                <Typography sx={typographyRole}>
+                  {loadingCompanyProfile ? (
+                    <Skeleton variant="text" width="50px" />
+                  ) : (
+                    HEADER.admin
+                  )}
+                </Typography>
+              </Stack>
+
+              <Box sx={dropdownContainer} className="center">
+                <img src={ColoredDownArrow} alt="User" />
+              </Box>
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
 

@@ -146,9 +146,44 @@ const handleChangePasswordMutation = async (
   }
 };
 
+const handleResetPasswordMutation = async (
+  payload, // { id, body: { new_password } }
+  mutationFn,
+  setError,
+  methods,
+  handleCloseFormDialog
+) => {
+  try {
+    const res = await mutationFn(payload).unwrap();
+
+    if (res.success) {
+      toast.success(res?.message || "Password reset successfully");
+      handleCloseFormDialog?.();
+      methods.reset();
+      return res;
+    }
+  } catch (error) {
+    const errors = error?.data;
+
+    if (typeof errors?.errors === "object") {
+      setError(errors?.errors);
+    } else {
+      toast.error(
+        errors?.message || errors?.error || errors || "Password reset failed",
+        {
+          id: "global-error",
+        }
+      );
+    }
+
+    return null;
+  }
+};
+
 export {
   handleCreateAdminMutation,
   handleUpdateAdminMutation,
   handleDeleteAdminMutation,
   handleChangePasswordMutation,
+  handleResetPasswordMutation,
 };

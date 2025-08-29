@@ -1,4 +1,9 @@
-import { EMPLOYEE, GET_ALL_DEPARTMENTS, GET_ALL_EMPLOYEES } from "../../../api/apiEndPoints";
+import {
+  EMPLOYEE,
+  EMPLOYEE_REPORTS,
+  GET_ALL_DEPARTMENTS,
+  GET_ALL_EMPLOYEES,
+} from "../../../api/apiEndPoints";
 
 import { apiSlice } from "../../../api/apiSlice";
 
@@ -34,11 +39,11 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
     }),
     getEmployeeById: builder.query({
       query: (id) => ({
-        url: EMPLOYEE,
-        params: id,
+        url: `${EMPLOYEE}/${id}`, 
         method: "GET",
       }),
     }),
+
     updateEmployee: builder.mutation({
       query: ({ body, id }) => {
         const formData = new FormData();
@@ -69,22 +74,27 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
       },
     }),
     getAllEmployees: builder.query({
-      query: ({ id }) => {
+      query: () => {
         return {
-          // url: `${EMPLOYEE}/${id}`,
-          url : GET_ALL_EMPLOYEES,
+          url: GET_ALL_EMPLOYEES,
           method: "GET",
         };
       },
     }),
-      getAllDepartments: builder.query({
-      query: ({ id }) => {
+    getAllDepartments: builder.query({
+      query: () => {
         return {
-          // url: `${EMPLOYEE}/${id}`,
           url: GET_ALL_DEPARTMENTS,
           method: "GET",
         };
       },
+    }),
+    getAllReports: builder.query({
+      query: ({ page = 1, limit = 10, search = "" }) => ({
+        url: EMPLOYEE_REPORTS,
+        params: { page, limit, search },
+        method: "GET",
+      }),
     }),
   }),
 });
@@ -96,5 +106,6 @@ export const {
   useUpdateEmployeeMutation,
   useDeleteEmployeeMutation,
   useGetAllDepartmentsQuery,
-  useGetAllEmployeesQuery
+  useGetAllEmployeesQuery,
+  useGetAllReportsQuery,
 } = employeeApiSlice;

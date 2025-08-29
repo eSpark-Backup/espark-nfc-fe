@@ -14,10 +14,7 @@ const AboutCompany = ({ data }) => {
       <Box sx={sectionDetailsBox}>
         <Typography variant="body2" color="secondary.dark" sx={sectionDetails}>
           {data?.details ||
-            `Lorem ipsum is a dummy or placeholder text commonly used in graphic
-          design, publishing, and web development.Lorem ipsum is a dummy or
-          placeholder text commonly used in graphic design, publishing, and web
-          development.`}
+            `Founded in 2007 by Mr. Mohamed Fiaz Khazi. Euro Systems is a systems solution provider in the Doors and windows, Architectural systems, Outdoor shading, Interior shades, Acoustic solutions and aluminum and glazing industry.`}
         </Typography>
       </Box>
     </>

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import * as yup from "yup";
 
 const objectIdRegex = /^[0-9a-fA-F]{24}$/;
@@ -40,6 +41,23 @@ const passwordValidation = (edit, confirm) =>
           }
         ),
     });
+
+export const newPasswordValidation = (
+  currentField = "current_password",
+  label = "New"
+) =>
+  yup
+    .string()
+    .trim()
+    .required(`${label} password is required`)
+    .notOneOf(
+      [yup.ref(currentField)],
+      `${label} password must be different from current password`
+    )
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[\S]{8,}$/,
+      `${label} password must be at least 8 characters, include uppercase and lowercase letters, a number, and a special character, and have no spaces`
+    );
 
 const codeValidation = yup
   .string()
@@ -125,8 +143,11 @@ const dateTimeValidation = (label) =>
   yup
     .date()
     .required(`${label} date is required`)
-    .typeError("Invalid date format");
-
+    .typeError("Invalid date format")
+    .max(
+      dayjs().endOf("day").toDate(),
+      `${label} date cannot be in the future`
+    );
 const departmentValidation = yup.string().required("Department is required");
 
 const phoneNumberValidation = yup

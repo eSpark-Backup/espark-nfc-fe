@@ -30,6 +30,12 @@ import {
 } from "../../services/employee";
 
 import { ADD, EDIT, EMPOLYEEFIELDSCONFIG } from "../../constants/Employee";
+import { toast } from "sonner";
+import { useLazyGetDepartmentDropdownQuery } from "../../store/slices/department/departmentApiSlice";
+import {
+  setDepartments,
+  setLoadingDepartments,
+} from "../../store/slices/department/departmentSlice";
 
 dayjs.extend(utc);
 
@@ -48,7 +54,7 @@ const Employee = () => {
     isFetching,
   } = useGetEmployeeQuery(
     {
-      page,
+      page: page,
       limit: rowsPerPage,
       sort_order: sortOrder,
       search: searchText,
@@ -94,6 +100,7 @@ const Employee = () => {
   const [errora, setError] = useState(null);
   const [preview, setPreview] = useState(null);
   const [resetForm, setResetForm] = useState(null);
+  const [triggerGetDepartmentDropdown] = useLazyGetDepartmentDropdownQuery();
 
   useEffect(() => {
     if (employees) {
@@ -119,7 +126,7 @@ const Employee = () => {
       setCopied(true);
     } else if (index === 1) {
       window.open(
-        `${window.location.origin}/employee-detail/${row.id}`,
+        `${window.location.origin}/employee-detail/${row?.id}`,
         "_blank"
       );
     } else {
@@ -130,15 +137,33 @@ const Employee = () => {
     }
   };
 
-  const handleClickAdd = () => {
-    setOpen(true);
-  };
-
   const handleClickDelete = () => {
     setDeleteDialog(true);
   };
 
+  const handleFetchDepartments = async () => {
+    try {
+      dispatch(setLoadingDepartments(true));
+
+      const res = await triggerGetDepartmentDropdown().unwrap();
+
+      if (res?.success) {
+        dispatch(setDepartments(res.departments || []));
+      }
+    } catch (error) {
+      console.error("Failed to fetch departments", error);
+    } finally {
+      dispatch(setLoadingDepartments(false));
+    }
+  };
+
+  const handleClickAdd = () => {
+    setOpen(true);
+    handleFetchDepartments();
+  };
+
   const handleClickEdit = () => {
+    handleFetchDepartments();
     const defaultVal = {
       profile_image: rowDetails?.profile_image?.image_url,
       name: rowDetails?.name,
@@ -157,7 +182,6 @@ const Employee = () => {
       instagram: rowDetails?.social_links?.instagram,
       youtube: rowDetails?.social_links?.youtube,
     };
-
     resetForm(defaultVal);
 
     setEdit(true);
@@ -252,8 +276,8 @@ const Employee = () => {
     }
   };
 
-  const totalRows = allEmployees?.total_count || 0;
-  const totalPages = allEmployees?.total_pages || 1;
+  const totalRows = allEmployees?.pagination?.total_count || 0;
+  const totalPages = allEmployees?.pagination?.total_pages || 1;
 
   return (
     <>
@@ -304,6 +328,7 @@ const Employee = () => {
       />
 
       <SmallDialog
+        itemTitle={rowDetails?.name || ""}
         open={deleteDialog}
         setOpen={setDeleteDialog}
         handleDelete={handleDelete}

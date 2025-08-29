@@ -55,7 +55,7 @@ const SelectDropdown = ({
           <Box>
             <Select
               {...field}
-              value={value}
+              value={value?.id || value || ""}
               displayEmpty
               renderValue={(selected) => {
                 const selectedOption = options.find(

@@ -68,6 +68,7 @@ const ROWS = [
 ];
 
 const ADD = "add new admin";
+const RESETPASSWORD = "Reset password";
 const EDIT = "edit";
 
 const ADMINTFIELDSCONFIG = [
@@ -103,6 +104,15 @@ const ADMINTFIELDSCONFIG = [
   },
 ];
 
+const RESETPASSWORDFIELDSCONFIG = [
+  {
+    name: "new_password",
+    label: "New password",
+    type: "password",
+    placeholder: "Enter new password",
+  },
+];
+
 const CHANGEPASSWORDFIELDS = [
   {
     name: "current_password",
@@ -118,4 +128,12 @@ const CHANGEPASSWORDFIELDS = [
   },
 ];
 
-export { ROWS, ADD, EDIT, ADMINTFIELDSCONFIG, CHANGEPASSWORDFIELDS };
+export {
+  ROWS,
+  ADD,
+  EDIT,
+  RESETPASSWORD,
+  ADMINTFIELDSCONFIG,
+  CHANGEPASSWORDFIELDS,
+  RESETPASSWORDFIELDSCONFIG,
+};

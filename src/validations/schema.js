@@ -17,6 +17,7 @@ import {
   imageValidation,
   instagramValidation,
   nameValidation,
+  newPasswordValidation,
   noOfEmpolyeesValidation,
   passwordValidation,
   phoneNumberValidation,
@@ -50,7 +51,7 @@ const departmentFormSchema = yup.object({
   name: departmentNameValidation,
   email: emailValidation,
   // employee_count: noOfEmpolyeesValidation,
-  created_at: dateTimeValidation("Creation"),
+  // created_at: dateTimeValidation("Creation"),
 });
 
 const employeeFormSchema = yup.object({
@@ -81,7 +82,11 @@ const adminFormSchema = (edit) =>
 
 const changePasswordSchema = yup.object({
   current_password: passwordValidation(),
-  new_password: passwordValidation("", 'New'),
+  new_password: newPasswordValidation(),
+});
+
+const resetPasswordSchema = yup.object({
+  new_password: passwordValidation("", "New"),
 });
 
 export {
@@ -92,4 +97,5 @@ export {
   employeeFormSchema,
   adminFormSchema,
   changePasswordSchema,
+  resetPasswordSchema,
 };

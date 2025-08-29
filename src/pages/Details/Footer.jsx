@@ -1,7 +1,6 @@
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 
 import { PARTNERS, VIEW } from "../../constants/Details";
-
 import { Logo } from "../../assets/images/pngs";
 
 import {
@@ -13,12 +12,19 @@ import {
   partnersItem,
 } from "./styles";
 
-const Footer = ({ isAbout }) => {
+const Footer = ({ isAbout, companyProfile }) => {
+  const handleClick = (link) => {
+    window.open(link || "https://thebitvistas.com", "_blank");
+  };
   return (
     <Box sx={footerContainer}>
       {!isAbout && (
-        <Button variant="contained" sx={footerButton}>
-          {VIEW}
+        <Button
+          variant="contained"
+          sx={footerButton}
+          onClick={() => handleClick(companyProfile?.button_redirect_url)}
+        >
+          {companyProfile?.button_name || VIEW}
         </Button>
       )}
 
@@ -26,13 +32,12 @@ const Footer = ({ isAbout }) => {
 
       <Stack sx={partnersContainer}>
         {PARTNERS.map((el, i) => (
-          <>
-            <Typography key={i} variant="caption" sx={partnersItem}>
+          <Box key={i} display="flex" alignItems="center">
+            <Typography variant="caption" sx={partnersItem}>
               {el}
             </Typography>
-
-            {i !== 3 && <Divider sx={partnersBorder} />}
-          </>
+            {i !== PARTNERS.length - 1 && <Divider sx={partnersBorder} />}
+          </Box>
         ))}
       </Stack>
     </Box>
