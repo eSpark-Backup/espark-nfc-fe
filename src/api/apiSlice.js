@@ -8,7 +8,7 @@ import { navigate } from "../utils/navigateService";
 import { handleLogoutUser } from "../utils/auth";
 import { getToken } from "../utils/tokenManager";
 
-const baseURL = import.meta.env.VITE_API_URL || "https://nfc-be.stg.esparkconsultants.com/api";
+const baseURL = import.meta.env.VITE_API_BASE;
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
@@ -37,7 +37,7 @@ const baseQueryWithErrorHandling = async (args, api, extraOptions) => {
     toast.error("Your session has expired. Please log in again.", {
       id: "global-error",
     });
-    
+
     api.dispatch(logOut());
     handleLogoutUser(navigate);
   }
