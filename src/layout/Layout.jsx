@@ -26,12 +26,14 @@ import { USER_TYPE } from "../utils/auth";
 const drawerWidth = 240;
 
 const Layout = () => {
+  const token = getToken();
+
   const {
     data: company,
     isSuccess: isCompanySuccess,
     isLoading: isCompanyLoading,
   } = useGetCompanyQuery(null, {
-    skip: !getToken() || USER_TYPE !== "super-admin",
+    skip: !token,
   });
 
   const dispatch = useDispatch();

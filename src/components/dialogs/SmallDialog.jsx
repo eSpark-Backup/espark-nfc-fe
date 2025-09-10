@@ -53,7 +53,7 @@ const SmallDialog = ({
     >
       <DialogContent sx={smallDialogContent}>
         <Stack sx={smallDialogButtonsContainer}>
-          <IconButton sx={smallDialogButtonIcon}>
+          <IconButton disableRipple sx={smallDialogButtonIcon}>
             {logout ? (
               <LogoutIcon color="error" fontSize="medium" />
             ) : (

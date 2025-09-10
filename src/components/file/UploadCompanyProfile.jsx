@@ -84,14 +84,11 @@ const UploadCompanyProfile = ({
               )}
             </Box>
 
-            {edit && (preview || value) && (
+            {edit && (
               <Box
                 sx={filledEdit}
                 className="center"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleRemove(onChange);
-                }}
+                onClick={edit ? handleClick : () => {}}
               >
                 <Box component={"img"} src={FilledEdit} />
               </Box>

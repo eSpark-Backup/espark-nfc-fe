@@ -40,8 +40,9 @@ const filledEdit = {
   width: "39px",
   height: "39px",
   position: "absolute",
-  right: '10px',
-  bottom: '-7px',
+  cursor: "pointer",
+  right: "10px",
+  bottom: "-7px",
   borderRadius: "50%",
   backgroundColor: "#1C274C",
 };

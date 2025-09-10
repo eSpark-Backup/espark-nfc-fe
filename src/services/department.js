@@ -114,7 +114,7 @@ const handleDeleteDepartmentMutation = async (
         }
       );
     }
-
+    handleCloseFormDialog();
     return null;
   }
 };
