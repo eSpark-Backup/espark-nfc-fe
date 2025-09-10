@@ -8,8 +8,7 @@ import { navigate } from "../utils/navigateService";
 import { handleLogoutUser } from "../utils/auth";
 import { getToken } from "../utils/tokenManager";
 
-const baseURL =
-  import.meta.env.VITE_API_BASE || "https://www.eurosystemsint.com/api";
+const baseURL = import.meta.env.VITE_API_BASE;
 
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
