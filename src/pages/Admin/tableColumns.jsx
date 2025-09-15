@@ -9,7 +9,9 @@ export const adminTableColumns = [
     render: (row) => (
       <Box display="flex" alignItems="center" gap={1}>
         <Avatar
-          src={row.image || "/default-avatar.png"}
+          src={
+            row.image || row?.profile_image?.image_url || "/default-avatar.png"
+          }
           alt={row.name}
           sx={avatar}
         />
