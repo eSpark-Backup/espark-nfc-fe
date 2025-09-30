@@ -52,7 +52,7 @@ const DetailsInDektop = ({
       <Stack
         justifyContent={"space-between"}
         p={1}
-        spacing={{ xs: 4, md: 6 }}
+        spacing={{ xs: 4, md: 5 }}
         sx={{
           width: { sm: "calc(100% - 300px)" },
           height: "100%",
@@ -60,7 +60,7 @@ const DetailsInDektop = ({
       >
         <Title data={data} currentEmployee={currentEmployee} />
         <SocialIcons currentEmployee={currentEmployee} />
-        <Stack mb={-3}>
+        <Stack pt={1.5}>
           <SwitchButtons isAbout={isAbout} setIsAbout={setIsAbout} />
         </Stack>
         <Stack spacing={3}>
