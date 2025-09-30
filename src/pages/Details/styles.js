@@ -1,3 +1,4 @@
+
 const mainContainer = (isMobile) => ({
   height: isMobile ? "100vh" : "100%",
   backgroundColor: isMobile ? "#E9E7E7" : "#ffffff",
@@ -100,11 +101,21 @@ const contactListContainer = {
   gap: "21px",
 };
 
-const contactListIcon = {
-  width: "21px",
-
-  "& img": { margin: "auto" },
-};
+const contactListIcon = (el) => ({
+  width: "30px",
+  display: "flex",
+  textAlign: "center",
+  "& img": {
+    margin: "auto",
+    width: "fit-content",
+    height:
+      el.key === "phone_number"
+        ? "28px"
+        : el.key === "address"
+        ? "28px"
+        : "26px",
+  },
+});
 
 const listItem = {
   color: "#48494A",

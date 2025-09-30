@@ -14,7 +14,7 @@ const OurSolutions = ({ isMobile }) => {
         {OURSOLUTION}
       </Typography>
 
-      <Grid container spacing={{ xs: 2, lg: 2.75 }} sx={gridContainer}>
+      <Grid container spacing={{ xs: 2, lg: 2.2 }} sx={gridContainer}>
         {OURSOLUTIONS.map((el, i) => (
           <Grid size={{ xs: 12, smLarge: 6 }} key={i}>
             <Box

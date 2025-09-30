@@ -20,7 +20,7 @@ const Footer = ({ isAbout, companyProfile }) => {
     <Box sx={footerContainer}>
       {!isAbout && (
         <Button
-          variant="contained"
+          variant="containedSecondary"
           sx={footerButton}
           onClick={() => handleClick(companyProfile?.button_redirect_url)}
         >

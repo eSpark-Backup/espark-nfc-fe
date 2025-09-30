@@ -44,7 +44,7 @@ const ContactDetails = ({ currentEmployee }) => {
     <Stack gap={1.375}>
       {displayDetails.map((el, i) => (
         <Stack key={i} sx={contactListContainer}>
-          <Box sx={contactListIcon}>
+          <Box sx={contactListIcon(el)}>
             <Box component="img" src={el.icon} alt="icon" />
           </Box>
 
@@ -63,7 +63,7 @@ const ContactDetails = ({ currentEmployee }) => {
             >
               <Typography sx={listItem}>{el.details}</Typography>
               <Button
-                variant="contained"
+                variant="containedSecondary"
                 size="small"
                 onClick={() => handleSaveContact(currentEmployee)}
                 sx={{
@@ -80,7 +80,9 @@ const ContactDetails = ({ currentEmployee }) => {
               <Typography sx={listItem}>{el.details}</Typography>
             </Link>
           ) : (
-            <Typography sx={listItem}>{el.details}</Typography>
+            <Typography sx={{ ...listItem, width: "calc(100% - 40px)" }}>
+              {el.details}
+            </Typography>
           )}
         </Stack>
       ))}

@@ -1,3 +1,4 @@
+import { Chrome, GoogleMap, Link, Mail, Whatsapp } from "../assets/images/pngs";
 import {
   Acoustic,
   AcousticMobile,
@@ -11,16 +12,12 @@ import {
   EmployeeAboutDisabled,
   EmployeeCompanyProfilDisabled,
   EmployeeCompanyProfile,
-  Facebook,
-  Instagram,
   Interior,
   InteriorMobile,
   Location,
   Outdoor,
   OutdoorMobile,
-  Twitter,
   Website,
-  YouTube,
 } from "../assets/images/svgs";
 
 const SOCIALICONS = [
@@ -55,10 +52,10 @@ const SOCIALICONS = [
 ];
 
 const CONTACTDETAILS = [
-  { icon: Email, key: "email" },
-  { icon: Contact, key: "phone_number" },
-  { icon: Website, key: "website" },
-  { icon: Location, key: "address" },
+  { icon: Mail, key: "email" },
+  { icon: Whatsapp, key: "phone_number" },
+  { icon: Link, key: "website" },
+  { icon: GoogleMap, key: "address" },
 ];
 
 const OURSOLUTIONS = [

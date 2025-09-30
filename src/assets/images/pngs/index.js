@@ -10,6 +10,11 @@ import Marketing from "./marketing.png";
 import Sales from "./sales.png";
 import SoftwareEngineering from "./se.png";
 import UIUX from "./ui-ux.png";
+import Chrome from "./chrome.png";
+import Whatsapp from "./whatsapp.png";
+import GoogleMap from "./google-map.png";
+import Mail from "./mail.png";
+import Link from "./link.png";
 // Users
 import User1 from "./user-1.png";
 import User2 from "./user-2.png";
@@ -33,6 +38,11 @@ export {
   Sales,
   SoftwareEngineering,
   UIUX,
+  Chrome,
+  Whatsapp,
+  GoogleMap,
+  Mail,
+  Link,
   // Users
   User1,
   User2,
