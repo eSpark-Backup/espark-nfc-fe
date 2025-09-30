@@ -1,33 +1,26 @@
 const mainContainer = (isMobile) => ({
-  padding: isMobile ? "26px 20px" : { xs: "30px 28px", lg: "35px 34px" },
   height: isMobile ? "100vh" : "100%",
   backgroundColor: isMobile ? "#E9E7E7" : "#ffffff",
   overflowY: isMobile ? "auto" : "unset",
-
-  "@media (max-width:374px)": {
-    padding: "25px 20px",
-  },
 });
 
 const desktopImageBox = {
-  width: { xs: "224px", mdS: "244px", mdLarge: "294px" },
-  height: "222px",
-
   "& img": {
-    width: { xs: "224px", mdS: "244px", mdLarge: "294px" },
+    width: "100%",
+    height: { xs: "180px", md: "222px" },
     border: "1px solid #2684FC",
     borderRadius: 1,
-    height: "100%",
     objectFit: "cover",
+    objectPosition: "center center",
   },
 };
 
 const title = {
   letterSpacing: "-0.015em",
   color: "#000000",
-  fontSize: { xs: "21px", smLarge: "25px" },
+  fontSize: { xs: "20px", sm: "25px" },
 
-  "@media (max-width:374px)": {
+  "@media (max-width:375px)": {
     fontSize: "19px",
   },
 };
@@ -35,7 +28,7 @@ const title = {
 const department = {
   letterSpacing: "-0.015em",
   color: "#606061",
-  fontSize: { xs: "13px", smLarge: "15px" },
+  fontSize: { xs: "13px", sm: "15px" },
 };
 
 const switchButtonsContainer = {
@@ -43,29 +36,24 @@ const switchButtonsContainer = {
   backgroundColor: "action.disabledBackground",
   borderRadius: 1.5,
   width: {
-    xs: "309px",
-    smLarge: "371px",
-  },
-
-  "@media (max-width:374px)": {
-    width: "90%",
-    justifyContent: "space-between",
-
-    "& img": {
-      display: "none",
-    },
+    xs: "fit-content",
+    smLarge: "285px",
+    md: "341px",
   },
 };
 
 const switchButtons = {
   fontSize: {
-    xs: "14px",
-    smLarge: "17px",
+    xs: "10px",
+    smLarge: "13px",
+    md: "17px",
   },
   lineHeight: {
     xs: "24px",
+    sm: "26px",
     smLarge: "29px",
   },
+  textWrap: "noWrap",
   fontWeight: 500,
   borderRadius: 1.5,
 };
@@ -75,7 +63,6 @@ const aboutButton = (isAbout) => ({
   color: isAbout ? "#ffffff" : "action.disabled",
   padding: {
     xs: "6px 30px",
-    smLarge: !isAbout ? "8px 39px" : "8px 36px",
   },
 
   "@media (max-width:374px)": {
@@ -86,11 +73,6 @@ const aboutButton = (isAbout) => ({
 const companyButton = (isAbout) => ({
   backgroundColor: !isAbout ? "#3B5B82" : "transparent",
   color: !isAbout ? "#ffffff" : "action.disabled",
-  padding: {
-    xs: !isAbout ? "6px 10px 6px 21px" : "6px 16px 6px 18px",
-    smLarge: !isAbout ? "8px 19px 8px 21px" : "8px 12px 8px 26px",
-  },
-
   "@media (max-width:374px)": {
     padding: "6px 15px",
   },
@@ -103,7 +85,7 @@ const sectionHeading = {
 };
 
 const sectionDetailsBox = {
-  width: { xs: "100%", lg: "500px" },
+  // width: { xs: "100%" },
 };
 
 const sectionDetails = {
@@ -131,12 +113,15 @@ const listItem = {
   fontWeight: 600,
   lineHeight: "20px",
   maxWidth: "170px",
+  wordBreak: "break-all",
+  whiteSpace: "normal",
+  overflowWrap: "break-word",
 };
 
 const gridContainer = {
   width: { xs: "100%" },
 
-  "@media (min-width:1000px)": {
+  "@media (min-width:786px)": {
     width: "400px",
   },
 };
@@ -159,7 +144,7 @@ const ourSolutions = {
 const mobileTopContainer = {
   backgroundColor: "#ffffff",
   borderRadius: "9px",
-  padding: "30px 31px 27px 18px",
+  padding: "30px 18px 27px 18px",
 };
 
 const mobileBottomContainer = {
@@ -176,22 +161,24 @@ const mobileDetailsContainer = {
 };
 
 const mobileTitleContainer = {
+  width: "100%",
   textAlign: "center",
-  marginRight: "29px",
-
-  "@media (max-width:374px)": {
-    marginRight: "19px",
-  },
 };
 
 const mobileImageBox = {
-  width: "143px",
-  height: "143px",
+  mx: "auto",
+  width: "135px",
+  height: "135px",
   borderRadius: "50%",
 
-  "@media (max-width:400px)": {
-    width: "120px",
-    height: "120px",
+  "@media (max-width:399px)": {
+    width: "110px",
+    height: "110px",
+  },
+
+  "@media (max-width:375px)": {
+    width: "95px",
+    height: "95px",
   },
 
   "& img": {
@@ -212,25 +199,29 @@ const mobileButtonsContainer = {
   display: "flex",
   justifyContent: "center",
   position: "relative",
-  top: "-14px",
+  top: "-13px",
 };
 
-const footerContainer = { marginLeft: "9px", maxWidth: "450px" };
+const footerContainer = {
+  marginLeft: "9px",
+  maxWidth: "450px",
+  mx: { xs: "auto", smLarge: 0 },
+};
 
 const footerButton = {
   padding: "10px 22px",
   fontSize: "12px",
   display: "block",
-  margin: { xs: "0px auto 22px", sm: "0px 0px 22px auto" },
+  margin: { xs: "22px auto 20px", smLarge: "0px 0px 22px auto" },
 };
 
-const footerLogo = { margin: { xs: "auto", sm: "0px" } };
+const footerLogo = { margin: { xs: "auto", smLarge: "0px" } };
 
 const partnersContainer = {
   marginLeft: "10px",
   flexDirection: "row",
   alignItems: "center",
-  justifyContent: { xs: "center", sm: "normal" },
+  justifyContent: { xs: "center", smLarge: "normal" },
   gap: 1,
 };
 

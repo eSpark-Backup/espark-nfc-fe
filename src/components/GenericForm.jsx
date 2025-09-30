@@ -63,6 +63,7 @@ const GenericForm = ({
                   const commonProps = {
                     ...controllerField,
                     label: field.label,
+                    disabled: field.disabled,
                     fullWidth: true,
                     error: !!fieldState.error,
                     helperText: fieldState.error?.message,

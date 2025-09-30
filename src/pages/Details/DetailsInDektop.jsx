@@ -24,55 +24,61 @@ const DetailsInDektop = ({
   return (
     <Stack
       flexDirection={"row"}
-      gap={{ xs: 1.625, mdS: 2.625 }}
+      gap={{ xs: 2.625 }}
+      maxWidth={"1024px"}
+      mx={"auto"}
       justifyContent={"center"}
+      padding={{ xs: "30px 28px", lg: "35px 34px" }}
+      display={{ xs: "none", sm: "flex" }}
     >
-      {!currentEmployee?.profile_image?.image_url || imageError ? (
-        <Avatar
-          src={currentEmployee?.name}
-          alt={currentEmployee?.name}
-          sx={{ width: 60, height: 60 }}
-        />
-      ) : (
-        <Box sx={desktopImageBox}>
-          <Box
-            component="img"
-            src={currentEmployee?.profile_image?.image_url}
-            alt="Profile"
-            onError={() => setImageError(true)}
-          />
-        </Box>
-      )}
-
       <Stack>
-        <Box marginBottom={"37px"}>
-          <Title data={data} currentEmployee={currentEmployee} />
-        </Box>
-
-        <Box marginBottom={"63px"}>
-          <SocialIcons currentEmployee={currentEmployee} />
-        </Box>
-
-        <Box marginBottom={"30px"}>
+        {!currentEmployee?.profile_image?.image_url || imageError ? (
+          <Avatar
+            src={currentEmployee?.name}
+            alt={currentEmployee?.name}
+            sx={{ width: 60, height: 60 }}
+          />
+        ) : (
+          <Box sx={desktopImageBox}>
+            <Box
+              component="img"
+              src={currentEmployee?.profile_image?.image_url}
+              alt="Profile"
+              onError={() => setImageError(true)}
+            />
+          </Box>
+        )}
+      </Stack>
+      <Stack
+        justifyContent={"space-between"}
+        p={1}
+        spacing={3}
+        sx={{
+          width: { sm: "calc(100% - 300px)" },
+        }}
+      >
+        <Title data={data} currentEmployee={currentEmployee} />
+        <SocialIcons currentEmployee={currentEmployee} />
+        <Stack mb={-3}>
           <SwitchButtons isAbout={isAbout} setIsAbout={setIsAbout} />
-        </Box>
-
-        <Box marginBottom={"19px"}>
+        </Stack>
+        <Stack spacing={3}>
           {isAbout ? (
             <AboutMe data={data} currentEmployee={currentEmployee} />
           ) : (
             <AboutCompany data={data} currentEmployee={currentEmployee} />
           )}
-        </Box>
-
-        <Box marginBottom={"37px"}>
           {isAbout ? (
-            <ContactDetails currentEmployee={currentEmployee} />
+            <ContactDetails
+              currentEmployee={{
+                ...currentEmployee,
+                website: companyProfile?.website_link,
+              }}
+            />
           ) : (
             <OurSolutions />
           )}
-        </Box>
-
+        </Stack>
         <Footer
           isAbout={isAbout}
           currentEmployee={currentEmployee}
