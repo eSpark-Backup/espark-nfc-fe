@@ -22,8 +22,11 @@ const OurSolutions = ({ isMobile }) => {
               alignItems="center"
               gap={{ xs: 1.625, lg: 2.625 }}
             >
-              <Box component="img" src={isMobile ? el.iconMobile : el.icon} />
-
+              <Box
+                component="img"
+                src={isMobile ? el.iconMobile : el.icon}
+                width={{ xs: "40px" }}
+              />
               <Typography sx={listItem}>{el.details}</Typography>
             </Box>
           </Grid>

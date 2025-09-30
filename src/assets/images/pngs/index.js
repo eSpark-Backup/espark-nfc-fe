@@ -5,7 +5,7 @@ import LoginBG from "./login-bg.png";
 import BusinessDevelopment from "./bd.png";
 import Devops from "./devops.png";
 import HR from "./hr.png";
-import Logo from './Logo.png';
+import Logo from "./Logo.png";
 import Marketing from "./marketing.png";
 import Sales from "./sales.png";
 import SoftwareEngineering from "./se.png";
@@ -41,5 +41,5 @@ export {
   User5,
   User6,
   User7,
-  User
+  User,
 };

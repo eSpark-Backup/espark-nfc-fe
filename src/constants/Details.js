@@ -23,33 +23,41 @@ import {
   YouTube,
 } from "../assets/images/svgs";
 
-const SOCIALICONS =  [
+const SOCIALICONS = [
   {
     name: "Facebook",
     key: "facebook",
-    icon: Facebook,
+    image:
+      "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg",
+    color: "#1877f2",
   },
   {
     name: "YouTube",
     key: "youtube",
-    icon: YouTube,
+    image:
+      "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg",
+    color: "#ff0000",
   },
   {
     name: "Instagram",
     key: "instagram",
-    icon: Instagram,
+    image:
+      "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg",
+    color: "#e1306c",
   },
   {
     name: "Twitter",
     key: "twitter",
-    icon: Twitter,
+    image:
+      "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg",
+    color: "#1DA1F2",
   },
 ];
 
 const CONTACTDETAILS = [
   { icon: Email, key: "email" },
   { icon: Contact, key: "phone_number" },
-  { icon: Website, key: "website" }, 
+  { icon: Website, key: "website" },
   { icon: Location, key: "address" },
 ];
 

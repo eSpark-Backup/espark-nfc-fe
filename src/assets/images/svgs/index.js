@@ -52,7 +52,8 @@ import Logo from "./logo.svg";
 import DashboardActive from "./dashboard-active.svg";
 import Dashboard from "./dashboard.svg";
 import Report from "./Report.svg";
-import ReportActive from "./ReportActive.svg"
+import ReportActive from "./ReportActive.svg";
+import Banner from "./banner.svg";
 
 export {
   // UI Icons
@@ -110,4 +111,5 @@ export {
   Dashboard,
   Report,
   ReportActive,
+  Banner,
 };

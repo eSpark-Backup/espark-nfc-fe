@@ -19,7 +19,7 @@ import { useGetCompanyQuery } from "../../store/slices/companyProfile/companyPro
 
 const Details = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down(600));
+  const isMobile = useMediaQuery(theme.breakpoints.down(768));
 
   const { id } = useParams();
 
@@ -39,7 +39,7 @@ const Details = () => {
   });
 
   const [isAbout, setIsAbout] = useState(true);
-  
+
   return (
     <Box sx={mainContainer(isMobile)}>
       {isLoading || isFetching ? (

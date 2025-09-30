@@ -27,6 +27,7 @@
     "react-hook-form": "^7.60.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.3",
+    "simple-icons": "^15.16.0",
     "sonner": "^2.0.6",
     "tailwindcss": "^4.1.11",
     "yup": "^1.6.1"
