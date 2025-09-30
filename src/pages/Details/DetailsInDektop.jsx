@@ -52,9 +52,10 @@ const DetailsInDektop = ({
       <Stack
         justifyContent={"space-between"}
         p={1}
-        spacing={3}
+        spacing={{ xs: 4, md: 6 }}
         sx={{
           width: { sm: "calc(100% - 300px)" },
+          height: "100%",
         }}
       >
         <Title data={data} currentEmployee={currentEmployee} />
