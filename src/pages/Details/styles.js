@@ -1,4 +1,3 @@
-
 const mainContainer = (isMobile) => ({
   height: isMobile ? "100vh" : "100%",
   backgroundColor: isMobile ? "#E9E7E7" : "#ffffff",
@@ -123,7 +122,7 @@ const listItem = {
   letterSpacing: "-0.015em",
   fontWeight: 600,
   lineHeight: "20px",
-  maxWidth: "170px",
+  maxWidth: "210px",
   wordBreak: "break-all",
   whiteSpace: "normal",
   overflowWrap: "break-word",
@@ -149,6 +148,7 @@ const ourSolutions = {
   "& img": {
     width: "100%",
     height: "100%",
+    objectFit: "contain",
   },
 };
 

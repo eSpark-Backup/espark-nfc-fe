@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, Stack, Typography, Button } from "@mui/material";
 import { CONTACTDETAILS } from "../../../constants/Details";
 import { contactListContainer, contactListIcon, listItem } from "../styles";
@@ -10,10 +11,6 @@ VERSION:3.0
 FN:${employee.name}
 TEL:${employee.phone_number}
 EMAIL:${employee.email}
-ORG:${employee.department_id?.name || ""}
-TITLE:${employee.designation || ""}
-ADR:${employee.address || ""}
-URL:${employee.website || ""}
 END:VCARD
   `.trim();
 };
@@ -43,51 +40,75 @@ const ContactDetails = ({ currentEmployee }) => {
   return (
     <Stack gap={1.375}>
       {displayDetails.map((el, i) => (
-        <Stack key={i} sx={contactListContainer}>
-          <Box sx={contactListIcon(el)}>
-            <Box component="img" src={el.icon} alt="icon" />
-          </Box>
+        <React.Fragment key={i}>
+          <Stack sx={contactListContainer}>
+            <Box sx={contactListIcon(el)}>
+              <Box component="img" src={el.icon} alt="icon" />
+            </Box>
 
-          {el.key === "phone_number" ? (
-            <Stack
-              direction="row"
-              alignItems="center"
-              gap={1.5}
-              sx={{
-                "@media(max-width: 375px)": {
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  gap: 0.8,
-                },
-              }}
-            >
-              <Typography sx={listItem}>{el.details}</Typography>
-              <Button
-                variant="containedSecondary"
-                size="small"
-                onClick={() => handleSaveContact(currentEmployee)}
+            {el.key === "phone_number" ? (
+              <Stack
+                direction="row"
+                alignItems="center"
+                gap={1.5}
                 sx={{
-                  padding: "6px 12px",
-                  fontSize: "12px",
-                  display: "block",
+                  "@media(max-width: 375px)": {
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    gap: 0.8,
+                  },
                 }}
               >
-                Save Contact
-              </Button>
+                <Typography sx={listItem}>{el.details}</Typography>
+                <Button
+                  variant="containedSecondary"
+                  size="small"
+                  onClick={() => handleSaveContact(currentEmployee)}
+                  sx={{
+                    padding: "6px 12px",
+                    fontSize: "12px",
+                    display: "block",
+                  }}
+                >
+                  Save Contact
+                </Button>
+              </Stack>
+            ) : el.key === "website" ? (
+              <Link to={`${el.details}`}>
+                <Typography sx={listItem}>{el.details}</Typography>
+              </Link>
+            ) : (
+              <Typography sx={{ ...listItem, width: "calc(100% - 40px)" }}>
+                {el.details}
+              </Typography>
+            )}
+          </Stack>
+
+          {/* ✅ Render static number right after the first phone_number */}
+          {el.key === "phone_number" && (
+            <Stack sx={contactListContainer}>
+              <Box
+                sx={contactListIcon({
+                  icon: CONTACTDETAILS.find((d) => d.key === "phone_number")
+                    .icon,
+                })}
+              >
+                <Box
+                  component="img"
+                  src={
+                    CONTACTDETAILS.find((d) => d.key === "phone_number").icon
+                  }
+                  alt="icon"
+                />
+              </Box>
+              <Typography sx={listItem}>+92 300 1234567</Typography>
             </Stack>
-          ) : el.key === "website" ? (
-            <Link to={`${el.details}`}>
-              <Typography sx={listItem}>{el.details}</Typography>
-            </Link>
-          ) : (
-            <Typography sx={{ ...listItem, width: "calc(100% - 40px)" }}>
-              {el.details}
-            </Typography>
           )}
-        </Stack>
+        </React.Fragment>
       ))}
     </Stack>
   );
 };
+
 
 export default ContactDetails;

@@ -121,7 +121,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
     <Box sx={drawerContainer}>
       <Box>
         <Toolbar sx={toolbar}>
-          <Box component={"img"} src={Logo} alt="Logo" />
+          <Box component={"img"} height="45px" width="175px" src={Logo} alt="Logo" />
         </Toolbar>
 
         {renderLinks()}
