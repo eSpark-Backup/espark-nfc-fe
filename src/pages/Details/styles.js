@@ -97,22 +97,26 @@ const sectionDetails = {
 const contactListContainer = {
   flexDirection: "row",
   alignItems: "center",
-  gap: "21px",
+  gap: "15px",
 };
 
 const contactListIcon = (el) => ({
-  width: "30px",
+  width: "45px",
   display: "flex",
   textAlign: "center",
   "& img": {
     margin: "auto",
+    filter:
+      "invert(31%) sepia(12%) saturate(1382%) hue-rotate(174deg) brightness(91%) contrast(90%)",
     width: "fit-content",
     height:
       el.key === "phone_number"
-        ? "28px"
+        ? "33px"
         : el.key === "address"
-        ? "28px"
-        : "26px",
+        ? "31px"
+        : el.key === "landline"
+        ? "32px"
+        : "26.5px",
   },
 });
 
