@@ -53,9 +53,9 @@ const SocialIcons = ({ currentEmployee }) => {
             objectFit: "contain",
           }}
           dangerouslySetInnerHTML={{
-            __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#${
-              el.hex || el.color
-            }" width="" height="">${el.svg}</svg>`,
+            __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#${"3B5B82"}" width="" height="">${
+              el.svg
+            }</svg>`,
           }}
         />
       ))}

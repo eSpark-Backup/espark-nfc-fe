@@ -22,11 +22,24 @@ const OurSolutions = ({ isMobile }) => {
               alignItems="center"
               gap={{ xs: 1.625, lg: 2.625 }}
             >
-              <Box
-                component="img"
-                src={isMobile ? el.iconMobile : el.icon}
-                width={{ xs: "40px" }}
-              />
+              {isMobile ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#e9e9ea",
+                    borderRadius: "100%",
+                    p: 1.3,
+                    width: "48px",
+                    height: "48px",
+                  }}
+                >
+                  <Box component="img" src={isMobile ? el.icon : el.icon} />
+                </Box>
+              ) : (
+                <Box component="img" src={isMobile ? el.icon : el.icon} />
+              )}
               <Typography sx={listItem}>{el.details}</Typography>
             </Box>
           </Grid>
