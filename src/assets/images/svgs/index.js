@@ -54,6 +54,21 @@ import Dashboard from "./dashboard.svg";
 import Report from "./Report.svg";
 import ReportActive from "./ReportActive.svg";
 import Banner from "./banner.svg";
+import telephone from "./telephone.svg";
+import mail from "./mail.svg";
+import mark from "./mark.svg";
+import receiver from "./receiver.svg";
+import landline from "./landline.svg";
+import website from "./website.svg";
+import phone from "./phone.svg";
+import com from "./com.svg";
+
+import mailB from "./mail-b.svg";
+import locationB from "./location-b.svg";
+import landlineB from "./landline-b.svg";
+import websiteB from "./website-b.svg";
+import phoneB from "./phone-b.svg";
+import comB from "./com-b.svg";
 
 export {
   // UI Icons
@@ -112,4 +127,18 @@ export {
   Report,
   ReportActive,
   Banner,
+  telephone,
+  mail,
+  mark,
+  receiver,
+  landline,
+  website,
+  phone,
+  com,
+  comB,
+  mailB,
+  locationB,
+  websiteB,
+  landlineB,
+  phoneB,
 };

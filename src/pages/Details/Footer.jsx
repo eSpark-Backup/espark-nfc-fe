@@ -28,7 +28,7 @@ const Footer = ({ isAbout, companyProfile }) => {
         </Button>
       )}
 
-      <Box component={"img"} src={Logo} alt="Logo" sx={footerLogo} />
+      <Box component={"img"} width="161px" height="44px" src={Logo} alt="Logo" sx={footerLogo} />
 
       <Stack sx={partnersContainer}>
         {PARTNERS.map((el, i) => (

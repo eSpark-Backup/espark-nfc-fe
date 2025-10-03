@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, Stack, Typography, Button } from "@mui/material";
 import { CONTACTDETAILS } from "../../../constants/Details";
 import { contactListContainer, contactListIcon, listItem } from "../styles";
@@ -10,10 +11,6 @@ VERSION:3.0
 FN:${employee.name}
 TEL:${employee.phone_number}
 EMAIL:${employee.email}
-ORG:${employee.department_id?.name || ""}
-TITLE:${employee.designation || ""}
-ADR:${employee.address || ""}
-URL:${employee.website || ""}
 END:VCARD
   `.trim();
 };
@@ -37,54 +34,69 @@ const ContactDetails = ({ currentEmployee }) => {
   const displayDetails = CONTACTDETAILS.map((item) => ({
     icon: item.icon,
     key: item.key,
-    details: currentEmployee[item.key] || "NA",
+    details: currentEmployee[item.key] || "",
   }));
 
   return (
     <Stack gap={1.375}>
       {displayDetails.map((el, i) => (
-        <Stack key={i} sx={contactListContainer}>
-          <Box sx={contactListIcon(el)}>
-            <Box component="img" src={el.icon} alt="icon" />
-          </Box>
+        <React.Fragment key={i}>
+          <Stack sx={contactListContainer}>
+            {/* Icon */}
+            <Box sx={contactListIcon(el)}>
+              <Box component="img" src={el.icon} alt="icon" />
+            </Box>
 
-          {el.key === "phone_number" ? (
+            {/* Content Wrapper */}
             <Stack
-              direction="row"
-              alignItems="center"
-              gap={1.5}
               sx={{
+                width: "calc(100% - 40px)",
                 "@media(max-width: 375px)": {
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  gap: 0.8,
+                  width: "100%",
                 },
               }}
             >
-              <Typography sx={listItem}>{el.details}</Typography>
-              <Button
-                variant="containedSecondary"
-                size="small"
-                onClick={() => handleSaveContact(currentEmployee)}
-                sx={{
-                  padding: "6px 12px",
-                  fontSize: "12px",
-                  display: "block",
-                }}
-              >
-                Save Contact
-              </Button>
+              {el.key === "phone_number" ? (
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  gap={1.5}
+                  sx={{
+                    "@media(max-width: 375px)": {
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      gap: 0.8,
+                    },
+                  }}
+                >
+                  <Typography sx={listItem}>{el.details}</Typography>
+                  <Button
+                    variant="containedSecondary"
+                    size="small"
+                    onClick={() => handleSaveContact(currentEmployee)}
+                    sx={{
+                      padding: "6px 12px",
+                      fontSize: "12px",
+                      display: "block",
+                    }}
+                  >
+                    Save Contact
+                  </Button>
+                </Stack>
+              ) : el.key === "website" ? (
+                <Link to={`${el.details}`} style={{ width: "fit-content" }}>
+                  <Typography sx={listItem}>{el.details}</Typography>
+                </Link>
+              ) : el.key === "landline" ? (
+                <Typography sx={listItem}>
+                  {el.details || "+97148928880"}
+                </Typography>
+              ) : (
+                <Typography sx={listItem}>{el.details}</Typography>
+              )}
             </Stack>
-          ) : el.key === "website" ? (
-            <Link to={`${el.details}`}>
-              <Typography sx={listItem}>{el.details}</Typography>
-            </Link>
-          ) : (
-            <Typography sx={{ ...listItem, width: "calc(100% - 40px)" }}>
-              {el.details}
-            </Typography>
-          )}
-        </Stack>
+          </Stack>
+        </React.Fragment>
       ))}
     </Stack>
   );
