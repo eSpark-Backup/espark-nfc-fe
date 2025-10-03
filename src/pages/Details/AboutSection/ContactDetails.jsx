@@ -84,12 +84,12 @@ const ContactDetails = ({ currentEmployee }) => {
                   </Button>
                 </Stack>
               ) : el.key === "website" ? (
-                <Link to={`${el.details}`}>
+                <Link to={`${el.details}`} style={{ width: "fit-content" }}>
                   <Typography sx={listItem}>{el.details}</Typography>
                 </Link>
               ) : el.key === "landline" ? (
                 <Typography sx={listItem}>
-                  {el.details || "+92 300 1234567"}
+                  {el.details || "+97148928880"}
                 </Typography>
               ) : (
                 <Typography sx={listItem}>{el.details}</Typography>

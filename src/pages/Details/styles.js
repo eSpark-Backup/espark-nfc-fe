@@ -116,7 +116,7 @@ const contactListIcon = (el) => ({
         ? "31px"
         : el.key === "landline"
         ? "32px"
-        : "26.5px",
+        : el.key === "email" ? '32px' : "26.5px",
   },
 });
 
