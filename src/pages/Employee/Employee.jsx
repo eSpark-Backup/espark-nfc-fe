@@ -178,7 +178,7 @@ const Employee = () => {
       about_me: rowDetails?.about_me,
       address: rowDetails?.address,
       facebook: rowDetails?.social_links?.facebook,
-      twitter: rowDetails?.social_links?.twitter,
+      linkedin: rowDetails?.social_links?.linkedin,
       instagram: rowDetails?.social_links?.instagram,
       youtube: rowDetails?.social_links?.youtube,
     };

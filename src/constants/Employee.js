@@ -112,8 +112,12 @@ const EMPOLYEEFIELDSCONFIG = [
   {
     name: "phone_number",
     label: "Phone Number",
-    type: "number",
+    type: "tel",
     placeholder: "Enter phone number",
+    inputProps: {
+      pattern: "^\\+?\\d{7,15}$",
+      inputMode: "numeric",
+    },
   },
   {
     name: "age",
@@ -143,6 +147,7 @@ const EMPOLYEEFIELDSCONFIG = [
     name: "address",
     label: "Address",
     type: "textarea",
+
     placeholder: "Enter address",
   },
   {
@@ -152,16 +157,16 @@ const EMPOLYEEFIELDSCONFIG = [
     placeholder: "Enter facebook URL",
   },
   {
-    name: "twitter",
-    label: "Twitter URL",
-    type: "text",
-    placeholder: "Enter twitter URL",
-  },
-  {
     name: "instagram",
     label: "Instagram URL",
     type: "text",
     placeholder: "Enter instagram URL",
+  },
+  {
+    name: "linkedin",
+    label: "Linkedin URL",
+    type: "text",
+    placeholder: "Enter Linkedin URL",
   },
   {
     name: "youtube",

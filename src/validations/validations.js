@@ -152,7 +152,10 @@ const departmentValidation = yup.string().required("Department is required");
 
 const phoneNumberValidation = yup
   .string()
-  .matches(/^\d+$/, "Phone number must be digits only")
+  .matches(
+    /^\+?\d+$/,
+    "Phone number must be digits only (optionally starting with +)"
+  )
   .min(7, "Phone number is too short")
   .max(15, "Phone number is too long")
   .required("Phone number is required");
@@ -198,11 +201,11 @@ const facebookValidation = yup
   .nullable()
   .notRequired();
 
-const twitterValidation = yup
+const linkedInValidation = yup
   .string()
   .trim()
   .lowercase()
-  .url("Invalid Twitter URL")
+  .url("Invalid LinkdIn URL")
   .nullable()
   .notRequired();
 
@@ -240,12 +243,12 @@ export {
   departmentValidation,
   phoneNumberValidation,
   ageValidation,
+  linkedInValidation,
   urlValidation,
   designationValidation,
   departmentIdValidation,
   aboutMeValidation,
   facebookValidation,
-  twitterValidation,
   instagramValidation,
   youtubeValidation,
 };
