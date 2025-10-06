@@ -1,41 +1,24 @@
 import { Box, Stack } from "@mui/material";
 import { SOCIALICONS } from "../../constants/Details";
-import * as icons from "simple-icons";
 
 const SocialIcons = ({ currentEmployee }) => {
   const filteredIcons = SOCIALICONS.filter(
     (item) => currentEmployee?.social_links?.[item.key]
-  ).map((item) => {
-    let icon;
-
-    switch (item.key) {
-      case "facebook":
-        icon = icons.siFacebook;
-        break;
-      case "youtube":
-        icon = icons.siYoutube;
-        break;
-      case "twitter":
-        icon = icons.siX;
-        break;
-      case "instagram":
-        icon = icons.siInstagram;
-        break;
-      default:
-        icon = null;
-    }
-
-    return {
-      ...item,
-      link: currentEmployee?.social_links?.[item.key],
-      svg: icon?.svg,
-      hex: icon?.hex,
-    };
-  });
+  ).map((item) => ({
+    ...item,
+    link: currentEmployee?.social_links?.[item.key],
+  }));
 
   if (!filteredIcons.length) return null;
+
+  const recolorSvg = (dataUri, color) => {
+    const svg = decodeURIComponent(dataUri.split(",")[1]);
+    const colored = svg.replace(/fill=['"][^'"]*['"]/g, `fill='${color}'`);
+    return `data:image/svg+xml,${encodeURIComponent(colored)}`;
+  };
+
   return (
-    <Stack flexDirection="row" gap={2} alignItems="center">
+    <Stack flexDirection={"row"} gap={2.5} alignItems={"baseline"}>
       {filteredIcons.map((el, index) => (
         <Box
           key={index}
@@ -44,26 +27,24 @@ const SocialIcons = ({ currentEmployee }) => {
           target="_blank"
           rel="noopener noreferrer"
           sx={{
-            width: "fit-content",
-            height:
-              el.key === "youtube" ? 29.5 : el.key === "twitter" ? 20.3 : 23,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            objectFit: "contain",
           }}
-          dangerouslySetInnerHTML={{
-            __html: `
-        <svg xmlns="http://www.w3.org/2000/svg"
-             viewBox="0 0 24 24"
-             fill="#3B5B82"
-             height="${
-               el.key === "youtube" ? 29.5 : el.key === "twitter" ? 20.3 : 23
-             }">
-          ${el.svg}
-        </svg>`,
-          }}
-        />
+        >
+          <Box
+            component="img"
+            src={recolorSvg(el.icon, "#3B5B82")}
+            alt={el.name}
+            sx={{
+              width: "fit-content",
+              height: {
+                xs: el.key === "youtube" ? 19.2 : 19,
+                md: el.key === "youtube" ? 21.2 : 22,
+              },
+            }}
+          />
+        </Box>
       ))}
     </Stack>
   );

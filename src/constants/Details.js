@@ -11,45 +11,54 @@ import {
   EmployeeAboutDisabled,
   EmployeeCompanyProfilDisabled,
   EmployeeCompanyProfile,
+  Facebook,
+  Twitter,
+  Instagram,
   Interior,
   InteriorMobile,
   landlineB,
+  LinkedIn,
   locationB,
   mailB,
   Outdoor,
   OutdoorMobile,
   phoneB,
   websiteB,
+  YouTube,
 } from "../assets/images/svgs";
 
 const SOCIALICONS = [
   {
     name: "Facebook",
     key: "facebook",
+    icon: Facebook,
     image:
       "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg",
     color: "#1877f2",
   },
   {
-    name: "YouTube",
-    key: "youtube",
-    image:
-      "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg",
-    color: "#ff0000",
-  },
-  {
     name: "Instagram",
     key: "instagram",
+    icon: Instagram,
     image:
       "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg",
     color: "#e1306c",
   },
   {
-    name: "Twitter",
-    key: "twitter",
+    name: "linkedin",
+    key: "linkedin",
+    icon: LinkedIn,
     image:
-      "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg",
-    color: "#1DA1F2",
+      "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg",
+    color: "",
+  },
+  {
+    name: "YouTube",
+    key: "youtube",
+    icon: YouTube,
+    image:
+      "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg",
+    color: "#ff0000",
   },
 ];
 

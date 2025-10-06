@@ -33,6 +33,7 @@ import Attachment from "./attachment.svg";
 import Facebook from "./facebook.svg";
 import Instagram from "./instagram.svg";
 import Twitter from "./twitter.svg";
+import LinkedIn from "./linkedin.svg";
 import YouTube from "./youtube.svg";
 import Website from "./website.svg";
 // Other Icons
@@ -108,6 +109,7 @@ export {
   Twitter,
   YouTube,
   Website,
+  LinkedIn,
   // Other Icons
   Acoustic,
   AcousticMobile,
