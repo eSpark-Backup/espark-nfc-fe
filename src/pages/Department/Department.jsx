@@ -157,7 +157,6 @@ const Department = () => {
     if (res?.success) {
       const updated = departments?.filter((item) => item.id !== rowDetails.id);
       dispatch(setDepartments(updated || []));
-      toast.success("Department deleted successfully!");
     } else {
       toast.error(res?.error || "Failed to delete department");
     }
