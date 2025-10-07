@@ -1,5 +1,4 @@
 import { forwardRef } from "react";
-
 import {
   Box,
   Dialog,
@@ -8,9 +7,7 @@ import {
   Slide,
   Typography,
 } from "@mui/material";
-
 import FormLayout from "../FormLayout";
-
 import {
   formDialogContent,
   formDialogHeading,
@@ -38,11 +35,20 @@ const FormDialog = ({
   isLoading,
   preview,
   setPreview,
+  previewBanner,
+  setPreviewBanner,
   exposeReset,
   setSelectedDepartmentId,
   admin,
   reset,
   text,
+  handleImageValidationAndCrop,
+  croppingState,
+  onCropComplete,
+  performCrop,
+  cancelCrop,
+  setCrop,
+  setZoom,
 }) => {
   return (
     <Dialog
@@ -53,41 +59,44 @@ const FormDialog = ({
       slotProps={{
         transition: { direction },
         paper: {
-          sx: formDialogPaper,
+          sx: {
+            ...formDialogPaper,
+            height: "auto",
+            maxHeight: "90vh",
+            display: "flex",
+            flexDirection: "column",
+          },
         },
       }}
       keepMounted
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description"
+      maxWidth="lg"
     >
       <DialogTitle
         id="scroll-dialog-title"
         sx={{
           padding: "24px 0px 0px",
           marginBottom: 3,
+          flexShrink: 0,
         }}
       >
         <Box textAlign={"center"}>
           <Typography variant="h5" sx={formDialogHeading}>
             {edit ? EDIT : ADD}
           </Typography>
-
-          {/*
-            <Typography
-              variant="subtitle2"
-              sx={{
-                letterSpacing: "-0.015em",
-                color: "text.secondary",
-                fontWeight: 300,
-              }}
-            >
-              {detail}
-            </Typography>
-          */}
         </Box>
       </DialogTitle>
 
-      <DialogContent sx={formDialogContent} dividers={scroll === "paper"}>
+      <DialogContent
+        sx={{
+          ...formDialogContent,
+          flex: 1,
+          overflow: "auto",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <FormLayout
           title={ADD}
           editTitle={EDIT}
@@ -99,11 +108,20 @@ const FormDialog = ({
           edit={edit}
           preview={preview}
           setPreview={setPreview}
+          previewBanner={previewBanner}
+          setPreviewBanner={setPreviewBanner}
           exposeReset={exposeReset}
           setSelectedDepartmentId={setSelectedDepartmentId}
           admin={admin}
           reset={reset}
           text={text}
+          handleImageValidationAndCrop={handleImageValidationAndCrop}
+          croppingState={croppingState}
+          onCropComplete={onCropComplete}
+          performCrop={performCrop}
+          cancelCrop={cancelCrop}
+          setCrop={setCrop}
+          setZoom={setZoom}
         />
       </DialogContent>
     </Dialog>

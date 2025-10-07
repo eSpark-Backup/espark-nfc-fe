@@ -1,6 +1,5 @@
 import { Controller, FormProvider } from "react-hook-form";
-
-import { Button, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 
 import TextInput from "./inputs/TextInput";
 import UploadCompanyProfile from "./file/UploadCompanyProfile";
@@ -33,9 +32,18 @@ const GenericForm = ({
   edit,
   preview,
   setPreview,
+  previewBanner,
+  setPreviewBanner,
   exposeReset,
   setSelectedDepartmentId,
   admin,
+  handleImageValidationAndCrop,
+  croppingState,
+  onCropComplete,
+  performCrop,
+  cancelCrop,
+  setCrop,
+  setZoom,
 }) => {
   const methods = useCustomForm(schema, defaultValues);
   const { control, handleSubmit, setValue, reset } = methods;
@@ -47,12 +55,18 @@ const GenericForm = ({
   return (
     <FormProvider {...methods}>
       <form
-        style={styles}
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
         onSubmit={
           login ? handleSubmit((data) => onSubmit(data, methods)) : null
         }
       >
-        <Stack gap={4}>
+        {/* Form fields container - will scroll if needed */}
+        <Stack gap={4} sx={{ flex: 1, overflow: "auto", mb: 2 }}>
           <Stack gap={1.5}>
             {fieldsConfig.map((field) => (
               <Controller
@@ -87,8 +101,24 @@ const GenericForm = ({
                               {...commonProps}
                               setValue={setValue}
                               edit={edit}
-                              preview={preview}
-                              setPreview={setPreview}
+                              preview={
+                                field.name === "banner_image"
+                                  ? previewBanner
+                                  : preview
+                              }
+                              setPreview={
+                                field.name === "banner_image"
+                                  ? setPreviewBanner
+                                  : setPreview
+                              }
+                              fieldName={field.name}
+                              onCropRequest={handleImageValidationAndCrop}
+                              croppingState={croppingState}
+                              onCropComplete={onCropComplete}
+                              performCrop={performCrop}
+                              cancelCrop={cancelCrop}
+                              setCrop={setCrop}
+                              setZoom={setZoom}
                             />
                           )}
                         </>
@@ -132,7 +162,9 @@ const GenericForm = ({
               />
             ))}
           </Stack>
+        </Stack>
 
+        <Box sx={{ flexShrink: 0, mt: "auto" }}>
           <Button
             variant="containedPrimary"
             type={login ? "submit" : "button"}
@@ -142,10 +174,11 @@ const GenericForm = ({
             onClick={
               !login ? handleSubmit((data) => onSubmit(data, methods)) : null
             }
+            fullWidth
           >
             {submitText}
           </Button>
-        </Stack>
+        </Box>
       </form>
     </FormProvider>
   );

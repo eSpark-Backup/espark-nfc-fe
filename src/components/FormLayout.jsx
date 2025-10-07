@@ -1,9 +1,6 @@
 import { Stack } from "@mui/material";
-
 import GenericForm from "./GenericForm";
-
 import { FORM } from "../constants/Form";
-
 import { label } from "./styles";
 
 const FormLayout = ({
@@ -18,9 +15,18 @@ const FormLayout = ({
   text,
   preview,
   setPreview,
+  previewBanner,
+  setPreviewBanner,
   exposeReset,
   setSelectedDepartmentId,
   admin,
+  handleImageValidationAndCrop,
+  croppingState,
+  onCropComplete,
+  performCrop,
+  cancelCrop,
+  setCrop,
+  setZoom,
 }) => {
   return (
     <Stack
@@ -42,9 +48,18 @@ const FormLayout = ({
         edit={edit}
         preview={preview}
         setPreview={setPreview}
+        previewBanner={previewBanner}
+        setPreviewBanner={setPreviewBanner}
         exposeReset={exposeReset}
         setSelectedDepartmentId={setSelectedDepartmentId}
         admin={admin}
+        handleImageValidationAndCrop={handleImageValidationAndCrop}
+        croppingState={croppingState}
+        onCropComplete={onCropComplete}
+        performCrop={performCrop}
+        cancelCrop={cancelCrop}
+        setCrop={setCrop}
+        setZoom={setZoom}
       />
     </Stack>
   );
