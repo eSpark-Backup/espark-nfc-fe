@@ -1,4 +1,4 @@
-import { Avatar, Box, Grid } from "@mui/material";
+import { Avatar, Box, Grid, useTheme, useMediaQuery } from "@mui/material";
 
 import Title from "./Title";
 import SocialIcons from "./SocialIcons";
@@ -30,17 +30,81 @@ const DetailsInMobile = ({
   isMobile,
 }) => {
   const [imageError, setImageError] = useState(false);
+  const [bannerError, setBannerError] = useState(false);
+
+  const theme = useTheme();
+
+  const isSmallMobile = useMediaQuery(theme.breakpoints.down(375));
+  const isMediumMobile = useMediaQuery(theme.breakpoints.between(376, 428));
+  const isLargeMobile = useMediaQuery(theme.breakpoints.between(429, 768));
+
+  const bannerImage =
+    currentEmployee?.department_id?.banner_image?.image_url ||
+    data?.banner_image?.image_url ||
+    companyProfile?.banner_image?.image_url;
+
+  const getBannerStyles = () => {
+    if (isSmallMobile) {
+      return {
+        width: "100%",
+        height: "160px",
+        objectFit: "cover",
+        objectPosition: "center",
+        minHeight: "140px",
+      };
+    } else if (isMediumMobile) {
+      return {
+        width: "100%",
+        height: "180px",
+        objectFit: "cover",
+        objectPosition: "center",
+        minHeight: "160px",
+      };
+    } else if (isLargeMobile) {
+      return {
+        width: "100%",
+        height: "200px",
+        objectFit: "cover",
+        objectPosition: "center",
+        minHeight: "180px",
+      };
+    } else {
+      return {
+        width: "100%",
+        height: "220px",
+        objectFit: "cover",
+        objectPosition: "center",
+        minHeight: "200px",
+      };
+    }
+  };
+
+  console.log("🔍 Banner image sources:", {
+    departmentBanner: currentEmployee?.department_id?.banner_image?.image_url,
+    dataBanner: data?.banner_image?.image_url,
+    companyBanner: companyProfile?.banner_image?.image_url,
+    finalBanner: bannerImage,
+  });
+
   return (
     <>
-      <Box
-        component="img"
-        src={`${Banner}`}
-        alt="banner"
-        sx={{
-          width: "100%",
-          objectFit: "contain",
-        }}
-      />
+      {bannerImage && !bannerError ? (
+        <Box
+          component="img"
+          src={bannerImage}
+          alt="department banner"
+          onError={() => setBannerError(true)}
+          sx={getBannerStyles()}
+        />
+      ) : (
+        <Box
+          component="img"
+          src={Banner}
+          alt="default banner"
+          sx={getBannerStyles()}
+        />
+      )}
+
       <Box padding={"26px 20px"}>
         <Box sx={mobileTopContainer}>
           <Grid

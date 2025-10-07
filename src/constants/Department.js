@@ -72,22 +72,28 @@ const EDIT = "edit";
 
 const DEPARTMENTFIELDSCONFIG = [
   {
-    name: "image",
-    label: "Upload Profile",
-    type: "file",
-    placeholder: "Upload image",
-  },
-  {
     name: "name",
     label: "Department Name",
     type: "text",
-    placeholder: "Enter name",
+    placeholder: "Enter department name",
   },
   {
     name: "email",
     label: "Email",
-    type: "email",
-    placeholder: "Enter email",
+    type: "text",
+    placeholder: "Enter department email",
+  },
+  {
+    name: "image",
+    label: "Department Image",
+    type: "file",
+    placeholder: "Upload image",
+  },
+  {
+    name: "banner_image",
+    label: "Department Banner",
+    type: "file",
+    placeholder: "Upload banner",
   },
 ];
 

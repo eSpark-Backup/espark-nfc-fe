@@ -1,30 +1,16 @@
 import { DEPARTMENT, DEPARTMENT_DROPDOWN } from "../../../api/apiEndPoints";
-
 import { apiSlice } from "../../../api/apiSlice";
 
 export const departmentApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addDepartment: builder.mutation({
-      query: (body) => {
-        const formData = new FormData();
-
-        for (const key in body) {
-          if (body[key] !== undefined && body[key] !== null) {
-            if (key === "image" && body[key] instanceof File) {
-              formData.append("image", body[key]);
-            } else {
-              formData.append(key, body[key]);
-            }
-          }
-        }
-
-        return {
-          url: DEPARTMENT,
-          method: "POST",
-          body: formData,
-        };
-      },
+      query: (formData) => ({
+        url: DEPARTMENT,
+        method: "POST",
+        body: formData,
+      }),
     }),
+
     getDepartment: builder.query({
       query: ({ page = "", limit = "", sort_order = "desc", search = "" }) => ({
         url: DEPARTMENT,
@@ -32,24 +18,19 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+
     getDepartmentDropdown: builder.query({
       query: () => ({
         url: DEPARTMENT_DROPDOWN,
         method: "GET",
       }),
     }),
-    updateDepartment: builder.mutation({
-      query: ({ body, id }) => {
-        const formData = new FormData();
 
-        for (const key in body) {
-          if (body[key] !== undefined && body[key] !== null) {
-            if (key === "image" && body[key] instanceof File) {
-              formData.append("image", body[key]);
-            } else {
-              formData.append(key, body[key]);
-            }
-          }
+    updateDepartment: builder.mutation({
+      query: (formData) => {
+        const id = formData.get("id");
+        if (!id) {
+          throw new Error("Department ID is required for update");
         }
 
         return {
@@ -59,13 +40,12 @@ export const departmentApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+
     deleteDepartment: builder.mutation({
-      query: ({ id }) => {
-        return {
-          url: `${DEPARTMENT}/${id}`,
-          method: "DELETE",
-        };
-      },
+      query: ({ id }) => ({
+        url: `${DEPARTMENT}/${id}`,
+        method: "DELETE",
+      }),
     }),
   }),
 });
