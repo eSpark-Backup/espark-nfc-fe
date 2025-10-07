@@ -26,7 +26,6 @@
     "react-dom": "^19.1.0",
     "react-easy-crop": "^5.5.3",
     "react-hook-form": "^7.60.0",
-    "react-image-crop": "^11.0.10",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.3",
     "simple-icons": "^15.16.0",
