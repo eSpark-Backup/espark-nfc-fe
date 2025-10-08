@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import {
   Avatar,
@@ -24,6 +24,7 @@ import {
 } from "./styles";
 import { errorText } from "../inputs/styles";
 import { useCallback } from "react";
+
 const UploadProfile = ({
   control,
   name,
@@ -45,15 +46,23 @@ const UploadProfile = ({
   setZoom,
 }) => {
   const inputRef = useRef();
+  const containerRef = useRef();
 
   const zoomRef = useRef(croppingState?.zoom || 1);
   const frameRef = useRef(null);
+  const [cropBoxHeight, setCropBoxHeight] = useState(300);
+  const [containerSize, setContainerSize] = useState({
+    width: 200,
+    height: 200,
+  });
 
   const handleZoomChange = useCallback(
     (_, newValue) => {
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
 
-      zoomRef.current = parseFloat(newValue.toFixed(2));
+      const clampedValue = Math.min(Math.max(newValue, 0.5), 4);
+
+      zoomRef.current = parseFloat(clampedValue.toFixed(2));
 
       frameRef.current = requestAnimationFrame(() => {
         setZoom(zoomRef.current);
@@ -85,6 +94,43 @@ const UploadProfile = ({
 
     return true;
   };
+
+  useEffect(() => {
+    const updateContainerSize = () => {
+      if (containerRef.current) {
+        const { width, height } = containerRef.current.getBoundingClientRect();
+        setContainerSize({ width, height });
+      }
+    };
+
+    updateContainerSize();
+
+    window.addEventListener("resize", updateContainerSize);
+    return () => window.removeEventListener("resize", updateContainerSize);
+  }, [preview, croppingState]);
+
+  useEffect(() => {
+    if (croppingState.image) {
+      const img = new Image();
+      img.onload = () => {
+        const aspectRatio = img.width / img.height;
+        const containerWidth = containerRef.current?.clientWidth || 600;
+
+        let calculatedHeight = containerWidth / aspectRatio;
+
+        const minHeight = 300;
+        const maxHeight = Math.min(window.innerHeight * 0.6, 500);
+
+        calculatedHeight = Math.min(
+          Math.max(calculatedHeight, minHeight),
+          maxHeight
+        );
+
+        setCropBoxHeight(calculatedHeight);
+      };
+      img.src = croppingState.image;
+    }
+  }, [croppingState.image, containerSize]);
 
   const handleFileChange = async (e, onChange) => {
     const file = e.target.files?.[0];
@@ -127,9 +173,12 @@ const UploadProfile = ({
         <Stack sx={{ order: 2, gap: 1 }}>
           <InputLabel sx={inputStyles?.label}>{label}</InputLabel>
 
-          <Box sx={profileContainer(preview || fieldValue, error)}>
+          <Box
+            sx={profileContainer(preview || fieldValue, error)}
+            ref={containerRef}
+          >
             {isThisFieldCropping ? (
-              <Box sx={{ width: "100%", p: 2 }}>
+              <Box sx={{ width: "100%", p: 2, height: "132px" }}>
                 <Typography variant="h6" gutterBottom align="center">
                   Crop{" "}
                   {fieldName === "banner_image"
@@ -140,11 +189,12 @@ const UploadProfile = ({
                 <Box
                   sx={{
                     position: "relative",
-                    height: fieldName === "banner_image" ? 200 : 300,
                     width: "100%",
+                    height: "130px",
                     bgcolor: "grey.100",
                     mb: 2,
                     borderRadius: 1,
+                    overflow: "hidden",
                   }}
                 >
                   <Cropper
@@ -223,7 +273,12 @@ const UploadProfile = ({
                         typeof fieldValue === "string" ? fieldValue : preview
                       }
                       alt="Uploaded Preview"
-                      sx={profileAvatar}
+                      sx={{
+                        ...profileAvatar,
+                        width: "100%",
+                        height: "132px",
+                        objectFit: "cover",
+                      }}
                     />
                   ) : (
                     <Box sx={headingBox}>

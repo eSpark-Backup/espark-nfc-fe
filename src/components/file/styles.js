@@ -49,7 +49,7 @@ const filledEdit = {
 
 const profileContainer = (preview, error) => ({
   width: "100%",
-  height: "98px",
+  height: "134px",
   border: `1px ${preview ? "solid" : "dashed"} ${
     error ? "#DF1C41" : "rgba(0, 0, 0, 0.13)"
   }`,

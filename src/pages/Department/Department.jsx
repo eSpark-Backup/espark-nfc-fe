@@ -77,6 +77,7 @@ const Department = () => {
   const [preview, setPreview] = useState(null);
   const [previewBanner, setPreviewBanner] = useState(null);
   const [resetForm, setResetForm] = useState(null);
+  
 
   useEffect(() => {
     if (isSuccess) {
@@ -355,6 +356,10 @@ const Department = () => {
       croppedAreaPixels: null,
       cropConfig: { aspect: 1, minWidth: 200, minHeight: 200 },
     });
+
+    setPreview(null);
+    setPreviewBanner(null);
+
     toast.info("Cropping cancelled");
   };
 
@@ -372,12 +377,24 @@ const Department = () => {
     setVisible(false);
     setAnchorEl(null);
 
+    setCroppingState({
+      isCropping: false,
+      image: null,
+      fieldName: null,
+      onChange: null,
+      crop: { x: 0, y: 0 },
+      zoom: 1,
+      croppedAreaPixels: null,
+      cropConfig: { aspect: 1, minWidth: 200, minHeight: 200 },
+    });
+
+    setPreview(null);
+    setPreviewBanner(null);
+    setError(null);
+
     setTimeout(() => {
       setEdit(false);
       setRowDetails(null);
-      setPreview(null);
-      setPreviewBanner(null);
-      setError(null);
 
       if (resetForm) {
         handleReset();
