@@ -208,7 +208,7 @@ const UploadProfile = ({
                   />
                 </Box>
 
-                <Box sx={{ mb: 2, px: 1 }}>
+                <Box sx={{ mb: 1, px: 1 }}>
                   <Typography variant="body2" sx={{ mb: 1 }} align="center">
                     Zoom: {Math.round(croppingState.zoom * 100)}%
                   </Typography>
@@ -242,6 +242,7 @@ const UploadProfile = ({
                     gap: 2,
                     justifyContent: "center",
                     flexWrap: "wrap",
+                    pb: "20px",
                   }}
                 >
                   <Button variant="outlined" size="medium" onClick={cancelCrop}>
