@@ -31,6 +31,7 @@ import {
   tableHeaderCell,
   tableStackContainer,
 } from "./styles";
+import { useLocation } from "react-router-dom";
 
 const GenericTable = ({
   columns,
@@ -47,7 +48,7 @@ const GenericTable = ({
   message,
 }) => {
   const [selected, setSelected] = useState([]);
-
+  const location = useLocation();
   const isAllSelected = rows.length > 0 && selected.length === rows.length;
   const handleSelectAll = (checked) => {
     setSelected(checked ? rows.map((row) => row.id) : []);
@@ -119,7 +120,9 @@ const GenericTable = ({
               <TableCell
                 sx={{
                   ...tableHeaderCell,
-                  textAlign: "center",
+                  ...(location.pathname !== "/employees" && {
+                    textAlign: "center",
+                  }),
                 }}
               >
                 Action
@@ -148,7 +151,16 @@ const GenericTable = ({
                     ))}
 
                     <TableCell sx={tableBodyCell}>
-                      <Skeleton variant="circular" width={24} height={24} />
+                      <Skeleton
+                        variant="circular"
+                        width={24}
+                        height={24}
+                        sx={{
+                          ...(location.pathname !== "/employees" && {
+                            mx: "auto",
+                          }),
+                        }}
+                      />
                     </TableCell>
                   </TableRow>
                 ))
