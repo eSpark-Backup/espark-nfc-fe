@@ -42,13 +42,13 @@ const FormDialog = ({
   admin,
   reset,
   text,
-  handleImageValidationAndCrop,
-  croppingState,
-  onCropComplete,
-  performCrop,
-  cancelCrop,
-  setCrop,
-  setZoom,
+  handleImageValidationAndCrop = () => {},
+  croppingState = {},
+  onCropComplete = () => {},
+  performCrop = () => {},
+  cancelCrop = () => {},
+  setCrop = () => {},
+  setZoom = () => {},
 }) => {
   return (
     <Dialog

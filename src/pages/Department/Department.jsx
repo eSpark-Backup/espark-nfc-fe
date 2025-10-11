@@ -77,7 +77,8 @@ const Department = () => {
   const [preview, setPreview] = useState(null);
   const [previewBanner, setPreviewBanner] = useState(null);
   const [resetForm, setResetForm] = useState(null);
-  
+  const [lastAppliedBanner, setLastAppliedBanner] = useState(null);
+  const [lastAppliedProfile, setLastAppliedProfile] = useState(null);
 
   useEffect(() => {
     if (isSuccess) {
@@ -227,9 +228,14 @@ const Department = () => {
       });
 
       const previewUrl = URL.createObjectURL(croppedFile);
-      fieldName === "banner_image"
-        ? setPreviewBanner(previewUrl)
-        : setPreview(previewUrl);
+
+      if (fieldName === "banner_image") {
+        setPreviewBanner(previewUrl);
+        setLastAppliedBanner(previewUrl);
+      } else {
+        setPreview(previewUrl);
+        setLastAppliedProfile(previewUrl);
+      }
 
       onChange?.(croppedFile);
 
@@ -346,6 +352,9 @@ const Department = () => {
   };
 
   const cancelCrop = () => {
+    const wasBanner = croppingState?.fieldName === "banner_image";
+    const wasProfile = croppingState?.fieldName === "image";
+
     setCroppingState({
       isCropping: false,
       image: null,
@@ -357,12 +366,22 @@ const Department = () => {
       cropConfig: { aspect: 1, minWidth: 200, minHeight: 200 },
     });
 
-    setPreview(null);
-    setPreviewBanner(null);
+    if (wasBanner) {
+      if (lastAppliedBanner) {
+        setPreviewBanner(lastAppliedBanner);
+      } else {
+        setPreviewBanner(null);
+      }
+    } else if (wasProfile) {
+      if (lastAppliedProfile) {
+        setPreview(lastAppliedProfile);
+      } else {
+        setPreview(null);
+      }
+    }
 
     toast.info("Cropping cancelled");
   };
-
   const handleSubmit = (data, methods) => {
     if (!data.name || !data.email) {
       toast.error("Name and email are required fields");

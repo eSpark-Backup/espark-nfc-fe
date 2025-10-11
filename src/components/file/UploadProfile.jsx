@@ -24,6 +24,7 @@ import {
 } from "./styles";
 import { errorText } from "../inputs/styles";
 import { useCallback } from "react";
+import { toast } from "sonner";
 
 const UploadProfile = ({
   control,
@@ -47,7 +48,6 @@ const UploadProfile = ({
 }) => {
   const inputRef = useRef();
   const containerRef = useRef();
-
   const zoomRef = useRef(croppingState?.zoom || 1);
   const frameRef = useRef(null);
   const [cropBoxHeight, setCropBoxHeight] = useState(300);
@@ -110,7 +110,7 @@ const UploadProfile = ({
   }, [preview, croppingState]);
 
   useEffect(() => {
-    if (croppingState.image) {
+    if (croppingState?.image) {
       const img = new Image();
       img.onload = () => {
         const aspectRatio = img.width / img.height;
@@ -130,34 +130,41 @@ const UploadProfile = ({
       };
       img.src = croppingState.image;
     }
-  }, [croppingState.image, containerSize]);
+  }, [croppingState?.image, containerSize]);
 
   const handleFileChange = async (e, onChange) => {
     const file = e.target.files?.[0];
-    if (file) {
-      try {
-        validateFile(file, fieldName || name);
+    if (!file) return;
 
-        if (fieldName === "banner_image") {
-          try {
-            await validateBannerForMobile(file);
-            const previewUrl = URL.createObjectURL(file);
-            setPreview(previewUrl);
-            onChange(file);
-            toast.success("Banner image validated successfully!");
-          } catch (validationError) {
-            const previewUrl = URL.createObjectURL(file);
-            setPreview(previewUrl);
-            onCropRequest(file, fieldName, onChange);
-          }
-        } else {
+    try {
+      validateFile(file, fieldName || name);
+
+      if (fieldName === "banner_image") {
+        // keep track of old preview before overwriting
+        const oldPreview = preview;
+
+        try {
+          await validateBannerForMobile(file);
           const previewUrl = URL.createObjectURL(file);
           setPreview(previewUrl);
           onChange(file);
+          toast.success("Banner image validated successfully!");
+        } catch {
+          const previewUrl = URL.createObjectURL(file);
+          setPreview(previewUrl);
+          onCropRequest(file, fieldName, onChange);
+
+          // restore old preview if crop canceled
+          // handled in cancelCrop below
+          cancelCrop.oldPreview = oldPreview;
         }
-      } catch (error) {
-        toast.error(error.message);
+      } else {
+        const previewUrl = URL.createObjectURL(file);
+        setPreview(previewUrl);
+        onChange(file);
       }
+    } catch (error) {
+      toast.error(error.message);
     }
     e.target.value = "";
   };
@@ -174,11 +181,16 @@ const UploadProfile = ({
           <InputLabel sx={inputStyles?.label}>{label}</InputLabel>
 
           <Box
-            sx={profileContainer(preview || fieldValue, error)}
+            sx={profileContainer(
+              preview || fieldValue,
+              error,
+              isThisFieldCropping,
+              fieldName
+            )}
             ref={containerRef}
           >
             {isThisFieldCropping ? (
-              <Box sx={{ width: "100%", p: 2, height: "132px" }}>
+              <Box sx={{ width: "100%", py: 2, px: 0.5, height: "auto" }}>
                 <Typography variant="h6" gutterBottom align="center">
                   Crop{" "}
                   {fieldName === "banner_image"
@@ -192,7 +204,8 @@ const UploadProfile = ({
                     width: "100%",
                     height: "130px",
                     bgcolor: "grey.100",
-                    mb: 2,
+                    mt: 1,
+                    mb: 2.5,
                     borderRadius: 1,
                     overflow: "hidden",
                   }}
@@ -208,8 +221,8 @@ const UploadProfile = ({
                   />
                 </Box>
 
-                <Box sx={{ mb: 1, px: 1 }}>
-                  <Typography variant="body2" sx={{ mb: 1 }} align="center">
+                <Box sx={{ mb: 0, px: 4 }}>
+                  <Typography variant="body2" sx={{ mb: 0.5 }} align="center">
                     Zoom: {Math.round(croppingState.zoom * 100)}%
                   </Typography>
                   <Slider

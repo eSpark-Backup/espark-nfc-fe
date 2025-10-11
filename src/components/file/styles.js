@@ -47,9 +47,15 @@ const filledEdit = {
   backgroundColor: "#1C274C",
 };
 
-const profileContainer = (preview, error) => ({
+const profileContainer = (
+  preview,
+  error,
+  isThisFieldCropping = false,
+  fieldName = ''
+) => ({
   width: "100%",
-  height: "134px",
+  height:
+    fieldName === "banner_image" && isThisFieldCropping ? "178px" : "134px",
   border: `1px ${preview ? "solid" : "dashed"} ${
     error ? "#DF1C41" : "rgba(0, 0, 0, 0.13)"
   }`,
