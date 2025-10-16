@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack, Typography, Button } from "@mui/material";
+import { Box, Stack, Typography, Button, useMediaQuery } from "@mui/material";
 import { CONTACTDETAILS } from "../../../constants/Details";
 import { contactListContainer, contactListIcon, listItem } from "../styles";
 import { Link } from "react-router-dom";
@@ -9,7 +9,12 @@ const generateVCard = (employee) => {
 BEGIN:VCARD
 VERSION:3.0
 FN:${employee.name}
-TEL:${employee.phone_number}
+TEL;TYPE=MAIN:${employee.phone_number}
+${
+  employee.second_phone_number
+    ? `TEL;TYPE=OTHER:${employee.second_phone_number}`
+    : ""
+}
 EMAIL:${employee.email}
 END:VCARD
   `.trim();
@@ -31,6 +36,8 @@ const handleSaveContact = (employee) => {
 };
 
 const ContactDetails = ({ currentEmployee }) => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   const displayDetails = CONTACTDETAILS.map((item) => ({
     icon: item.icon,
     key: item.key,
@@ -58,30 +65,53 @@ const ContactDetails = ({ currentEmployee }) => {
             >
               {el.key === "phone_number" ? (
                 <Stack
-                  direction="row"
-                  alignItems="center"
-                  gap={1.5}
+                  direction="column"
+                  alignItems="flex-start"
+                  gap={0.8}
                   sx={{
                     "@media(max-width: 375px)": {
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      gap: 0.8,
+                      gap: 0.6,
                     },
                   }}
                 >
-                  <Typography sx={listItem}>{el.details}</Typography>
-                  <Button
-                    variant="containedSecondary"
-                    size="small"
-                    onClick={() => handleSaveContact(currentEmployee)}
-                    sx={{
-                      padding: "6px 12px",
-                      fontSize: "12px",
-                      display: "block",
-                    }}
-                  >
-                    Save Contact
-                  </Button>
+                  <Stack direction="row" alignItems="center" gap={1.5}>
+                    <Typography sx={listItem}>{el.details}</Typography>
+                    {!isMobile && (
+                      <Button
+                        variant="containedSecondary"
+                        size="small"
+                        onClick={() => handleSaveContact(currentEmployee)}
+                        sx={{
+                          padding: "6px 12px",
+                          fontSize: "12px",
+                          display: "block",
+                        }}
+                      >
+                        Save Contact
+                      </Button>
+                    )}
+                  </Stack>
+
+                  {currentEmployee.second_phone_number && (
+                    <Typography sx={listItem}>
+                      {currentEmployee.second_phone_number}
+                    </Typography>
+                  )}
+
+                  {isMobile && (
+                    <Button
+                      variant="containedSecondary"
+                      size="small"
+                      onClick={() => handleSaveContact(currentEmployee)}
+                      sx={{
+                        padding: "6px 12px",
+                        fontSize: "12px",
+                        mt: 0.5,
+                      }}
+                    >
+                      Save Contact
+                    </Button>
+                  )}
                 </Stack>
               ) : el.key === "website" ? (
                 <Link to={`${el.details}`} style={{ width: "fit-content" }}>

@@ -120,6 +120,16 @@ const EMPOLYEEFIELDSCONFIG = [
     },
   },
   {
+    name: "second_phone_number",
+    label: "Second Phone Number",
+    type: "tel",
+    placeholder: "Enter second phone number",
+    inputProps: {
+      pattern: "^\\+?\\d{7,15}$",
+      inputMode: "numeric",
+    },
+  },
+  {
     name: "age",
     label: "Age",
     type: "number",
