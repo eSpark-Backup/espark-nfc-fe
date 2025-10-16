@@ -170,6 +170,7 @@ const Employee = () => {
       email: rowDetails?.email,
       department_id: rowDetails?.department_id?.id,
       phone_number: rowDetails?.phone_number,
+      second_phone_number: rowDetails?.second_phone_number,
       age: rowDetails?.age,
       joining_date: rowDetails?.joining_date
         ? dayjs.utc(rowDetails?.joining_date)
