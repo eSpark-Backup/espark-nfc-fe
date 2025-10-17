@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack, Typography, Button, useMediaQuery } from "@mui/material";
+import { Box, Stack, Typography, Button } from "@mui/material";
 import { CONTACTDETAILS } from "../../../constants/Details";
 import { contactListContainer, contactListIcon, listItem } from "../styles";
 import { Link } from "react-router-dom";
@@ -36,8 +36,6 @@ const handleSaveContact = (employee) => {
 };
 
 const ContactDetails = ({ currentEmployee }) => {
-  const isMobile = useMediaQuery("(max-width:600px)");
-
   const displayDetails = CONTACTDETAILS.map((item) => ({
     icon: item.icon,
     key: item.key,
@@ -76,41 +74,24 @@ const ContactDetails = ({ currentEmployee }) => {
                 >
                   <Stack direction="row" alignItems="center" gap={1.5}>
                     <Typography sx={listItem}>{el.details}</Typography>
-                    {!isMobile && (
-                      <Button
-                        variant="containedSecondary"
-                        size="small"
-                        onClick={() => handleSaveContact(currentEmployee)}
-                        sx={{
-                          padding: "6px 12px",
-                          fontSize: "12px",
-                          display: "block",
-                        }}
-                      >
-                        Save Contact
-                      </Button>
-                    )}
+                    <Button
+                      variant="containedSecondary"
+                      size="small"
+                      onClick={() => handleSaveContact(currentEmployee)}
+                      sx={{
+                        padding: "6px 9px",
+                        fontSize: "8px",
+                        display: "block",
+                      }}
+                    >
+                      Save Contact
+                    </Button>
                   </Stack>
 
                   {currentEmployee.second_phone_number && (
                     <Typography sx={listItem}>
                       {currentEmployee.second_phone_number}
                     </Typography>
-                  )}
-
-                  {isMobile && (
-                    <Button
-                      variant="containedSecondary"
-                      size="small"
-                      onClick={() => handleSaveContact(currentEmployee)}
-                      sx={{
-                        padding: "6px 12px",
-                        fontSize: "12px",
-                        mt: 0.5,
-                      }}
-                    >
-                      Save Contact
-                    </Button>
                   )}
                 </Stack>
               ) : el.key === "website" ? (

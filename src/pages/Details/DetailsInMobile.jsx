@@ -79,13 +79,6 @@ const DetailsInMobile = ({
     }
   };
 
-  console.log("🔍 Banner image sources:", {
-    departmentBanner: currentEmployee?.department_id?.banner_image?.image_url,
-    dataBanner: data?.banner_image?.image_url,
-    companyBanner: companyProfile?.banner_image?.image_url,
-    finalBanner: bannerImage,
-  });
-
   return (
     <>
       {bannerImage && !bannerError ? (

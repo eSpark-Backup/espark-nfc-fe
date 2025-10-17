@@ -1,8 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
-
 import { OURSOLUTION, OURSOLUTIONS } from "../../../constants/Details";
-
 import { gridContainer, listItem, sectionHeading } from "../styles";
+
 const OurSolutions = ({ isMobile }) => {
   return (
     <>
@@ -31,14 +30,38 @@ const OurSolutions = ({ isMobile }) => {
                     backgroundColor: "#e9e9ea",
                     borderRadius: "100%",
                     p: 1.3,
-                    width: "48px",
-                    height: "48px",
+                    width: "54px",
+                    height: "54px",
+                    transform: "translate3d(0,0,0)",
+                    WebkitTransform: "translate3d(0,0,0)",
+                    backfaceVisibility: "hidden",
                   }}
                 >
-                  <Box component="img" src={isMobile ? el.icon : el.icon} />
+                  <Box
+                    component="img"
+                    src={el.icon}
+                    alt={el.details}
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain",
+                      transform: "translateZ(0)",
+                      WebkitTransform: "translateZ(0)",
+                      imageRendering: "-webkit-optimize-contrast",
+                    }}
+                  />
                 </Box>
               ) : (
-                <Box component="img" src={isMobile ? el.icon : el.icon} />
+                <Box
+                  component="img"
+                  src={el.icon}
+                  alt={el.details}
+                  sx={{
+                    transform: "translateZ(0)",
+                    WebkitTransform: "translateZ(0)",
+                    imageRendering: "-webkit-optimize-contrast",
+                  }}
+                />
               )}
               <Typography sx={listItem}>{el.details}</Typography>
             </Box>
