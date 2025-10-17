@@ -124,7 +124,7 @@ const contactListIcon = (el) => ({
 
 const listItem = {
   color: "#48494A",
-  fontSize: "12.8px",
+  fontSize: "10px",
   letterSpacing: "-0.015em",
   fontWeight: 600,
   lineHeight: "20px",
@@ -168,7 +168,7 @@ const mobileTopContainer = {
 const mobileBottomContainer = {
   backgroundColor: "#ffffff",
   borderRadius: "9px",
-  padding: "54px 29px 50px 34px",
+  padding: "54px 10px 50px 10px",
 };
 
 const mobileDetailsContainer = {
