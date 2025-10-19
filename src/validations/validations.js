@@ -160,6 +160,19 @@ const phoneNumberValidation = yup
   .max(15, "Phone number is too long")
   .required("Phone number is required");
 
+const secondPhoneNumberValidation = yup
+  .string()
+  .nullable()
+  .notRequired()
+  .matches(/^\+?\d+$/, {
+    message: "Phone number must be digits only (optionally starting with +)",
+    excludeEmptyString: true,
+  })
+  .test("len", "Phone number is too short or too long", (value) => {
+    if (!value) return true;
+    return value.length >= 7 && value.length <= 15;
+  });
+
 const ageValidation = yup
   .number()
   .typeError("Age must be a number")
@@ -242,6 +255,7 @@ export {
   dateTimeValidation,
   departmentValidation,
   phoneNumberValidation,
+  secondPhoneNumberValidation,
   ageValidation,
   linkedInValidation,
   urlValidation,

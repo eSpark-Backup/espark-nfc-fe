@@ -80,7 +80,7 @@ const companyButton = (isAbout) => ({
 
 const sectionHeading = {
   color: "#000000",
-  marginBottom: "15px",
+  marginBottom: "20px",
   letterSpacing: "-0.015em",
 };
 
@@ -89,42 +89,44 @@ const sectionDetailsBox = {
 };
 
 const sectionDetails = {
-  fontSize: "12px",
-  lineHeight: "14px",
+  fontSize: "12.2px",
   letterSpacing: "-0.015em",
+  "@media(min-width: 320px) and (max-width: 374px)": {
+    fontSize: "10.5px",
+  },
+  "@media(min-width: 280px) and (max-width: 319px)": {
+    fontSize: "10.5px",
+  },
 };
 
 const contactListContainer = {
   flexDirection: "row",
   alignItems: "center",
-  gap: "15px",
+  gap: { xs: "10px" },
 };
 
 const contactListIcon = (el) => ({
-  width: "45px",
+  width: "24px",
   display: "flex",
-  textAlign: "center",
+  alignSelf: el.key === "phone_number" ? "center" : "start",
   "& img": {
+    display: "flex",
+    alignSelf: el.key === "phone_number" ? "center" : "flex-start",
     margin: "auto",
     filter:
       "invert(31%) sepia(12%) saturate(1382%) hue-rotate(174deg) brightness(91%) contrast(90%)",
     width: "fit-content",
-    height:
-      el.key === "phone_number"
-        ? "33px"
-        : el.key === "address"
-        ? "31px"
-        : el.key === "landline"
-        ? "32px"
-        : el.key === "email"
-        ? "32px"
-        : "26.5px",
+    height: el.key === "phone_number" ? "34.2px" : "23px",
+
+    "@media(max-width: 319px)": {
+      height: el.key === "phone_number" ? "30px" : "20px",
+    },
   },
 });
 
 const listItem = {
   color: "#48494A",
-  fontSize: "10px",
+  fontSize: "12.8px",
   letterSpacing: "-0.015em",
   fontWeight: 600,
   lineHeight: "20px",
@@ -132,7 +134,13 @@ const listItem = {
   wordBreak: "break-all",
   whiteSpace: "normal",
   overflowWrap: "anywhere",
-  wordBreak: "keep-all",
+  "@media(min-width: 300px) and (max-width: 374px)": {
+    fontSize: { xs: "clamp(10.2px, 1vw, 11px)", sm: "12.2px" },
+  },
+  "@media(max-width: 319px)": {
+    fontSize: { xs: "clamp(10px, 1vw, 11px)", sm: "12.8px" },
+    lineHeight: "15px",
+  },
 };
 
 const gridContainer = {
@@ -168,7 +176,10 @@ const mobileTopContainer = {
 const mobileBottomContainer = {
   backgroundColor: "#ffffff",
   borderRadius: "9px",
-  padding: "54px 10px 50px 10px",
+  padding: { xs: "54px 26px 50px 33px", md: "54px 29px 50px 34px" },
+  "@media(max-width: 319px)": {
+    padding: "54px 26px 50px 26px",
+  },
 };
 
 const mobileDetailsContainer = {
@@ -181,6 +192,7 @@ const mobileDetailsContainer = {
 const mobileTitleContainer = {
   width: "100%",
   textAlign: "center",
+  px: 1.2,
 };
 
 const mobileImageBox = {

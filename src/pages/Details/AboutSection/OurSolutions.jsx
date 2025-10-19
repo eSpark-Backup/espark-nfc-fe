@@ -5,11 +5,7 @@ import { gridContainer, listItem, sectionHeading } from "../styles";
 const OurSolutions = ({ isMobile }) => {
   return (
     <>
-      <Typography
-        variant="h6"
-        sx={sectionHeading}
-        marginBottom={{ xs: "20px", smLarge: "25px" }}
-      >
+      <Typography variant="h6" sx={sectionHeading}>
         {OURSOLUTION}
       </Typography>
 
@@ -23,47 +19,42 @@ const OurSolutions = ({ isMobile }) => {
             >
               {isMobile ? (
                 <Box
+                  component="img"
+                  src={el.iconMobile}
+                  alt={el.details}
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "#e9e9ea",
-                    borderRadius: "100%",
-                    p: 1.3,
-                    width: "54px",
+                    width: "fit-content",
                     height: "54px",
-                    transform: "translate3d(0,0,0)",
-                    WebkitTransform: "translate3d(0,0,0)",
-                    backfaceVisibility: "hidden",
+                    objectFit: "contain",
+                    transform: "translateZ(0)",
+                    WebkitTransform: "translateZ(0)",
+                    imageRendering: "-webkit-optimize-contrast",
                   }}
-                >
-                  <Box
-                    component="img"
-                    src={el.icon}
-                    alt={el.details}
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "contain",
-                      transform: "translateZ(0)",
-                      WebkitTransform: "translateZ(0)",
-                      imageRendering: "-webkit-optimize-contrast",
-                    }}
-                  />
-                </Box>
+                />
               ) : (
                 <Box
                   component="img"
                   src={el.icon}
                   alt={el.details}
                   sx={{
+                    width: "40px",
+                    height: "40px",
                     transform: "translateZ(0)",
                     WebkitTransform: "translateZ(0)",
                     imageRendering: "-webkit-optimize-contrast",
                   }}
                 />
               )}
-              <Typography sx={listItem}>{el.details}</Typography>
+              <Typography
+                sx={{
+                  ...listItem,
+                  "@media(max-width: 374px)": {
+                    fontSize: 11,
+                  },
+                }}
+              >
+                {el.details}
+              </Typography>
             </Box>
           </Grid>
         ))}

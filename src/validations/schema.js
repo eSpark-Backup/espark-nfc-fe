@@ -23,6 +23,7 @@ import {
   passwordValidation,
   phoneNumberValidation,
   redirectedUrlValidation,
+  secondPhoneNumberValidation,
   websiteLinkValidation,
   youtubeValidation,
 } from "./validations";
@@ -60,6 +61,7 @@ const employeeFormSchema = yup.object({
   email: emailValidation,
   department_id: departmentValidation,
   phone_number: phoneNumberValidation,
+  second_phone_number: secondPhoneNumberValidation,
   age: ageValidation,
   joining_date: dateTimeValidation("Joining"),
   designation: designationValidation,

@@ -43,7 +43,14 @@ const ContactDetails = ({ currentEmployee }) => {
   }));
 
   return (
-    <Stack gap={1.375}>
+    <Stack
+      sx={{
+        gap: { xs: 2, sm: 2 },
+        "@media(max-width: 374px)": {
+          gap: 1.8,
+        },
+      }}
+    >
       {displayDetails.map((el, i) => (
         <React.Fragment key={i}>
           <Stack sx={contactListContainer}>
@@ -72,34 +79,72 @@ const ContactDetails = ({ currentEmployee }) => {
                     },
                   }}
                 >
-                  <Stack direction="row" alignItems="center" gap={1.5}>
-                    <Typography sx={listItem}>{el.details}</Typography>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    gap={1.5}
+                    sx={{
+                      "@media(max-width: 319px)": {
+                        gap: 1,
+                      },
+                    }}
+                  >
+                    <stack>
+                      <Typography
+                        sx={{
+                          ...listItem,
+                          "@media(max-width: 325px)": {
+                            fontSize: 9.5,
+                          },
+                        }}
+                      >
+                        {el.details}
+                      </Typography>
+                      {currentEmployee.second_phone_number && (
+                        <Typography
+                          sx={{
+                            ...listItem,
+                            "@media(max-width: 325px)": {
+                              fontSize: 9.5,
+                            },
+                          }}
+                        >
+                          {currentEmployee.second_phone_number}
+                        </Typography>
+                      )}
+                    </stack>
                     <Button
                       variant="containedSecondary"
                       size="small"
                       onClick={() => handleSaveContact(currentEmployee)}
                       sx={{
-                        padding: "6px 9px",
-                        fontSize: "8px",
-                        display: "block",
+                        maxWidth: "fit-content",
+                        padding: "6px 12px",
+                        fontSize: { xs: "clamp(8px, 2.1vw, 11px)", sm: "12px" },
+                        textWrap: "nowrap",
+                        "@media(max-width: 319px)": {
+                          fontSize: "clamp(7px, 0.5vw, 11px)",
+                          padding: "6px 4px",
+                        },
                       }}
                     >
                       Save Contact
                     </Button>
                   </Stack>
-
-                  {currentEmployee.second_phone_number && (
-                    <Typography sx={listItem}>
-                      {currentEmployee.second_phone_number}
-                    </Typography>
-                  )}
                 </Stack>
               ) : el.key === "website" ? (
                 <Link to={`${el.details}`} style={{ width: "fit-content" }}>
                   <Typography sx={listItem}>{el.details}</Typography>
                 </Link>
               ) : el.key === "landline" ? (
-                <Typography sx={listItem}>
+                <Typography
+                  sx={{
+                    ...listItem,
+                    "@media(max-width: 325px)": {
+                      fontSize: 9.5,
+                    },
+                  }}
+                >
                   {el.details || "+97148928880"}
                 </Typography>
               ) : (
