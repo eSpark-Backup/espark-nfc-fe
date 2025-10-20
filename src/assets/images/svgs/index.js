@@ -46,7 +46,7 @@ import DoorWindow from "./door-window-mobile2.svg";
 import DoorWindowMobile from "./door-window-mobile.svg";
 import Interior from "./interior-mobile2.svg";
 import InteriorMobile from "./interior-mobile.svg";
-import Outdoor from "./outdoor-mobile2.svg";
+import Outdoor from "./outdoor-mobile4.svg";
 import OutdoorMobile from "./outdoor-mobile.svg";
 import Location from "./location.svg";
 import Logo from "./logo.svg";
