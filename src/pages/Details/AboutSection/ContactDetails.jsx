@@ -89,7 +89,7 @@ const ContactDetails = ({ currentEmployee }) => {
                       },
                     }}
                   >
-                    <stack>
+                    <Stack>
                       <Typography
                         sx={{
                           ...listItem,
@@ -100,19 +100,7 @@ const ContactDetails = ({ currentEmployee }) => {
                       >
                         {el.details}
                       </Typography>
-                      {currentEmployee.second_phone_number && (
-                        <Typography
-                          sx={{
-                            ...listItem,
-                            "@media(max-width: 325px)": {
-                              fontSize: 9.5,
-                            },
-                          }}
-                        >
-                          {currentEmployee.second_phone_number}
-                        </Typography>
-                      )}
-                    </stack>
+                    </Stack>
                     <Button
                       variant="containedSecondary"
                       size="small"
@@ -145,7 +133,7 @@ const ContactDetails = ({ currentEmployee }) => {
                     },
                   }}
                 >
-                  {el.details || "+97148928880"}
+                  {currentEmployee.second_phone_number || "NA"}
                 </Typography>
               ) : (
                 <Typography sx={listItem}>{el.details}</Typography>

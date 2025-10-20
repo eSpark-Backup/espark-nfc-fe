@@ -162,16 +162,13 @@ const phoneNumberValidation = yup
 
 const secondPhoneNumberValidation = yup
   .string()
-  .nullable()
-  .notRequired()
-  .matches(/^\+?\d+$/, {
-    message: "Phone number must be digits only (optionally starting with +)",
-    excludeEmptyString: true,
-  })
-  .test("len", "Phone number is too short or too long", (value) => {
-    if (!value) return true;
-    return value.length >= 7 && value.length <= 15;
-  });
+  .matches(
+    /^\+?\d+$/,
+    "Phone number must be digits only (optionally starting with +)"
+  )
+  .min(7, "Phone number is too short")
+  .max(15, "Phone number is too long")
+  .required("Phone number is required");
 
 const ageValidation = yup
   .number()

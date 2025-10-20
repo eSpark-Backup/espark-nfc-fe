@@ -116,14 +116,14 @@ const contactListIcon = (el) => ({
     filter:
       "invert(31%) sepia(12%) saturate(1382%) hue-rotate(174deg) brightness(91%) contrast(90%)",
     width: "fit-content",
-    height: el.key === "phone_number" ? "32.5px" : "23px",
+    height: el.key === "phone_number" ? "32px" : "23px",
 
     "@media(min-width:320px) and (max-width: 375px)": {
-      height: el.key === "phone_number" ? "30px" : "23px",
+      height: el.key === "phone_number" ? "28.5px" : "23px",
     },
 
     "@media(max-width: 319px)": {
-      height: el.key === "phone_number" ? "28px" : "20px",
+      height: el.key === "phone_number" ? "27.3px" : "20px",
     },
   },
 });
