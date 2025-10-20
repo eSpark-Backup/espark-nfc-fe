@@ -45,9 +45,9 @@ const ContactDetails = ({ currentEmployee }) => {
   return (
     <Stack
       sx={{
-        gap: { xs: 2, sm: 2 },
+        gap: { xs: 3, sm: 3 },
         "@media(max-width: 374px)": {
-          gap: 1.8,
+          gap: 2.5,
         },
       }}
     >

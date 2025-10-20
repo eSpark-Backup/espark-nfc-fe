@@ -23,12 +23,8 @@ const OurSolutions = ({ isMobile }) => {
                   src={el.iconMobile}
                   alt={el.details}
                   sx={{
-                    width: "fit-content",
+                    width: "54px",
                     height: "54px",
-                    objectFit: "contain",
-                    transform: "translateZ(0)",
-                    WebkitTransform: "translateZ(0)",
-                    imageRendering: "-webkit-optimize-contrast",
                   }}
                 />
               ) : (
@@ -39,9 +35,6 @@ const OurSolutions = ({ isMobile }) => {
                   sx={{
                     width: "40px",
                     height: "40px",
-                    transform: "translateZ(0)",
-                    WebkitTransform: "translateZ(0)",
-                    imageRendering: "-webkit-optimize-contrast",
                   }}
                 />
               )}
