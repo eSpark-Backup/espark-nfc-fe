@@ -137,10 +137,10 @@ const listItem = {
   letterSpacing: "-0.015em",
   fontWeight: 600,
   lineHeight: "20px",
-  maxWidth: "210px",
-  wordBreak: "break-all",
+  maxWidth: "220px",
+  wordBreak: "break-word", 
   whiteSpace: "normal",
-  overflowWrap: "anywhere",
+  overflowWrap: "break-word",
   "@media(min-width: 300px) and (max-width: 374px)": {
     fontSize: { xs: "clamp(10.2px, 1vw, 11px)", sm: "12.2px" },
   },
