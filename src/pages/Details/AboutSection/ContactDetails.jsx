@@ -4,24 +4,136 @@ import { CONTACTDETAILS } from "../../../constants/Details";
 import { contactListContainer, contactListIcon, listItem } from "../styles";
 import { Link } from "react-router-dom";
 
-const generateVCard = (employee) => {
-  return `
-BEGIN:VCARD
-VERSION:3.0
-FN:${employee.name}
-TEL;TYPE=MAIN:${employee.phone_number}
-${
-  employee.second_phone_number
-    ? `TEL;TYPE=OTHER:${employee.second_phone_number}`
-    : ""
-}
-EMAIL:${employee.email}
-END:VCARD
-  `.trim();
+// const generateVCard = (employee) => {
+//   const {
+//     name,
+//     phone,
+//     second_phone_number,
+//     email,
+//     designation,
+//     website,
+//     address,
+//     profile_image,
+//   } = employee;
+
+//   let vcard = `BEGIN:VCARD
+// VERSION:3.0
+// FN:${name || ""}
+// N:${name || ""};;;;
+// TITLE:${designation || ""}
+// `;
+
+//   if (phone) {
+//     vcard += `TEL;TYPE=CELL,VOICE:${phone}\n`;
+//   }
+
+//   if (second_phone_number) {
+//     vcard += `TEL;TYPE=WORK,VOICE:${second_phone_number}\n`;
+//   }
+
+//   if (email) {
+//     vcard += `EMAIL;TYPE=INTERNET:${email}\n`;
+//   }
+
+//   if (website) {
+//     vcard += `URL:${website}\n`;
+//   }
+
+//   if (address) {
+//     vcard += `ADR;TYPE=WORK:;;${address};;;;\n`;
+//   }
+
+//   if (profile_image?.image_url) {
+//     vcard += `PHOTO;ENCODING=BASE64;TYPE=JPEG:${profile_image?.image_url}\n`;
+//   }
+
+//   vcard += `END:VCARD`;
+
+//   return vcard;
+// };
+
+// const handleSaveContact = (employee) => {
+//   console.log("Saving contact for:", employee);
+//   const vcard = generateVCard(employee);
+//   const blob = new Blob([vcard], { type: "text/vcard" });
+
+//   const url = URL.createObjectURL(blob);
+
+//   const link = document.createElement("a");
+//   link.href = url;
+//   link.download = `${employee.name}.vcf`;
+//   document.body.appendChild(link);
+//   link.click();
+//   document.body.removeChild(link);
+//   URL.revokeObjectURL(url);
+// };
+
+const imageToBase64 = async (imageUrl) => {
+  const response = await fetch(imageUrl);
+  const blob = await response.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result.split(',')[1]); // get only base64 part
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
 };
 
-const handleSaveContact = (employee) => {
-  const vcard = generateVCard(employee);
+const generateVCard = async (employee) => {
+  const {
+    name,
+    phone,
+    second_phone_number,
+    email,
+    designation,
+    website,
+    address,
+    profile_image,
+  } = employee;
+
+  let vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:${name || ""}
+N:${name || ""};;;;
+TITLE:${designation || ""}
+`;
+
+  if (phone) {
+    vcard += `TEL;TYPE=CELL:${phone}\n`;
+  }
+
+  if (second_phone_number) {
+    vcard += `TEL;TYPE=WORK:${second_phone_number}\n`;
+  }
+
+  if (email) {
+    vcard += `EMAIL;TYPE=INTERNET:${email}\n`;
+  }
+
+  if (website) {
+    vcard += `URL:${website}\n`;
+  }
+
+  if (address) {
+    vcard += `ADR;TYPE=WORK:;;${address};;;;\n`;
+  }
+
+  // Add photo
+  if (profile_image?.image_url) {
+    try {
+      const base64Image = await imageToBase64(profile_image.image_url);
+      vcard += `PHOTO;ENCODING=BASE64;TYPE=JPEG:${base64Image}\n`;
+    } catch (err) {
+      console.error("Error converting image to base64:", err);
+    }
+  }
+
+  vcard += `END:VCARD`;
+  return vcard;
+};
+
+const handleSaveContact = async (employee) => {
+  const vcard = await generateVCard(employee);
   const blob = new Blob([vcard], { type: "text/vcard" });
 
   const url = URL.createObjectURL(blob);
