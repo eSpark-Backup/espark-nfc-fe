@@ -13,6 +13,7 @@ const OurSolutions = ({ isMobile }) => {
         {OURSOLUTIONS.map((el, i) => (
           <Grid size={{ xs: 12, smLarge: 6 }} key={i}>
             <Box
+              onClick={() => window.open(el.link)}
               display="flex"
               alignItems="center"
               gap={{ xs: 1.625, lg: 2.625 }}

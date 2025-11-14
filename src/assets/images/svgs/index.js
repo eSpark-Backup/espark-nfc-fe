@@ -37,6 +37,8 @@ import LinkedIn from "./linkedin.svg";
 import YouTube from "./youtube.svg";
 import Website from "./website.svg";
 // Other Icons
+import automation from "./automation.svg";
+import automationMobile from "./automation2.svg";
 import Acoustic from "./acoustic-mobile2.svg";
 import AcousticMobile from "./acoustic-mobile.svg";
 import Action from "./action.svg";
@@ -111,6 +113,8 @@ export {
   Website,
   LinkedIn,
   // Other Icons
+  automation,
+  automationMobile,
   Acoustic,
   AcousticMobile,
   Action,

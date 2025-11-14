@@ -1,4 +1,6 @@
 import {
+  automation,
+  automationMobile,
   Acoustic,
   AcousticMobile,
   Architectural,
@@ -75,15 +77,18 @@ const OURSOLUTIONS = [
     icon: DoorWindow,
     iconMobile: DoorWindowMobile,
     details: "Doors and Windows",
+    link: "https://www.eurosystems.com/doors-and-windows"
   },
   {
     icon: Architectural,
     iconMobile: ArchitecturalMobile,
-    details: "Architecture System",
+    details: "Architectural Glazing Solutions",
+    link: "https://www.eurosystems.com/architectural-glazing"
   },
-  { icon: Interior, iconMobile: InteriorMobile, details: "Interior Shading" },
-  { icon: Outdoor, iconMobile: OutdoorMobile, details: "Outdoor Shading" },
-  { icon: Acoustic, iconMobile: AcousticMobile, details: "Acoustic Solution" },
+  { icon: Interior, iconMobile: InteriorMobile, details: "Interior Shading", link: "https://www.eurosystems.com/interior-shading" },
+  { icon: Outdoor, iconMobile: OutdoorMobile, details: "Outdoor Shading", link: "https://www.eurosystems.com/outdoor-shading" },
+  { icon: Acoustic, iconMobile: AcousticMobile, details: "Acoustic Solutions", link: "https://www.eurosystems.com/acoustic-solutions" },
+  { icon: automation, iconMobile: automationMobile, details: "Smart Automation Solutions", link: "https://www.eurosystems.com/smart-automation" },
 ];
 
 const SWITCHBUTTONS = {
