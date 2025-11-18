@@ -73,7 +73,7 @@ const imageToBase64 = async (imageUrl) => {
   const blob = await response.blob();
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result.split(',')[1]); // get only base64 part
+    reader.onloadend = () => resolve(reader.result.split(",")[1]); // get only base64 part
     reader.onerror = reject;
     reader.readAsDataURL(blob);
   });
@@ -82,7 +82,7 @@ const imageToBase64 = async (imageUrl) => {
 const generateVCard = async (employee) => {
   const {
     name,
-    phone,
+    phone_number,
     second_phone_number,
     email,
     designation,
@@ -98,8 +98,8 @@ N:${name || ""};;;;
 TITLE:${designation || ""}
 `;
 
-  if (phone) {
-    vcard += `TEL;TYPE=CELL:${phone}\n`;
+  if (phone_number) {
+    vcard += `TEL;TYPE=CELL:${phone_number}\n`;
   }
 
   if (second_phone_number) {
@@ -121,7 +121,7 @@ TITLE:${designation || ""}
   // Add photo
   if (profile_image?.image_url) {
     try {
-      const base64Image = await imageToBase64(profile_image.image_url);
+      const base64Image = await imageToBase64(profile_image?.image_url);
       vcard += `PHOTO;ENCODING=BASE64;TYPE=JPEG:${base64Image}\n`;
     } catch (err) {
       console.error("Error converting image to base64:", err);
