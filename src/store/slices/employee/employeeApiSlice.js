@@ -1,5 +1,7 @@
 import {
   EMPLOYEE,
+  EMPLOYEE_GENERATE_APPLE_WALLET_PASS,
+  EMPLOYEE_GENERATE_GOOGLE_WALLET_PASS,
   EMPLOYEE_REPORTS,
   GET_ALL_DEPARTMENTS,
   GET_ALL_EMPLOYEES,
@@ -39,11 +41,10 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
     }),
     getEmployeeById: builder.query({
       query: (id) => ({
-        url: `${EMPLOYEE}/${id}`, 
+        url: `${EMPLOYEE}/${id}`,
         method: "GET",
       }),
     }),
-
     updateEmployee: builder.mutation({
       query: ({ body, id }) => {
         const formData = new FormData();
@@ -96,6 +97,20 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    // wallets
+    generateGoogleWalletEmployee: builder.mutation({
+      query: (employeeId) => ({
+        url: `${EMPLOYEE}/${employeeId}${EMPLOYEE_GENERATE_GOOGLE_WALLET_PASS}`,
+        method: "POST",
+      }),
+    }),
+    generateAppleWalletEmployee: builder.mutation({
+      query: (employeeId) => ({
+        url: `${EMPLOYEE}/${employeeId}${EMPLOYEE_GENERATE_APPLE_WALLET_PASS}`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -105,6 +120,8 @@ export const {
   useGetEmployeeByIdQuery,
   useUpdateEmployeeMutation,
   useDeleteEmployeeMutation,
+  useGenerateGoogleWalletEmployeeMutation,
+  useGenerateAppleWalletEmployeeMutation,
   useGetAllDepartmentsQuery,
   useGetAllEmployeesQuery,
   useGetAllReportsQuery,

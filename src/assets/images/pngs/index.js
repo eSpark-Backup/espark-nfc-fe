@@ -24,6 +24,10 @@ import User5 from "./user-5.png";
 import User6 from "./user-6.png";
 import User7 from "./user-7.png";
 import User from "./user.png";
+import Blur_qr from "./blur_qr.png";
+import AppleWallet from "./apple-wallet.png";
+import GoogleWallet from "./g-wallet.png";
+import SamsungWallet from "./samsung-wallet.png";
 
 export {
   Avatar,
@@ -43,6 +47,11 @@ export {
   GoogleMap,
   Mail,
   Link,
+  Blur_qr,
+  AppleWallet,
+  GoogleWallet,
+  SamsungWallet,
+
   // Users
   User1,
   User2,

@@ -1,79 +1,32 @@
 import React from "react";
-import { Box, Stack, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Stack,
+  Typography,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import { CONTACTDETAILS } from "../../../constants/Details";
 import { contactListContainer, contactListIcon, listItem } from "../styles";
 import { Link } from "react-router-dom";
-
-// const generateVCard = (employee) => {
-//   const {
-//     name,
-//     phone,
-//     second_phone_number,
-//     email,
-//     designation,
-//     website,
-//     address,
-//     profile_image,
-//   } = employee;
-
-//   let vcard = `BEGIN:VCARD
-// VERSION:3.0
-// FN:${name || ""}
-// N:${name || ""};;;;
-// TITLE:${designation || ""}
-// `;
-
-//   if (phone) {
-//     vcard += `TEL;TYPE=CELL,VOICE:${phone}\n`;
-//   }
-
-//   if (second_phone_number) {
-//     vcard += `TEL;TYPE=WORK,VOICE:${second_phone_number}\n`;
-//   }
-
-//   if (email) {
-//     vcard += `EMAIL;TYPE=INTERNET:${email}\n`;
-//   }
-
-//   if (website) {
-//     vcard += `URL:${website}\n`;
-//   }
-
-//   if (address) {
-//     vcard += `ADR;TYPE=WORK:;;${address};;;;\n`;
-//   }
-
-//   if (profile_image?.image_url) {
-//     vcard += `PHOTO;ENCODING=BASE64;TYPE=JPEG:${profile_image?.image_url}\n`;
-//   }
-
-//   vcard += `END:VCARD`;
-
-//   return vcard;
-// };
-
-// const handleSaveContact = (employee) => {
-//   console.log("Saving contact for:", employee);
-//   const vcard = generateVCard(employee);
-//   const blob = new Blob([vcard], { type: "text/vcard" });
-
-//   const url = URL.createObjectURL(blob);
-
-//   const link = document.createElement("a");
-//   link.href = url;
-//   link.download = `${employee.name}.vcf`;
-//   document.body.appendChild(link);
-//   link.click();
-//   document.body.removeChild(link);
-//   URL.revokeObjectURL(url);
-// };
+import WalletButtons from "./WalletButtons";
+import {
+  AppleWallet,
+  Blur_qr,
+  GoogleWallet,
+  SamsungWallet,
+} from "../../../assets/images/pngs";
+import {
+  useGenerateAppleWalletEmployeeMutation,
+  useGenerateGoogleWalletEmployeeMutation,
+} from "../../../store/slices/employee/employeeApiSlice";
 
 const imageToBase64 = async (imageUrl) => {
   const response = await fetch(imageUrl);
   const blob = await response.blob();
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result.split(",")[1]); // get only base64 part
+    reader.onloadend = () => resolve(reader.result.split(",")[1]);
     reader.onerror = reject;
     reader.readAsDataURL(blob);
   });
@@ -118,7 +71,6 @@ TITLE:${designation || ""}
     vcard += `ADR;TYPE=WORK:;;${address};;;;\n`;
   }
 
-  // Add photo
   if (profile_image?.image_url) {
     try {
       const base64Image = await imageToBase64(profile_image?.image_url);
@@ -148,11 +100,40 @@ const handleSaveContact = async (employee) => {
 };
 
 const ContactDetails = ({ currentEmployee }) => {
-  const displayDetails = CONTACTDETAILS.map((item) => ({
+  const [generateGoogleWalletEmployee, { isLoading: googleWalletLoading }] =
+    useGenerateGoogleWalletEmployeeMutation();
+  const [generateAppleWalletEmployee, { isLoading: appleWalletLoading }] =
+    useGenerateAppleWalletEmployeeMutation();
+
+  const displayDetails = CONTACTDETAILS?.map((item) => ({
     icon: item.icon,
     key: item.key,
     details: currentEmployee[item.key] || "",
   }));
+
+  const handleGenerateGoogleWallet = async () => {
+    try {
+      const res = await generateGoogleWalletEmployee(
+        currentEmployee?.id
+      ).unwrap();
+
+      window.location.href = res.data.save_url;
+    } catch (error) {
+      console.error("Failed to generate Google Wallet pass", error);
+    }
+  };
+
+  const handleGenerateAppleWallet = async () => {
+    try {
+      const res = await generateAppleWalletEmployee(
+        currentEmployee?.id
+      ).unwrap();
+
+      window.location.href = res.data.save_url;
+    } catch (error) {
+      console.error("Failed to generate Google Wallet pass", error);
+    }
+  };
 
   return (
     <Stack
@@ -166,12 +147,10 @@ const ContactDetails = ({ currentEmployee }) => {
       {displayDetails.map((el, i) => (
         <React.Fragment key={i}>
           <Stack sx={contactListContainer}>
-            {/* Icon */}
             <Box sx={contactListIcon(el)}>
               <Box component="img" src={el.icon} alt="icon" />
             </Box>
 
-            {/* Content Wrapper */}
             <Stack
               sx={{
                 width: "calc(100% - 40px)",
@@ -254,6 +233,173 @@ const ContactDetails = ({ currentEmployee }) => {
           </Stack>
         </React.Fragment>
       ))}
+
+      <Stack
+        width={"fit-content"}
+        alignItems="center"
+        spacing={2}
+        sx={{
+          display: { xs: "flex", md: "none" },
+          height: "80%",
+          "@media(max-width: 300px)": {
+            gap: 1,
+            alignItems: "flex-start",
+            flexDirection: "column",
+          },
+        }}
+      >
+        <Box
+          component="div"
+          sx={{
+            p: 0,
+            pt: 3,
+            m: 0,
+            display: "flex",
+            gap: 1.2,
+            alignItems: "center",
+          }}
+        >
+          {/* QR CODE */}
+          <Box
+            sx={{
+              width: { xs: 65, sm: 85 },
+              height: { xs: 65, sm: 85 },
+            }}
+            src={currentEmployee?.qr_url || Blur_qr}
+            component="img"
+            alt="QR Code"
+          />
+
+          <Box
+            sx={{
+              width: "1px",
+              height: { xs: "50px", sm: "58px" },
+              backgroundColor: "darkGray",
+              opacity: 0.6,
+            }}
+          />
+
+          <Box component="ul" sx={{ p: 0, m: 0 }}>
+            <Box
+              component="li"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                disableRipple
+                disableFocusRipple
+                disableElevation
+                disableTouchRipple
+                disabled={appleWalletLoading}
+                onClick={handleGenerateAppleWallet}
+                sx={{
+                  color: "#48494A",
+                  fontSize: { xs: "10px", sm: "12.8px" },
+                  letterSpacing: "-0.015em",
+                  fontWeight: 600,
+                  minWidth: 0,
+                  "& .MuiButton-startIcon": {
+                    flexShrink: 0,
+                    mr: "6px",
+                  },
+
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                  },
+                }}
+                startIcon={
+                  appleWalletLoading ? (
+                    <CircularProgress size={18} />
+                  ) : (
+                    <Box
+                      component="img"
+                      src={AppleWallet}
+                      alt="Apple Wallet"
+                      sx={{
+                        width: { xs: 18, sm: 20 },
+                        height: { xs: 18, sm: 20 },
+                        flexShrink: 0,
+                      }}
+                    />
+                  )
+                }
+              >
+                <Box
+                  component="span"
+                  sx={{
+                    textAlign: "left",
+                    lineHeight: 1.4,
+                    flexGrow: 1,
+                  }}
+                >
+                  Add to Apple Wallet
+                </Box>
+              </Button>
+            </Box>
+
+            <Box
+              component="li"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                disableRipple
+                disableFocusRipple
+                disableElevation
+                disableTouchRipple
+                disabled={googleWalletLoading}
+                onClick={handleGenerateGoogleWallet}
+                sx={{
+                  color: "#48494A",
+                  fontSize: { xs: "10px", sm: "12.8px" },
+                  letterSpacing: "-0.015em",
+                  fontWeight: 600,
+                  minWidth: 0,
+                  "& .MuiButton-startIcon": {
+                    flexShrink: 0,
+                    mr: "6px",
+                  },
+
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                  },
+                }}
+                startIcon={
+                  googleWalletLoading ? (
+                    <CircularProgress size={18} />
+                  ) : (
+                    <Box
+                      component="img"
+                      src={SamsungWallet}
+                      alt="Apple Wallet"
+                      sx={{
+                        width: { xs: 18, sm: 20 },
+                        height: { xs: 18, sm: 20 },
+                        flexShrink: 0,
+                      }}
+                    />
+                  )
+                }
+              >
+                <Box
+                  component="span"
+                  sx={{
+                    textAlign: "left",
+                    lineHeight: 1.4,
+                    flexGrow: 1,
+                  }}
+                >
+                  Add to Samsung Wallet
+                </Box>
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Stack>
     </Stack>
   );
 };
