@@ -18,8 +18,8 @@ export const DEPARTMENT_DROPDOWN = "/departments/dropdown"; // Get all departmen
 
 // EMPLOYEE ENDPOINT
 export const EMPLOYEE = "/employees"; // Get all employees and update and delete employees by ID
-export const EMPLOYEE_GENERATE_GOOGLE_WALLET_PASS = "/wallet/google/generate";
-export const EMPLOYEE_GENERATE_APPLE_WALLET_PASS = "/wallet/apple/generate";
+export const EMPLOYEE_GENERATE_GOOGLE_WALLET_PASS = "/wallet/google";
+export const EMPLOYEE_GENERATE_APPLE_WALLET_PASS = "/wallet/apple";
 
 // COMPANY PROFILE ENDPOINT
 export const COMPANY_PROFILE = "/company-profile"; // Get, update and delete company profile

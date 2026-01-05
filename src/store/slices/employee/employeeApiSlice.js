@@ -99,15 +99,22 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
     }),
 
     // wallets
+    downloadAppleWalletEmployee: builder.query({
+      query: ({ employeeId }) => ({
+        url: `${EMPLOYEE}${EMPLOYEE_GENERATE_APPLE_WALLET_PASS}/${employeeId}/download`,
+        method: "GET",
+        responseHandler: (response) => response.blob(),
+      }),
+    }),
     generateGoogleWalletEmployee: builder.mutation({
       query: (employeeId) => ({
-        url: `${EMPLOYEE}/${employeeId}${EMPLOYEE_GENERATE_GOOGLE_WALLET_PASS}`,
+        url: `${EMPLOYEE}${EMPLOYEE_GENERATE_GOOGLE_WALLET_PASS}/${employeeId}/generate`,
         method: "POST",
       }),
     }),
     generateAppleWalletEmployee: builder.mutation({
       query: (employeeId) => ({
-        url: `${EMPLOYEE}/${employeeId}${EMPLOYEE_GENERATE_APPLE_WALLET_PASS}`,
+        url: `${EMPLOYEE}${EMPLOYEE_GENERATE_APPLE_WALLET_PASS}/${employeeId}/generate`,
         method: "POST",
       }),
     }),
@@ -122,6 +129,7 @@ export const {
   useDeleteEmployeeMutation,
   useGenerateGoogleWalletEmployeeMutation,
   useGenerateAppleWalletEmployeeMutation,
+  useDownloadAppleWalletEmployeeQuery,
   useGetAllDepartmentsQuery,
   useGetAllEmployeesQuery,
   useGetAllReportsQuery,

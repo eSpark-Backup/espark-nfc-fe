@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Stack,
@@ -9,7 +9,6 @@ import {
 import { CONTACTDETAILS } from "../../../constants/Details";
 import { contactListContainer, contactListIcon, listItem } from "../styles";
 import { Link } from "react-router-dom";
-import WalletButtons from "./WalletButtons";
 import {
   AppleWallet,
   Blur_qr,
@@ -17,6 +16,7 @@ import {
   SamsungWallet,
 } from "../../../assets/images/pngs";
 import {
+  useDownloadAppleWalletEmployeeQuery,
   useGenerateAppleWalletEmployeeMutation,
   useGenerateGoogleWalletEmployeeMutation,
 } from "../../../store/slices/employee/employeeApiSlice";
@@ -100,10 +100,18 @@ const handleSaveContact = async (employee) => {
 };
 
 const ContactDetails = ({ currentEmployee }) => {
+  const [downloadSkip, setDownloadSkip] = useState(true);
   const [generateGoogleWalletEmployee, { isLoading: googleWalletLoading }] =
     useGenerateGoogleWalletEmployeeMutation();
+
   const [generateAppleWalletEmployee, { isLoading: appleWalletLoading }] =
     useGenerateAppleWalletEmployeeMutation();
+
+  const { data: appleWalletBlob, isFetching } =
+    useDownloadAppleWalletEmployeeQuery(
+      { employeeId: currentEmployee?.employee_id },
+      { skip: downloadSkip }
+    );
 
   const displayDetails = CONTACTDETAILS?.map((item) => ({
     icon: item.icon,
@@ -114,7 +122,7 @@ const ContactDetails = ({ currentEmployee }) => {
   const handleGenerateGoogleWallet = async () => {
     try {
       const res = await generateGoogleWalletEmployee(
-        currentEmployee?.id
+        currentEmployee?.employee_id
       ).unwrap();
 
       window.location.href = res.data.save_url;
@@ -125,15 +133,35 @@ const ContactDetails = ({ currentEmployee }) => {
 
   const handleGenerateAppleWallet = async () => {
     try {
-      const res = await generateAppleWalletEmployee(
-        currentEmployee?.id
-      ).unwrap();
+      await generateAppleWalletEmployee(currentEmployee?.employee_id).unwrap();
 
-      window.location.href = res.data.save_url;
+      setDownloadSkip(false);
     } catch (error) {
-      console.error("Failed to generate Google Wallet pass", error);
+      console.error("Failed to generate Apple Wallet pass", error);
     }
   };
+
+  useEffect(() => {
+    if (!appleWalletBlob) return;
+
+    const blob = new Blob([appleWalletBlob], {
+      type: "application/vnd.apple.pkpass",
+    });
+
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "employee.pkpass";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    window.location.href = url;
+
+    // Cleanup
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }, [appleWalletBlob]);
 
   return (
     <Stack
@@ -311,7 +339,12 @@ const ContactDetails = ({ currentEmployee }) => {
                 }}
                 startIcon={
                   appleWalletLoading ? (
-                    <CircularProgress size={18} />
+                    <CircularProgress
+                      size={18}
+                      sx={{
+                        color: "#3b5b82",
+                      }}
+                    />
                   ) : (
                     <Box
                       component="img"
@@ -370,7 +403,12 @@ const ContactDetails = ({ currentEmployee }) => {
                 }}
                 startIcon={
                   googleWalletLoading ? (
-                    <CircularProgress size={18} />
+                    <CircularProgress
+                      size={18}
+                      sx={{
+                        color: "#3b5b82",
+                      }}
+                    />
                   ) : (
                     <Box
                       component="img"
