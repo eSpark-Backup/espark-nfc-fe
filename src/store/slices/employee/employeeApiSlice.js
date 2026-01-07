@@ -45,6 +45,12 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getEmployeePublicById: builder.query({
+      query: (id) => ({
+        url: `${EMPLOYEE}/${id}/public`,
+        method: "GET",
+      }),
+    }),
     updateEmployee: builder.mutation({
       query: ({ body, id }) => {
         const formData = new FormData();
@@ -125,6 +131,7 @@ export const {
   useAddEmployeeMutation,
   useGetEmployeeQuery,
   useGetEmployeeByIdQuery,
+  useGetEmployeePublicByIdQuery,
   useUpdateEmployeeMutation,
   useDeleteEmployeeMutation,
   useGenerateGoogleWalletEmployeeMutation,

@@ -107,6 +107,9 @@ const ContactDetails = ({ currentEmployee }) => {
   const [generateAppleWalletEmployee, { isLoading: appleWalletLoading }] =
     useGenerateAppleWalletEmployeeMutation();
 
+  const token = localStorage?.getItem("accessToken");
+  const isWalletVisible = Boolean(token);
+
   const { data: appleWalletBlob, isFetching } =
     useDownloadAppleWalletEmployeeQuery(
       { employeeId: currentEmployee?.employee_id },
@@ -287,155 +290,137 @@ const ContactDetails = ({ currentEmployee }) => {
             alignItems: "center",
           }}
         >
-          {/* QR CODE */}
-          <Box
-            sx={{
-              width: { xs: 65, sm: 85 },
-              height: { xs: 65, sm: 85 },
-            }}
-            src={currentEmployee?.qr_url || Blur_qr}
-            component="img"
-            alt="QR Code"
-          />
-
-          <Box
-            sx={{
-              width: "1px",
-              height: { xs: "50px", sm: "58px" },
-              backgroundColor: "darkGray",
-              opacity: 0.6,
-            }}
-          />
-
-          <Box component="ul" sx={{ p: 0, m: 0 }}>
-            <Box
-              component="li"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Button
-                disableRipple
-                disableFocusRipple
-                disableElevation
-                disableTouchRipple
-                disabled={appleWalletLoading}
-                onClick={handleGenerateAppleWallet}
+          {isWalletVisible && (
+            <Box component="ul" sx={{ p: 0, m: 0 }}>
+              <Box
+                component="li"
                 sx={{
-                  color: "#48494A",
-                  fontSize: { xs: "10px", sm: "12.8px" },
-                  letterSpacing: "-0.015em",
-                  fontWeight: 600,
-                  minWidth: 0,
-                  "& .MuiButton-startIcon": {
-                    flexShrink: 0,
-                    mr: "6px",
-                  },
-
-                  "&:hover": {
-                    backgroundColor: "transparent",
-                  },
+                  display: "flex",
+                  alignItems: "center",
                 }}
-                startIcon={
-                  appleWalletLoading ? (
-                    <CircularProgress
-                      size={18}
-                      sx={{
-                        color: "#3b5b82",
-                      }}
-                    />
-                  ) : (
-                    <Box
-                      component="img"
-                      src={AppleWallet}
-                      alt="Apple Wallet"
-                      sx={{
-                        width: { xs: 18, sm: 20 },
-                        height: { xs: 18, sm: 20 },
-                        flexShrink: 0,
-                      }}
-                    />
-                  )
-                }
               >
-                <Box
-                  component="span"
+                <Button
+                  disableRipple
+                  disableFocusRipple
+                  disableElevation
+                  disableTouchRipple
+                  disabled={appleWalletLoading}
+                  onClick={handleGenerateAppleWallet}
                   sx={{
-                    textAlign: "left",
-                    lineHeight: 1.4,
-                    flexGrow: 1,
-                  }}
-                >
-                  Add to Apple Wallet
-                </Box>
-              </Button>
-            </Box>
+                    color: "#48494A",
+                    fontSize: { xs: "10px", sm: "12.8px" },
+                    letterSpacing: "-0.015em",
+                    fontWeight: 600,
+                    minWidth: 0,
+                    "& .MuiButton-startIcon": {
+                      flexShrink: 0,
+                      mr: "6px",
+                    },
 
-            <Box
-              component="li"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Button
-                disableRipple
-                disableFocusRipple
-                disableElevation
-                disableTouchRipple
-                disabled={googleWalletLoading}
-                onClick={handleGenerateGoogleWallet}
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                    },
+                  }}
+                  startIcon={
+                    appleWalletLoading ? (
+                      <CircularProgress
+                        size={18}
+                        sx={{
+                          color: "#3b5b82",
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        component="img"
+                        src={AppleWallet}
+                        alt="Apple Wallet"
+                        sx={{
+                          width: { xs: 18, sm: 20 },
+                          height: { xs: 18, sm: 20 },
+                          flexShrink: 0,
+                        }}
+                      />
+                    )
+                  }
+                >
+                  <Box
+                    component="span"
+                    sx={{
+                      textAlign: "left",
+                      lineHeight: 1.4,
+                      flexGrow: 1,
+                    }}
+                  >
+                    Add to Apple Wallet
+                  </Box>
+                </Button>
+              </Box>
+
+              <Box
+                component="li"
                 sx={{
-                  color: "#48494A",
-                  fontSize: { xs: "10px", sm: "12.8px" },
-                  letterSpacing: "-0.015em",
-                  fontWeight: 600,
-                  minWidth: 0,
-                  "& .MuiButton-startIcon": {
-                    flexShrink: 0,
-                    mr: "6px",
-                  },
-
-                  "&:hover": {
-                    backgroundColor: "transparent",
-                  },
+                  display: "flex",
+                  alignItems: "center",
                 }}
-                startIcon={
-                  googleWalletLoading ? (
-                    <CircularProgress
-                      size={18}
-                      sx={{
-                        color: "#3b5b82",
-                      }}
-                    />
-                  ) : (
-                    <Box
-                      component="img"
-                      src={SamsungWallet}
-                      alt="Apple Wallet"
-                      sx={{
-                        width: { xs: 18, sm: 20 },
-                        height: { xs: 18, sm: 20 },
-                        flexShrink: 0,
-                      }}
-                    />
-                  )
-                }
               >
-                <Box
-                  component="span"
+                <Button
+                  disableRipple
+                  disableFocusRipple
+                  disableElevation
+                  disableTouchRipple
+                  disabled={googleWalletLoading}
+                  onClick={handleGenerateGoogleWallet}
                   sx={{
-                    textAlign: "left",
-                    lineHeight: 1.4,
-                    flexGrow: 1,
+                    color: "#48494A",
+                    fontSize: { xs: "10px", sm: "12.8px" },
+                    letterSpacing: "-0.015em",
+                    fontWeight: 600,
+                    minWidth: 0,
+                    "& .MuiButton-startIcon": {
+                      flexShrink: 0,
+                      mr: "6px",
+                    },
+
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                    },
                   }}
+                  startIcon={
+                    googleWalletLoading ? (
+                      <CircularProgress
+                        size={18}
+                        sx={{
+                          color: "#3b5b82",
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        component="img"
+                        src={SamsungWallet}
+                        alt="Apple Wallet"
+                        sx={{
+                          width: { xs: 18, sm: 20 },
+                          height: { xs: 18, sm: 20 },
+                          flexShrink: 0,
+                        }}
+                      />
+                    )
+                  }
                 >
-                  Add to Samsung Wallet
-                </Box>
-              </Button>
+                  <Box
+                    component="span"
+                    sx={{
+                      textAlign: "left",
+                      lineHeight: 1.4,
+                      flexGrow: 1,
+                    }}
+                  >
+                    Add to Samsung Wallet
+                  </Box>
+                </Button>
+              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
       </Stack>
     </Stack>

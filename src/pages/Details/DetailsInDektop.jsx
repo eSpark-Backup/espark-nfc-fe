@@ -1,4 +1,4 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Stack } from "@mui/material";
 
 import Title from "./Title";
 import SocialIcons from "./SocialIcons";
@@ -11,7 +11,6 @@ import Footer from "./Footer";
 
 import { desktopImageBox } from "./styles";
 import { useState } from "react";
-import { Blur_qr } from "../../assets/images/pngs";
 
 const DetailsInDektop = ({
   isAbout,
@@ -49,48 +48,6 @@ const DetailsInDektop = ({
             />
           </Box>
         )}
-        {
-          <Stack
-            width={"fit-content"}
-            alignItems="center"
-            spacing={2}
-            sx={{
-              mx: "auto",
-              height: "80%",
-              display: { xs: "none", md: "flex" },
-              "@media(max-width: 300px)": {
-                gap: 1,
-                alignItems: "flex-start",
-                flexDirection: "column",
-              },
-            }}
-          >
-            <Box component="ul" sx={{ p: 0, py: 5, m: 0, listStyle: "none" }}>
-              {/* QR CODE */}
-              <Box
-                sx={{
-                  width: { xs: 120, md: 135 },
-                  height: { xs: 120, md: 135 },
-                  mx: "auto",
-                }}
-                src={currentEmployee?.qr_url || Blur_qr}
-                component="img"
-                alt="QR Code"
-              />
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontWeight: 500,
-
-                  filter: currentEmployee?.qr_url ? "none" : "blur(2px)",
-                  opacity: currentEmployee?.qr_url ? "100%" : 0.3,
-                }}
-              >
-                Scan me
-              </Typography>
-            </Box>
-          </Stack>
-        }
       </Stack>
       <Stack
         justifyContent={"space-between"}

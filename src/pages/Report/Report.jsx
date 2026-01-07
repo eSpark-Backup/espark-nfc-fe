@@ -114,7 +114,7 @@ const Report = () => {
                     p: 2,
                     boxShadow: "none",
                     width: "238px",
-                    height: "208px",
+                    minHeight: "208px",
                     border: "1px solid #CCC8C8",
                     bgcolor: "#F6F8FA",
                   }}
@@ -140,9 +140,9 @@ const Report = () => {
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
-                        maxWidth: "100%", // Ensures it respects container width
+                        maxWidth: "100%", 
                       }}
-                      title={member.name} // Shows full name on hover
+                      title={member.name} 
                     >
                       {member.name}
                     </Typography>

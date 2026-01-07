@@ -12,7 +12,10 @@ import {
 import DetailsInDektop from "./DetailsInDektop";
 import DetailsInMobile from "./DetailsInMobile";
 
-import { useGetEmployeeByIdQuery } from "../../store/slices/employee/employeeApiSlice";
+import {
+  useGetEmployeeByIdQuery,
+  useGetEmployeePublicByIdQuery,
+} from "../../store/slices/employee/employeeApiSlice";
 
 import { mainContainer } from "./styles";
 import { useGetCompanyQuery } from "../../store/slices/companyProfile/companyProfileApiSlice";
@@ -22,23 +25,40 @@ const Details = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down(768));
 
   const { id } = useParams();
+  const token = localStorage?.getItem("accessToken");
+  const isWalletVisible  = Boolean(token);
 
   const {
-    data: employeeData,
-    isError,
-    error,
-    isLoading,
-    isSuccess,
-    isFetching,
+    data: privateEmployeeData,
+    isLoading: privateLoading,
+    isError: privateError,
+    error: privateErr,
+    isFetching: privateFetching,
   } = useGetEmployeeByIdQuery(id, {
+    skip: !isWalletVisible ,
     refetchOnMountOrArgChange: true,
   });
 
-  const { data: profileData } = useGetCompanyQuery(id, {
+  const {
+    data: publicEmployeeData,
+    isLoading: publicLoading,
+    isError: publicError,
+    error: publicErr,
+    isFetching: publicFetching,
+  } = useGetEmployeePublicByIdQuery(id, {
+    skip: isWalletVisible ,
     refetchOnMountOrArgChange: true,
   });
+
+  const { data: profileData } = useGetCompanyQuery(id);
 
   const [isAbout, setIsAbout] = useState(true);
+
+  const employeeData = isWalletVisible  ? privateEmployeeData : publicEmployeeData;
+  const isLoading = privateLoading || publicLoading;
+  const isFetching = privateFetching || publicFetching;
+  const isError = privateError || publicError;
+  const error = privateErr || publicErr;
 
   return (
     <Box sx={mainContainer(isMobile)}>
@@ -51,13 +71,9 @@ const Details = () => {
             height: "100%",
           }}
         >
-          <CircularProgress
-            sx={{
-              color: "#3B5B82",
-            }}
-          />
+          <CircularProgress sx={{ color: "#3B5B82" }} />
         </Box>
-      ) : isError && error?.data?.error !== "Invalid or expired token" ? (
+      ) : isError ? (
         <Typography color="error">
           {error?.data?.error ||
             "Something went wrong while fetching employee details."}
@@ -69,8 +85,8 @@ const Details = () => {
                 <DetailsInMobile
                   isAbout={isAbout}
                   setIsAbout={setIsAbout}
-                  companyProfile={profileData?.company_profile}
                   currentEmployee={employeeData?.employee}
+                  companyProfile={profileData?.company_profile}
                   isMobile={isMobile}
                 />
               )
