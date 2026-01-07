@@ -134,37 +134,42 @@ const ContactDetails = ({ currentEmployee }) => {
     }
   };
 
+  const handleDownload = async () => {
+    try {
+      const response = await appleWalletBlob;
+
+      const blob =
+        response instanceof Blob
+          ? response
+          : new Blob([response], {
+              type: "application/vnd.apple.pkpass",
+            });
+
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "employee.pkpass";
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Apple Wallet download failed", error);
+    }
+  };
+
   const handleGenerateAppleWallet = async () => {
     try {
       await generateAppleWalletEmployee(currentEmployee?.employee_id).unwrap();
 
       setDownloadSkip(false);
+      handleDownload();
     } catch (error) {
       console.error("Failed to generate Apple Wallet pass", error);
     }
   };
-
-  useEffect(() => {
-    if (!appleWalletBlob) return;
-
-    const blob = new Blob([appleWalletBlob], {
-      type: "application/vnd.apple.pkpass",
-    });
-
-    const url = window.URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "employee.pkpass";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    window.location.href = url;
-
-    // Cleanup
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }, [appleWalletBlob]);
 
   return (
     <Stack
