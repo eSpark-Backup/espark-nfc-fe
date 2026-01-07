@@ -26,7 +26,7 @@ const Details = () => {
 
   const { id } = useParams();
   const token = localStorage?.getItem("accessToken");
-  const isWalletVisible  = Boolean(token);
+  const isWalletVisible = Boolean(token);
 
   const {
     data: privateEmployeeData,
@@ -35,7 +35,7 @@ const Details = () => {
     error: privateErr,
     isFetching: privateFetching,
   } = useGetEmployeeByIdQuery(id, {
-    skip: !isWalletVisible ,
+    skip: !isWalletVisible,
     refetchOnMountOrArgChange: true,
   });
 
@@ -46,7 +46,7 @@ const Details = () => {
     error: publicErr,
     isFetching: publicFetching,
   } = useGetEmployeePublicByIdQuery(id, {
-    skip: isWalletVisible ,
+    skip: isWalletVisible,
     refetchOnMountOrArgChange: true,
   });
 
@@ -54,7 +54,9 @@ const Details = () => {
 
   const [isAbout, setIsAbout] = useState(true);
 
-  const employeeData = isWalletVisible  ? privateEmployeeData : publicEmployeeData;
+  const employeeData = isWalletVisible
+    ? privateEmployeeData
+    : publicEmployeeData;
   const isLoading = privateLoading || publicLoading;
   const isFetching = privateFetching || publicFetching;
   const isError = privateError || publicError;

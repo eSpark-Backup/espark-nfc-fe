@@ -28,6 +28,7 @@ const AppRoutes = () => {
     report,
     manage_account,
     employee_detail,
+    employee_detail_public,
   } = PATHS;
 
   return (
@@ -51,6 +52,7 @@ const AppRoutes = () => {
       </Route>
 
       <Route path={employee_detail} element={<Details />} />
+      <Route path={employee_detail_public} element={<Details />} />
     </Routes>
   );
 };

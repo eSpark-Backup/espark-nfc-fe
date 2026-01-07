@@ -29,6 +29,7 @@ import EmployeeCompanyProfilDisabled from "./employee-company-profile-disabled.s
 import Email from "./email.svg";
 import Contact from "./contact.svg";
 import Attachment from "./attachment.svg";
+import Share from "./share.svg";
 // Social Icons
 import Facebook from "./facebook.svg";
 import Instagram from "./instagram.svg";
@@ -105,6 +106,7 @@ export {
   Email,
   Contact,
   Attachment,
+  Share,
   // Social Icons
   Facebook,
   Instagram,

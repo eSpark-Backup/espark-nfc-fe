@@ -3,6 +3,7 @@ import {
   Add,
   Attachment,
   Delete,
+  Share,
   Sort,
   View,
 } from "../assets/images/svgs";
@@ -26,6 +27,10 @@ const TABLEACTIONBUTTONS = [
   {
     name: "View",
     icon: View,
+  },
+   {
+    name: "Share",
+    icon: Share,
   },
   {
     name: "Action",

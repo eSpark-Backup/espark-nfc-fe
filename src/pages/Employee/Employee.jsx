@@ -100,6 +100,7 @@ const Employee = () => {
   const [errora, setError] = useState(null);
   const [preview, setPreview] = useState(null);
   const [resetForm, setResetForm] = useState(null);
+  const [alertText, setAlertText] = useState("Employee");
   const [triggerGetDepartmentDropdown] = useLazyGetDepartmentDropdownQuery();
 
   useEffect(() => {
@@ -120,8 +121,9 @@ const Employee = () => {
 
   const handleClick = async (e, row, index) => {
     if (index === 0) {
+      setAlertText("Employee");
       await copyToClipboard(
-        `${window.location.origin}/employee-detail/${row.id}`
+        `${window.location.origin}/employee-detail/${row?.id}`
       );
       setCopied(true);
     } else if (index === 1) {
@@ -129,6 +131,12 @@ const Employee = () => {
         `${window.location.origin}/employee-detail/${row?.id}`,
         "_blank"
       );
+    } else if (index === 2) {
+      setAlertText("Public");
+      await copyToClipboard(
+        `${window.location.origin}/employee-detail/public/${row?.id}`
+      );
+      setCopied(true);
     } else {
       setRowDetails(row);
 
@@ -349,7 +357,7 @@ const Employee = () => {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Employee link copied
+          {`${alertText} link copied`}
         </Alert>
       </Snackbar>
     </>

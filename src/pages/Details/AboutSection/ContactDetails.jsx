@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Stack,
@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { CONTACTDETAILS } from "../../../constants/Details";
 import { contactListContainer, contactListIcon, listItem } from "../styles";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   AppleWallet,
   Blur_qr,
@@ -107,8 +107,8 @@ const ContactDetails = ({ currentEmployee }) => {
   const [generateAppleWalletEmployee, { isLoading: appleWalletLoading }] =
     useGenerateAppleWalletEmployeeMutation();
 
-  const token = localStorage?.getItem("accessToken");
-  const isWalletVisible = Boolean(token);
+  const { access } = useParams();
+  const isWalletVisible = !access;
 
   const { data: appleWalletBlob, isFetching } =
     useDownloadAppleWalletEmployeeQuery(

@@ -13,6 +13,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
 
 import SearchInput from "./inputs/SearchInput";
@@ -62,6 +63,12 @@ const GenericTable = ({
   useEffect(() => {
     setSelected([]);
   }, [rows]);
+
+  const getTooltipText = (name) => {
+    if (name === "Attachment") return "for employee";
+    if (name === "Share") return "for public";
+    return "";
+  };
 
   return (
     <Box sx={tableBoxContainer}>
@@ -196,34 +203,44 @@ const GenericTable = ({
                     {employee ? (
                       <TableCell sx={tableBodyCell}>
                         {TABLEACTIONBUTTONS.map((el, index) => {
+                          const tooltipText = getTooltipText(el.name);
+                          const showTooltip =
+                            el.name === "Attachment" || el.name === "Share";
+
                           return (
-                            <IconButton
-                              sx={{
-                                padding: 0,
-                                margin:
-                                  index === 1
-                                    ? { xs: "0px 8px", mdLarge: "0px 12px" }
-                                    : 0,
-                                borderRadius: index !== 2 ? "50%" : 1,
-                                width: index !== 2 ? "23px" : "auto",
-                                height: index !== 2 ? "23px" : "auto",
-                                backgroundColor:
-                                  index !== 2 &&
-                                  "rgba(230, 237, 249, 1) !important",
-                              }}
-                              onClick={(e) => {
-                                clickHandler.onActionClick(e, row, index);
-                              }}
+                            <Tooltip
                               key={index}
+                              title={tooltipText}
+                              arrow
+                              disableHoverListener={!showTooltip}
                             >
-                              <img
-                                src={el.icon}
-                                alt="Action"
-                                style={{
-                                  width: index !== 2 && "18px",
+                              <IconButton
+                                sx={{
+                                  padding: 0,
+                                  margin:
+                                    index === 1 || index === 3
+                                      ? { xs: "0px 8px", mdLarge: "0px 12px" }
+                                      : 0,
+                                  borderRadius: index !== 3 ? "50%" : 1,
+                                  width: index !== 3 ? "23px" : "auto",
+                                  height: index !== 3 ? "23px" : "auto",
+                                  backgroundColor:
+                                    index !== 3 &&
+                                    "rgba(230, 237, 249, 1) !important",
                                 }}
-                              />
-                            </IconButton>
+                                onClick={(e) => {
+                                  clickHandler.onActionClick(e, row, index);
+                                }}
+                              >
+                                <img
+                                  src={el.icon}
+                                  alt={el.name}
+                                  style={{
+                                    width: index !== 3 ? "18px" : "auto",
+                                  }}
+                                />
+                              </IconButton>
+                            </Tooltip>
                           );
                         })}
                       </TableCell>
