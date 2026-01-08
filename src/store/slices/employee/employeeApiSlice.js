@@ -136,7 +136,7 @@ export const {
   useDeleteEmployeeMutation,
   useGenerateGoogleWalletEmployeeMutation,
   useGenerateAppleWalletEmployeeMutation,
-  useDownloadAppleWalletEmployeeQuery,
+  useLazyDownloadAppleWalletEmployeeQuery,
   useGetAllDepartmentsQuery,
   useGetAllEmployeesQuery,
   useGetAllReportsQuery,

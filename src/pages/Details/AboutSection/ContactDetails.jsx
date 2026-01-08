@@ -9,14 +9,9 @@ import {
 import { CONTACTDETAILS } from "../../../constants/Details";
 import { contactListContainer, contactListIcon, listItem } from "../styles";
 import { Link, useParams } from "react-router-dom";
+import { AppleWallet, SamsungWallet } from "../../../assets/images/pngs";
 import {
-  AppleWallet,
-  Blur_qr,
-  GoogleWallet,
-  SamsungWallet,
-} from "../../../assets/images/pngs";
-import {
-  useDownloadAppleWalletEmployeeQuery,
+  useLazyDownloadAppleWalletEmployeeQuery,
   useGenerateAppleWalletEmployeeMutation,
   useGenerateGoogleWalletEmployeeMutation,
 } from "../../../store/slices/employee/employeeApiSlice";
@@ -100,21 +95,19 @@ const handleSaveContact = async (employee) => {
 };
 
 const ContactDetails = ({ currentEmployee }) => {
-  const [downloadSkip, setDownloadSkip] = useState(true);
   const [generateGoogleWalletEmployee, { isLoading: googleWalletLoading }] =
     useGenerateGoogleWalletEmployeeMutation();
 
-  const [generateAppleWalletEmployee, { isLoading: appleWalletLoading }] =
-    useGenerateAppleWalletEmployeeMutation();
+  const [
+    generateAppleWalletEmployee,
+    { isLoading: appleWalletLoading, isSuccess },
+  ] = useGenerateAppleWalletEmployeeMutation();
 
   const { access } = useParams();
   const isWalletVisible = !access;
 
-  const { data: appleWalletBlob, isFetching } =
-    useDownloadAppleWalletEmployeeQuery(
-      { employeeId: currentEmployee?.employee_id },
-      { skip: downloadSkip }
-    );
+  const [downloadAppleWalletEmployee, { isFetching: downloadLoading }] =
+    useLazyDownloadAppleWalletEmployeeQuery();
 
   const displayDetails = CONTACTDETAILS?.map((item) => ({
     icon: item.icon,
@@ -134,10 +127,8 @@ const ContactDetails = ({ currentEmployee }) => {
     }
   };
 
-  const handleDownload = async () => {
+  const handleDownload = (response) => {
     try {
-      const response = await appleWalletBlob;
-
       const blob =
         response instanceof Blob
           ? response
@@ -162,12 +153,18 @@ const ContactDetails = ({ currentEmployee }) => {
 
   const handleGenerateAppleWallet = async () => {
     try {
+      // 1️⃣ Generate Wallet
       await generateAppleWalletEmployee(currentEmployee?.employee_id).unwrap();
 
-      setDownloadSkip(false);
-      handleDownload();
+      // 2️⃣ Download Wallet (blob)
+      const downloadResponse = await downloadAppleWalletEmployee({
+        employeeId: currentEmployee?.employee_id,
+      }).unwrap();
+
+      // 3️⃣ Download trigger
+      handleDownload(downloadResponse);
     } catch (error) {
-      console.error("Failed to generate Apple Wallet pass", error);
+      console.error("Apple Wallet flow failed", error);
     }
   };
 
